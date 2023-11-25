@@ -9,9 +9,9 @@ import java.util.Random;
 
 public class ChampDeParticules implements Champ {
 
-    private int largeur;
-    private int hauteur;
-    private List<Particule> population;
+    private final int largeur;
+    private final int hauteur;
+    private final List<Particule> population;
     private List<Particule> nouvelleGeneration;
     private Controleur controleur;
 
@@ -19,14 +19,14 @@ public class ChampDeParticules implements Champ {
 
         this.largeur = largeur;
         this.hauteur = longeur;
-        this.population = new ArrayList<Particule>();
-        this.nouvelleGeneration = new ArrayList<Particule>();
+        this.population = new ArrayList<>();
+        this.nouvelleGeneration = new ArrayList<>();
     }
 
     public ChampDeParticules(int largeur, int longeur, int nb, int typeParticule) {
         this.largeur = largeur;
         this.hauteur = longeur;
-        this.population = new ArrayList<Particule>();
+        this.population = new ArrayList<>();
         this.nouvelleGeneration = this.generationParticule(nb, typeParticule);
     }
 
@@ -75,7 +75,7 @@ public class ChampDeParticules implements Champ {
     }
 
     private ArrayList<Particule> generationParticule(int nb, int typeParticule) {
-        ArrayList<Particule> nouvelleGeneration = new ArrayList<Particule>();
+        ArrayList<Particule> nouvelleGeneration = new ArrayList<>();
         Random generateur = new Random();
         int epaisseur = 0;
 
@@ -93,11 +93,9 @@ public class ChampDeParticules implements Champ {
 
         for (int i = 0; i < nb; i++) {
             int x = (int) (generateur.nextFloat() * largeur);
-            if (x > largeur - epaisseur)
-                x -= epaisseur;
+            if (x > largeur - epaisseur) x -= epaisseur;
             int y = (int) (generateur.nextFloat() * hauteur);
-            if (y > hauteur - epaisseur)
-                y -= epaisseur;
+            if (y > hauteur - epaisseur) y -= epaisseur;
 
             nouvelleGeneration.add(this.creationParticule(typeParticule, x, y));
         }
@@ -111,7 +109,7 @@ public class ChampDeParticules implements Champ {
 
     @Override
     public void supprimerLesParticulesDecedees() {
-        HashSet<Particule> particulesMortes = new HashSet<Particule>();
+        HashSet<Particule> particulesMortes = new HashSet<>();
         for (Particule p : this.population) {
             if (p.estMorte()) {
                 particulesMortes.add(p);
@@ -123,7 +121,7 @@ public class ChampDeParticules implements Champ {
 
     public void updatePopulation() {
         this.population.addAll(this.nouvelleGeneration);
-        this.nouvelleGeneration = new ArrayList<Particule>();
+        this.nouvelleGeneration = new ArrayList<>();
     }
 }
 

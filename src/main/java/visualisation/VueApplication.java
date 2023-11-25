@@ -17,8 +17,8 @@ public class VueApplication extends JFrame {
     private static final String[] libelleTypesParticules = {"Particules A", "Particules B"};
     private static final int[] typesParticules = {0, 1};
     private final Controleur controleur;
-    private JMenu m;
-    private JOptionPane nbParticules;
+    private final JMenu m;
+    private final JOptionPane nbParticules;
     private VueChampDeParticules affichageSimulation = null;
 
     public VueApplication(String lib, Controleur c) {

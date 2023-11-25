@@ -7,20 +7,20 @@ import java.util.List;
 
 public interface Champ {
 
-    public int getLargeur();
+    int getLargeur();
 
-    public int getHauteur();
+    int getHauteur();
 
-    public List<Particule> getParticules();
+    List<Particule> getParticules();
 
-    public void ajouterUnePopulation(int type, int nb);
+    void ajouterUnePopulation(int type, int nb);
 
-    public void supprimerLesParticulesDecedees();
+    void supprimerLesParticulesDecedees();
 
-    public void setControleur(Controleur c);
+    void setControleur(Controleur c);
 
-    public void naissance(int i, double x, double y);
+    void naissance(int i, double x, double y);
 
-    public void updatePopulation();
+    void updatePopulation();
 
 }

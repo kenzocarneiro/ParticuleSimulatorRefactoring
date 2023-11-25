@@ -11,22 +11,20 @@ import java.util.List;
 public class Controleur {
 
     /**
+     * champParticules est le modèle de notre application. Dans cet objet nous
+     * retrouvons entre autre toutes les particules.
+     */
+    private final Champ champParticules;
+    /**
+     * Application est la vue de notre application.
+     */
+    private final VueApplication application;
+    /**
      * sim est l'objet permettant d'animer le modèle.
      * C'est à dire qu'il gère le calcul du prochain état de chaque particule ainsi que le déplacement
      * à l'interieur d'un thread.
      */
     private Simulateur sim = null;
-
-    /**
-     * champParticules est le modèle de notre application. Dans cet objet nous
-     * retrouvons entre autre toutes les particules.
-     */
-    private final Champ champParticules;
-
-    /**
-     * Application est la vue de notre application.
-     */
-    private final VueApplication application;
 
     /**
      * Création d'un champ contenant une population de particules d'une famille
