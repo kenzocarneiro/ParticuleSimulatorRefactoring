@@ -39,12 +39,15 @@ public abstract class Particule {
      * Variable permettant de savoir dans quel etat se situe la particule
      */
     protected Etat etatDeLaParticule;
+
     protected int nbTour = 0;
     protected double prochaineVitesse;
     protected double prochaineDirection;  // en radians [0 - 2 PI[
+
     protected int passageACTIVE;
     protected int passageFINDEVIE;
     protected int passageMORT;
+
     protected Champ champ;
     protected EtatParticule etat;
 
@@ -75,6 +78,72 @@ public abstract class Particule {
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public int getNbTour() {
+        return nbTour;
+    }
+
+    public int getPassageACTIVE() {
+        return passageACTIVE;
+    }
+
+    public int getPassageFINDEVIE() {
+        return passageFINDEVIE;
+    }
+
+    public int getPassageMORT() {
+        return passageMORT;
+    }
+
+    public double getVitesseCourante() {
+        return vitesseCourante;
+    }
+
+    public void setVitesseCourante(double vitesseCourante) {
+        this.vitesseCourante = vitesseCourante;
+    }
+
+    public double getProchaineVitesse() {
+        return prochaineVitesse;
+    }
+
+    public void setProchaineVitesse(double prochaineVitesse) {
+        this.prochaineVitesse = prochaineVitesse;
+    }
+
+    public double getDirectionCourante() {
+        return directionCourante;
+    }
+
+    public void setDirectionCourante(double directionCourante) {
+        this.directionCourante = directionCourante;
+    }
+
+    public double getProchaineDirection() {
+        return prochaineDirection;
+    }
+
+    public void setProchaineDirection(double prochaineDirection) {
+        this.prochaineDirection = prochaineDirection;
+    }
+
+    public Champ getChamp() {
+        return champ;
+    }
+
+    public abstract void handleCollision(Particule p);
+
+    public EtatParticule intervertirEtat() {
+        return etat.intervertirEtat();
+    }
+
+    public boolean isActiveAndExcited() {
+        return etat.isActiveAndExcited();
+    }
+
+    public void setEtat(EtatParticule etat) {
+        this.etat = etat;
     }
 
     /**
@@ -189,7 +258,7 @@ public abstract class Particule {
     /**
      * Cette methode retourne l'ensemble des voisins avec lesquels la particule correcte en en collision exclusive.
      */
-    protected List<Particule> collisionSimpleBilateral(List<Particule> voisins) {
+    public List<Particule> collisionSimpleBilateral(List<Particule> voisins) {
 
         List<Particule> resultat = new ArrayList<Particule>();
         List<Particule> aRetirer = new ArrayList<Particule>();
