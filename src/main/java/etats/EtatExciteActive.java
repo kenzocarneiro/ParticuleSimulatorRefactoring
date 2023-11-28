@@ -20,7 +20,7 @@ public class EtatExciteActive extends EtatParticule {
     @Override
     public EtatParticule intervertirEtat() {
         particule.resetVitesse();
-        return new EtatExciteActive(particule); // TODO: passer en Normal
+        return new EtatNormalActive(particule);
     }
 
     @Override

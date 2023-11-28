@@ -68,18 +68,6 @@ public abstract class EtatParticule {
     }
 
     public EtatParticule gestionCycle() {
-        //        if (this.nbTour == this.passageACTIVE) {
-//            this.phaseDeLaParticule = Phase.ACTIVE;
-//        }
-//
-//        if (this.nbTour == this.passageFINDEVIE) {
-//            this.phaseDeLaParticule = Phase.FINDEVIE;
-//        }
-//
-//
-//        if (this.nbTour == this.passageMORT) {
-//            this.phaseDeLaParticule = Phase.MORTE;
-//        }
         throw new RuntimeException("Operation Impossible");
     }
 }

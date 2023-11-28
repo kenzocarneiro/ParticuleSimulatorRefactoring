@@ -1,5 +1,6 @@
 package particules;
 
+import etats.EtatNormalJeune;
 import etats.EtatParticule;
 
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public abstract class Particule {
         prochaineDirection = dC;
         this.phaseDeLaParticule = Phase.JEUNE;
         this.etatDeLaParticule = Etat.NORMAL;
+        this.etat = new EtatNormalJeune(this);
         this.enCollision = false;
     }
 
@@ -80,6 +82,16 @@ public abstract class Particule {
         this.y = y;
     }
 
+    public abstract void handleCollision(Particule p);
+
+    public EtatParticule intervertirEtat() {
+        return etat.intervertirEtat();
+    }
+
+    public boolean isActiveAndExcited() {
+        return etat.isActiveAndExcited();
+    }
+
     public int getNbTour() {
         return nbTour;
     }
@@ -96,50 +108,88 @@ public abstract class Particule {
         return passageMORT;
     }
 
+    public Etat getEtatDeLaParticule() {
+        return etatDeLaParticule;
+    }
+
+    public static List<Particule> getCollisionsSimplesTraitees() {
+        return collisionsSimplesTraitees;
+    }
+
     public double getVitesseCourante() {
         return vitesseCourante;
-    }
-
-    public void setVitesseCourante(double vitesseCourante) {
-        this.vitesseCourante = vitesseCourante;
-    }
-
-    public double getProchaineVitesse() {
-        return prochaineVitesse;
-    }
-
-    public void setProchaineVitesse(double prochaineVitesse) {
-        this.prochaineVitesse = prochaineVitesse;
     }
 
     public double getDirectionCourante() {
         return directionCourante;
     }
 
-    public void setDirectionCourante(double directionCourante) {
-        this.directionCourante = directionCourante;
+    public Phase getPhaseDeLaParticule() {
+        return phaseDeLaParticule;
+    }
+
+    public double getProchaineVitesse() {
+        return prochaineVitesse;
     }
 
     public double getProchaineDirection() {
         return prochaineDirection;
     }
 
-    public void setProchaineDirection(double prochaineDirection) {
-        this.prochaineDirection = prochaineDirection;
-    }
-
     public Champ getChamp() {
         return champ;
     }
 
-    public abstract void handleCollision(Particule p);
-
-    public EtatParticule intervertirEtat() {
-        return etat.intervertirEtat();
+    public EtatParticule getEtat() {
+        return etat;
     }
 
-    public boolean isActiveAndExcited() {
-        return etat.isActiveAndExcited();
+    public static void setCollisionsSimplesTraitees(List<Particule> collisionsSimplesTraitees) {
+        Particule.collisionsSimplesTraitees = collisionsSimplesTraitees;
+    }
+
+    public void setVitesseCourante(double vitesseCourante) {
+        this.vitesseCourante = vitesseCourante;
+    }
+
+    public void setDirectionCourante(double directionCourante) {
+        this.directionCourante = directionCourante;
+    }
+
+    public void setPhaseDeLaParticule(Phase phaseDeLaParticule) {
+        this.phaseDeLaParticule = phaseDeLaParticule;
+    }
+
+    public void setEtatDeLaParticule(Etat etatDeLaParticule) {
+        this.etatDeLaParticule = etatDeLaParticule;
+    }
+
+    public void setNbTour(int nbTour) {
+        this.nbTour = nbTour;
+    }
+
+    public void setProchaineVitesse(double prochaineVitesse) {
+        this.prochaineVitesse = prochaineVitesse;
+    }
+
+    public void setProchaineDirection(double prochaineDirection) {
+        this.prochaineDirection = prochaineDirection;
+    }
+
+    public void setPassageACTIVE(int passageACTIVE) {
+        this.passageACTIVE = passageACTIVE;
+    }
+
+    public void setPassageFINDEVIE(int passageFINDEVIE) {
+        this.passageFINDEVIE = passageFINDEVIE;
+    }
+
+    public void setPassageMORT(int passageMORT) {
+        this.passageMORT = passageMORT;
+    }
+
+    public void setChamp(Champ champ) {
+        this.champ = champ;
     }
 
     public void setEtat(EtatParticule etat) {
