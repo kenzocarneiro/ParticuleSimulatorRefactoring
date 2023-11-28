@@ -4,6 +4,7 @@ import particules.Champ;
 import particules.ChampDeParticules;
 import particules.Particule;
 import simulation.Simulateur;
+import visualisation.Sujet;
 import visualisation.VueApplication;
 
 import java.util.List;
@@ -63,6 +64,7 @@ public class Controleur {
      */
     public void lancerSimulation() {
         this.champParticules.setControleur(this);
+        this.champParticules.addObserver(this.application);
         this.sim.demarre();
     }
 
