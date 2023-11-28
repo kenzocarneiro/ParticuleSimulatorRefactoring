@@ -228,6 +228,13 @@ public abstract class Particule {
 
 
     /**
+     * Cette methode permet de savoir si une particule est visible ou non.
+     */
+    public boolean isVisible() {
+        return true;
+    }
+
+    /**
      * Par defaut, une particule est dans son etat normal.
      * Apres collision dans un etat normal, une particule devient excitee.
      * Elle peut revenir dans son etat normal :

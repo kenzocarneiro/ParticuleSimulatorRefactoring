@@ -62,7 +62,11 @@ public class ChampDeParticules implements Champ {
 
         switch (typeParticule) {
             case 0: {
-                result = new ParticuleA(this, x, y, direction);
+                if(generateur.nextFloat() < 0.5)
+                    result = new ParticuleA(this, x, y, direction);
+                else
+                    result = new Epileptique(new ParticuleA(this, x, y, direction));
+
                 break;
             }
 
