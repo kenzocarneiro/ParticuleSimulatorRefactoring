@@ -22,9 +22,9 @@ public class VueChampDeParticules extends JPanel {
     }
 
     public void updateParticulesVisibles() {
-        this.particulesADessiner = new ArrayList<VueParticule>();
+        this.particulesADessiner = new ArrayList<>();
         for (Particule p : c.getPopulationModele()) {
-            this.particulesADessiner.add(new VueParticule(p));
+            this.particulesADessiner.add(FabriqueVueParticule.creationVueParticule(p));
         }
     }
 
@@ -33,7 +33,7 @@ public class VueChampDeParticules extends JPanel {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setStroke(new BasicStroke(3f));
         super.paint(g);
-        List<VueParticule> aSupprimer = new ArrayList<VueParticule>();
+        List<VueParticule> aSupprimer = new ArrayList<>();
         synchronized (particulesADessiner) {
             for (VueParticule d : particulesADessiner) {
                 if (d.outOfDate()) {

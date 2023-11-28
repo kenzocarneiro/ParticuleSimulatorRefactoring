@@ -1,6 +1,7 @@
 package application;
 
 import controleur.Controleur;
+import controleur.FabriqueControleur;
 
 public class Application {
 
@@ -18,7 +19,7 @@ public class Application {
          * Le contrôleur après creation lance la simulation
          */
 
-        c = new Controleur("Simulateur de particules", 640, 480);
+        c = FabriqueControleur.creationControleur("Simulateur de particules", 640, 480);
         c.lancerSimulation();
 
     }

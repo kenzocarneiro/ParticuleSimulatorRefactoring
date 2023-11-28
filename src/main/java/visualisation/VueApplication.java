@@ -46,7 +46,7 @@ public class VueApplication extends JFrame {
         mb.add(m);
         this.setJMenuBar(mb);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.affichageSimulation = new VueChampDeParticules(c);
+        this.affichageSimulation = FabriqueVueChampDeParticules.creationVueChampDeParticules(this.controleur);
         this.getContentPane().add(this.affichageSimulation, BorderLayout.CENTER);
         this.pack();
         this.setVisible(true);
