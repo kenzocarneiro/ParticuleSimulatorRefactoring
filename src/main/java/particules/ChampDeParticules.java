@@ -66,12 +66,12 @@ public class ChampDeParticules implements Champ, Sujet {
 
         switch (typeParticule) {
             case 0: {
-                result = new ParticuleA(this, x, y, direction);
+                result = FabriqueParticuleA.creationParticule(this, x, y, direction);
                 break;
             }
 
             case 1: {
-                result = new ParticuleB(this, x, y, direction);
+                result = FabriqueParticuleB.creationParticule(this, x, y, direction);
                 break;
             }
         }

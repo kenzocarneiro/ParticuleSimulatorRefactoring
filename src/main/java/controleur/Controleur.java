@@ -1,10 +1,11 @@
 package controleur;
 
 import particules.Champ;
-import particules.ChampDeParticules;
+import particules.FabriqueChampDeParticules;
 import particules.Particule;
+import simulation.FabriqueSimulateur;
 import simulation.Simulateur;
-import visualisation.Sujet;
+import visualisation.FabriqueVueApplication;
 import visualisation.VueApplication;
 
 import java.util.List;
@@ -37,9 +38,9 @@ public class Controleur {
      * @param type    : type des particules a creer initialement
      */
     public Controleur(String lib, int largeur, int hauteur, int nb, int type) {
-        champParticules = new ChampDeParticules(largeur, hauteur, nb, type);
-        this.sim = new Simulateur(30, this);
-        this.application = new VueApplication(lib, this);
+        champParticules = FabriqueChampDeParticules.creationChampDeParticules(largeur, hauteur, nb, type);
+        this.sim = FabriqueSimulateur.creationSimulateur(30, this);
+        this.application = FabriqueVueApplication.creationVueApplication(lib, this);
     }
 
     /**
@@ -50,9 +51,9 @@ public class Controleur {
      * @param hauteur : hauteur du champ de particules
      */
     public Controleur(String lib, int largeur, int hauteur) {
-        champParticules = new ChampDeParticules(largeur, hauteur);
-        this.sim = new Simulateur(30, this);
-        this.application = new VueApplication(lib, this);
+        champParticules = FabriqueChampDeParticules.creationChampDeParticules(largeur, hauteur);
+        this.sim = FabriqueSimulateur.creationSimulateur(30, this);
+        this.application = FabriqueVueApplication.creationVueApplication(lib, this);
     }
 
     public VueApplication getApplication() {
