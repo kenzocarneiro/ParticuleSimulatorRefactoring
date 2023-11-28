@@ -1,11 +1,12 @@
 package particules;
 
 import controleur.Controleur;
+import visualisation.Sujet;
 
 import java.util.List;
 
 
-public interface Champ {
+public interface Champ extends Sujet {
 
     int getLargeur();
 
