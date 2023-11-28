@@ -47,6 +47,7 @@ public abstract class Particule {
     protected int passageMORT;
     protected Champ champ;
     protected EtatParticule etat;
+
     protected boolean enCollision;
 
     public Particule(Champ c, double x, double y, double dC) {
@@ -80,20 +81,29 @@ public abstract class Particule {
      * Methode appelee a chaque fois qu'un deplacement est fait
      */
     public void gestionCycle() {
+        etat = etat.gestionCycle();
 
-        if (this.nbTour == this.passageACTIVE) {
-            this.phaseDeLaParticule = Phase.ACTIVE;
-        }
+//        if (this.nbTour == this.passageACTIVE) {
+//            this.phaseDeLaParticule = Phase.ACTIVE;
+//        }
+//
+//        if (this.nbTour == this.passageFINDEVIE) {
+//            this.phaseDeLaParticule = Phase.FINDEVIE;
+//        }
+//
+//
+//        if (this.nbTour == this.passageMORT) {
+//            this.phaseDeLaParticule = Phase.MORTE;
+//        }
 
-        if (this.nbTour == this.passageFINDEVIE) {
-            this.phaseDeLaParticule = Phase.FINDEVIE;
-        }
+    }
 
+    public boolean isEnCollision() {
+        return enCollision;
+    }
 
-        if (this.nbTour == this.passageMORT) {
-            this.phaseDeLaParticule = Phase.MORTE;
-        }
-
+    public void setEnCollision(boolean enCollision) {
+        this.enCollision = enCollision;
     }
 
     public void printIt() {
@@ -166,7 +176,7 @@ public abstract class Particule {
      * @param c : particules presentes dans le champ de particules
      * @return les particules presentes dans le champ d'action de la particule courante.
      */
-    protected List<Particule> extraireVoisins(List<Particule> c) {
+    public List<Particule> extraireVoisins(List<Particule> c) {
         List<Particule> result = new ArrayList<Particule>();
         for (Particule p : c) {
             if (p != this && util.DistancesEtDirections.distanceDepuisUnPoint(this.getX(), this.getY(), p.getX(), p.getY()) <= Particule.epaisseur) {
@@ -208,25 +218,11 @@ public abstract class Particule {
      * @return : retourne vrai si une collision multiple a eu lieu et faux sinon.
      */
     public boolean collisionMultiple(List<Particule> c) {
-        List<Particule> voisins = this.extraireVoisins(c);
-        if (voisins.size() > 1) {
-
-            if (this.directionCourante > Math.PI) this.prochaineDirection = Math.PI - this.directionCourante;
-            else this.prochaineDirection = Math.PI + this.directionCourante;
-
-
-            if (!(this.etatDeLaParticule == Etat.EXCITE)) {
-                this.etatDeLaParticule = Etat.EXCITE;
-                this.augmentationVitesse();
-            } else {
-                this.prochaineVitesse = this.vitesseCourante;
-            }
-            return true;
-        }
-        return false;
+        etat = etat.collisionMultiple(c);
+        return enCollision;
     }
 
-    protected void augmentationVitesse() {
+    public void augmentationVitesse() {
         this.prochaineVitesse = this.vitesseCourante * 1.5;
 
     }
