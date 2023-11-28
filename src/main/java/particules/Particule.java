@@ -1,5 +1,7 @@
 package particules;
 
+import etats.EtatParticule;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +46,19 @@ public abstract class Particule {
     protected int passageFINDEVIE;
     protected int passageMORT;
     protected Champ champ;
+    protected EtatParticule etat;
+    protected boolean enCollision;
+
+    public Particule(Champ c, double x, double y, double dC) {
+        this.champ = c;
+        this.x = x;
+        this.y = y;
+        directionCourante = dC;
+        prochaineDirection = dC;
+        this.phaseDeLaParticule = Phase.JEUNE;
+        this.etatDeLaParticule = Etat.NORMAL;
+        this.enCollision = false;
+    }
 
     public double getX() {
         return x;
@@ -222,7 +237,10 @@ public abstract class Particule {
      * La variable champ represente l'ensemble des particules presentes dans le champ de particules.
      * Les nouvelles entitees eventuellement crees devront etre ajoutees dans le champ de particules.
      */
-    public abstract boolean collisionSimple(List<Particule> champ);
+    public boolean collisionSimple(List<Particule> champ){
+        etat = etat.collisionSimple(champ);
+        return enCollision;
+    }
 
     public abstract void resetVitesse();
 
