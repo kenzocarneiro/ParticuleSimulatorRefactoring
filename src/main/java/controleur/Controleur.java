@@ -65,7 +65,6 @@ public class Controleur {
      */
     public void lancerSimulation() {
         this.champParticules.setControleur(this);
-        this.champParticules.addObserver(this.application);
         this.sim.demarre();
     }
 
