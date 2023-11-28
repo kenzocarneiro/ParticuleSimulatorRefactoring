@@ -19,6 +19,14 @@ public class EtatNormalJeune extends EtatParticule {
         }
         return this;
     }
+
+    @Override
+    public EtatParticule intervertirEtat() {
+        particule.augmentationVitesse();
+        return new EtatExciteJeune(particule);
+    }
+
+
     @Override
     public EtatParticule collisionMultiple(List<Particule> champ) {
         List<Particule> voisins = particule.extraireVoisins(champ);
@@ -31,7 +39,7 @@ public class EtatNormalJeune extends EtatParticule {
 
             particule.augmentationVitesse();
             particule.setEnCollision(true);
-            return new EtatNormalJeune(particule); // TODO change Normal to Excite
+            return new EtatExciteJeune(particule);
 
         }
         particule.setEnCollision(false);

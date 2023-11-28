@@ -10,6 +10,12 @@ public class EtatNormalMorte extends EtatParticule {
         super(particule);
     }
 
+    @Override
+    public EtatParticule intervertirEtat() {
+        particule.augmentationVitesse();
+        return new EtatExciteMorte(particule);
+    }
+
 
     @Override
     public EtatParticule collisionMultiple(List<Particule> champ) {
@@ -23,7 +29,7 @@ public class EtatNormalMorte extends EtatParticule {
 
             particule.augmentationVitesse();
             particule.setEnCollision(true);
-            return new EtatNormalMorte(particule); // TODO change Normal to Excite
+            return new EtatExciteMorte(particule);
 
         }
         particule.setEnCollision(false);

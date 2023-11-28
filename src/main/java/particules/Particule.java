@@ -40,12 +40,15 @@ public abstract class Particule {
      * Variable permettant de savoir dans quel etat se situe la particule
      */
     protected Etat etatDeLaParticule;
+
     protected int nbTour = 0;
     protected double prochaineVitesse;
     protected double prochaineDirection;  // en radians [0 - 2 PI[
+
     protected int passageACTIVE;
     protected int passageFINDEVIE;
     protected int passageMORT;
+
     protected Champ champ;
     protected EtatParticule etat;
 
@@ -77,6 +80,16 @@ public abstract class Particule {
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public abstract void handleCollision(Particule p);
+
+    public EtatParticule intervertirEtat() {
+        return etat.intervertirEtat();
+    }
+
+    public boolean isActiveAndExcited() {
+        return etat.isActiveAndExcited();
     }
 
     public int getNbTour() {

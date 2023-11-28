@@ -18,6 +18,12 @@ public class EtatNormalFinDeVie extends EtatParticule {
     }
 
     @Override
+    public EtatParticule intervertirEtat() {
+        particule.augmentationVitesse();
+        return new EtatExciteFinDeVie(particule);
+    }
+
+    @Override
     public EtatParticule collisionMultiple(List<Particule> champ) {
         List<Particule> voisins = particule.extraireVoisins(champ);
 
@@ -29,7 +35,7 @@ public class EtatNormalFinDeVie extends EtatParticule {
 
             particule.augmentationVitesse();
             particule.setEnCollision(true);
-            return new EtatNormalFinDeVie(particule); // TODO change Normal to Excite
+            return new EtatExciteFinDeVie(particule);
 
         }
         particule.setEnCollision(false);
