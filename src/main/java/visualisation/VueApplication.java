@@ -1,13 +1,15 @@
 package visualisation;
 
 import controleur.Controleur;
+import particules.Particule;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
-public class VueApplication extends JFrame {
+public class VueApplication extends JFrame implements Observer {
 
     /**
      *
@@ -19,6 +21,7 @@ public class VueApplication extends JFrame {
     private final Controleur controleur;
     private final JMenu m;
     private final JOptionPane nbParticules;
+    private final JLabel texte = new JLabel("Particules : 0 A, 0 B");
     private VueChampDeParticules affichageSimulation = null;
 
     public VueApplication(String lib, Controleur c) {
@@ -45,6 +48,7 @@ public class VueApplication extends JFrame {
 
         mb.add(m);
         this.setJMenuBar(mb);
+        this.add(texte, BorderLayout.SOUTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.affichageSimulation = FabriqueVueChampDeParticules.creationVueChampDeParticules(this.controleur);
         this.getContentPane().add(this.affichageSimulation, BorderLayout.CENTER);
@@ -54,5 +58,23 @@ public class VueApplication extends JFrame {
 
     public void majParticulesADessiner() {
         this.affichageSimulation.updateParticulesVisibles();
+    }
+
+    @Override
+    public void update(List<Particule> p) {
+        int[] nbs = new int[libelleTypesParticules.length];
+        for (Particule particule : p) {
+            for (int i = 0; i < libelleTypesParticules.length; i++) {
+                if (particule.getClass().getSimpleName().equals("Particule" + libelleTypesParticules[i].charAt(libelleTypesParticules[i].length() - 1))) {
+                    nbs[i]++;
+                }
+            }
+        }
+        StringBuilder texte = new StringBuilder("Particules : ");
+        for (int i = 0; i < libelleTypesParticules.length; i++) {
+            texte.append(nbs[i]).append(" ").append(libelleTypesParticules[i]);
+            if(i != libelleTypesParticules.length - 1) texte.append(", ");
+        }
+        this.texte.setText(texte.toString());
     }
 }
