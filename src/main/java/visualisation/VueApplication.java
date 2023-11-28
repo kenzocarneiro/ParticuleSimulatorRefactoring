@@ -72,7 +72,8 @@ public class VueApplication extends JFrame implements Observer {
         }
         StringBuilder texte = new StringBuilder("Particules : ");
         for (int i = 0; i < libelleTypesParticules.length; i++) {
-            texte.append(nbs[i]).append(" ").append(libelleTypesParticules[i]).append(", ");
+            texte.append(nbs[i]).append(" ").append(libelleTypesParticules[i]);
+            if(i != libelleTypesParticules.length - 1) texte.append(", ");
         }
         this.texte.setText(texte.toString());
     }
