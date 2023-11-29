@@ -266,6 +266,7 @@ public abstract class Particule {
                 }
             }
         }
+        this.champ.notifyObservers();
     }
 
     public void effectueDeplacement() {

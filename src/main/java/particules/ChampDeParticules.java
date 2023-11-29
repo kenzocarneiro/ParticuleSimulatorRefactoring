@@ -1,26 +1,29 @@
 package particules;
 
 import controleur.Controleur;
+import visualisation.Observer;
+import visualisation.Sujet;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-public class ChampDeParticules implements Champ {
+public class ChampDeParticules implements Champ, Sujet {
 
     private final int largeur;
     private final int hauteur;
     private final List<Particule> population;
     private List<Particule> nouvelleGeneration;
     private Controleur controleur;
+    private List<Observer> observers;
 
     public ChampDeParticules(int largeur, int longeur) {
-
         this.largeur = largeur;
         this.hauteur = longeur;
         this.population = new ArrayList<>();
         this.nouvelleGeneration = new ArrayList<>();
+        this.observers = new ArrayList<>();
     }
 
     public ChampDeParticules(int largeur, int longeur, int nb, int typeParticule) {
@@ -28,6 +31,7 @@ public class ChampDeParticules implements Champ {
         this.hauteur = longeur;
         this.population = new ArrayList<>();
         this.nouvelleGeneration = this.generationParticule(nb, typeParticule);
+        this.observers = new ArrayList<>();
     }
 
     public void setControleur(Controleur c) {
@@ -62,12 +66,12 @@ public class ChampDeParticules implements Champ {
 
         switch (typeParticule) {
             case 0: {
-                result = new ParticuleA(this, x, y, direction);
+                result = FabriqueParticuleA.creationParticule(this, x, y, direction);
                 break;
             }
 
             case 1: {
-                result = new ParticuleB(this, x, y, direction);
+                result = FabriqueParticuleB.creationParticule(this, x, y, direction);
                 break;
             }
         }
@@ -117,11 +121,30 @@ public class ChampDeParticules implements Champ {
         }
 
         this.population.removeAll(particulesMortes);
+        notifyObservers();
     }
 
     public void updatePopulation() {
         this.population.addAll(this.nouvelleGeneration);
         this.nouvelleGeneration = new ArrayList<>();
+        notifyObservers();
+    }
+
+    @Override
+    public void addObserver(Observer o) {
+        this.observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        this.observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer o : this.observers) {
+            o.update(this.population);
+        }
     }
 }
 
