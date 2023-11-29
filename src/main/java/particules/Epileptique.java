@@ -14,10 +14,64 @@ public class Epileptique extends Particule {
         return this.particuleDecoree;
     }
 
+    @Override
+    public double getX() {
+        return this.particuleDecoree.getX();
+    }
 
     @Override
-    public boolean isVisible() {
-        return nbTour % 4 == 0 || nbTour % 4 == 1;
+    public void setX(double x) {
+        this.particuleDecoree.setX(x);
+    }
+
+    @Override
+    public double getY() {
+        return this.particuleDecoree.getY();
+    }
+
+    @Override
+    public void setY(double y) {
+        this.particuleDecoree.setY(y);
+    }
+
+    @Override
+    public void gestionCycle() {
+        this.particuleDecoree.gestionCycle();
+    }
+
+    @Override
+    public void printIt() {
+        this.particuleDecoree.printIt();
+    }
+
+    @Override
+    public void calculeDeplacementAFaire() {
+        this.particuleDecoree.calculeDeplacementAFaire();
+    }
+
+    @Override
+    public void effectueDeplacement() {
+        this.particuleDecoree.effectueDeplacement();
+    }
+
+    @Override
+    public boolean estMorte() {
+        return this.particuleDecoree.estMorte();
+    }
+
+    @Override
+    protected List<Particule> collisionSimpleBilateral(List<Particule> voisins) {
+        return this.particuleDecoree.collisionSimpleBilateral(voisins);
+    }
+
+    @Override
+    public boolean collisionMultiple(List<Particule> c) {
+        return this.particuleDecoree.collisionMultiple(c);
+    }
+
+    @Override
+    protected void augmentationVitesse() {
+        this.particuleDecoree.augmentationVitesse();
     }
 
     @Override
@@ -32,4 +86,10 @@ public class Epileptique extends Particule {
     public void resetVitesse() {
         this.particuleDecoree.resetVitesse();
     }
+
+    @Override
+    public boolean isVisible() {
+        return nbTour % 100 < 50;
+    }
+
 }

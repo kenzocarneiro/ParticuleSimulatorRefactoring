@@ -110,7 +110,7 @@ public abstract class Particule {
      *
      * // @param champ : liste des particules presentes dans le champ de particules.
      */
-    final public void calculeDeplacementAFaire() {
+    public void calculeDeplacementAFaire() {
         nbTour++;
         this.gestionCycle();
         if (!Particule.collisionsSimplesTraitees.contains(this)) {
