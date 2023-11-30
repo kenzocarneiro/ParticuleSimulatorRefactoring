@@ -13,8 +13,8 @@ public class FabriqueParticuleB extends FabriqueParticule {
     }
 
     @Override
-    public Particule creationParticule(Champ c, double x, double y, double dC) {
-        return new ParticuleB(c, x, y, dC);
+    public Particule creationParticule(Champ c, double x, double y, double dC, boolean epileptique) {
+        return new ParticuleB(c, x, y, dC, epileptique);
     }
 
 }

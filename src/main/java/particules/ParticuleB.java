@@ -13,8 +13,8 @@ public class ParticuleB extends Particule {
         return couleur;
     }
 
-    public ParticuleB(Champ c, double x, double y, double dC) {
-        super(c, x, y, dC);
+    public ParticuleB(Champ c, double x, double y, double dC, boolean epiletique) {
+        super(c, x, y, dC, epiletique);
         vitesseCourante = vitesseOriginale;
         resetVitesse();
         passageACTIVE = 100;
@@ -37,9 +37,9 @@ public class ParticuleB extends Particule {
         }
         // B collides with A (and both are Active and Excited)
         if (p.getType().equals(ParticuleType.A)) {
-            this.intervertirEtat();
-            p.intervertirEtat();
             this.champ.naissance(ParticuleType.A, this.x, this.y);
+            p.setEtat(p.intervertirEtat());
+            return this.intervertirEtat();
         }
 
         return this.getEtat();

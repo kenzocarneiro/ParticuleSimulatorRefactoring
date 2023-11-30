@@ -29,6 +29,11 @@ public abstract class EtatParticule {
             return this;
         }
         particule.setEnCollision(true);
+        Particule p = enCollisionFrontale.get(0);
+
+        if(!p.isVisible()) {
+            return this;
+        }
 
         Particule.collisionsSimplesTraitees.add(particule);
         if (particule.getDirectionCourante() > Math.PI) {
@@ -36,23 +41,22 @@ public abstract class EtatParticule {
         } else {
             particule.setProchaineDirection(particule.getDirectionCourante() + Math.PI);
         }
-
-        for (Particule p : enCollisionFrontale) {
-            if(!p.isVisible()) {
-                continue;
-            }
-            p.contamine(particule);
-            if (p.getDirectionCourante() > Math.PI) p.setProchaineDirection(p.getDirectionCourante() - Math.PI);
-            else p.setProchaineDirection(p.getDirectionCourante() + Math.PI);
-            Particule.collisionsSimplesTraitees.add(p);
-            if (p.estExciteEtActive() && this.estExciteEtActive()) {
-                return particule.handleCollision(p);
-            } else {
-                p.setEtat(p.intervertirEtat());
-                return particule.intervertirEtat();
-            }
+        if (p.getDirectionCourante() > Math.PI) {
+            p.setProchaineDirection(p.getDirectionCourante() - Math.PI);
+        } else {
+            p.setProchaineDirection(p.getDirectionCourante() + Math.PI);
         }
-        return this;
+
+        particule.contamine(p);
+        p.contamine(particule);
+
+        Particule.collisionsSimplesTraitees.add(p);
+        if (p.estExciteEtActive() && this.estExciteEtActive()) {
+            return particule.handleCollision(p);
+        } else {
+            p.setEtat(p.intervertirEtat());
+            return particule.intervertirEtat();
+        }
     }
 
     public EtatParticule collisionMultiple(List<Particule> champ) {

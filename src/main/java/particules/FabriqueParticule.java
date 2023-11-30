@@ -3,35 +3,28 @@ package particules;
 import java.util.ArrayList;
 import java.util.Random;
 
-import comportement.ComportementEpileptique;
-import comportement.ComportementNormal;
-
 public abstract class FabriqueParticule {
 
-    public abstract Particule creationParticule(Champ c, double x, double y, double dC);
+    public abstract Particule creationParticule(Champ c, double x, double y, double dC, boolean epileptique);
 
     public static Particule creationParticuleType(double x, double y, ParticuleType typeParticule, Champ champ) {
         Random generateur = new Random();
         double direction = (generateur.nextFloat() * 2 * Math.PI);
 
         Particule result = null;
+        boolean epileptique = generateur.nextFloat() < 0.18;
 
         switch (typeParticule) {
             case A: {
-                result = FabriqueParticuleA.getInstance().creationParticule(champ, x, y, direction);
+                result = FabriqueParticuleA.getInstance().creationParticule(champ, x, y, direction, epileptique);
                 break;
             }
 
             case B: {
-                result = FabriqueParticuleB.getInstance().creationParticule(champ, x, y, direction);
+                result = FabriqueParticuleB.getInstance().creationParticule(champ, x, y, direction, epileptique);
                 break;
             }
         }
-
-        if(generateur.nextFloat() < 0.18)
-            result.setComportement(new ComportementEpileptique(result));
-        else
-            result.setComportement(new ComportementNormal(result));
 
         return result;
     }

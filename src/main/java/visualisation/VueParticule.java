@@ -1,5 +1,6 @@
 package visualisation;
 
+import comportement.ComportementEpileptique;
 import etats.EtatExcite;
 import particules.Particule;
 
@@ -29,7 +30,14 @@ public class VueParticule {
                 (p.getCouleur().getBlue() * coefColor)/255));
 
         int epaisseur = Particule.getEpaisseur();
-        g.fillOval(x - (epaisseur / 2), y + (epaisseur / 2), epaisseur, epaisseur);
+
+        if (p.getComportement() instanceof ComportementEpileptique) {
+            g.fillRect(x - (epaisseur / 2), y + (epaisseur / 2), epaisseur, epaisseur);
+        }
+        else {
+            g.fillOval(x - (epaisseur / 2), y + (epaisseur / 2), epaisseur, epaisseur);
+        }
+
         if (p.getEtat() instanceof EtatExcite) {
             g.drawOval(x - (epaisseur / 2) - 5, y + (epaisseur / 2) - 5, epaisseur + 10, epaisseur + 10);
         }

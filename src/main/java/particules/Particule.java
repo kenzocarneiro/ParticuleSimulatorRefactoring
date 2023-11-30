@@ -1,5 +1,7 @@
 package particules;
 
+import comportement.ComportementEpileptique;
+import comportement.ComportementNormal;
 import etats.EtatNormalJeune;
 import etats.EtatParticule;
 
@@ -50,7 +52,7 @@ public abstract class Particule {
 
     protected Comportement comportement;
 
-    public Particule(Champ c, double x, double y, double dC) {
+    public Particule(Champ c, double x, double y, double dC, boolean epileptique) {
         this.champ = c;
         this.x = x;
         this.y = y;
@@ -58,6 +60,7 @@ public abstract class Particule {
         this.prochaineDirection = dC;
         this.etat = new EtatNormalJeune(this);
         this.enCollision = false;
+        this.comportement = epileptique ? new ComportementEpileptique(this) : new ComportementNormal(this);
     }
 
     public double getX() {
@@ -263,24 +266,19 @@ public abstract class Particule {
     }
 
     /**
-     * Cette methode retourne l'ensemble des voisins avec lesquels la particule correcte en en collision exclusive.
+     * Cette methode retourne l'ensemble des voisins avec lesquels la particule correcte en collision exclusive.
      */
     public List<Particule> collisionSimpleBilateral(List<Particule> voisins) {
         List<Particule> resultat = this.extraireVoisins(voisins);
         List<Particule> aRetirer = new ArrayList<>();
 
         for (Particule p : resultat) {
-            if (p.extraireVoisins(voisins).size() > 1) {
+            if (p.extraireVoisins(voisins).size() > 1 || Particule.collisionsSimplesTraitees.contains(p)) {
                 aRetirer.add(p);
-            } else {
-                if (Particule.collisionsSimplesTraitees.contains(p)) {
-                    aRetirer.add(p);
-                }
             }
         }
         resultat.removeAll(aRetirer);
         return resultat;
-
     }
 
     /**
@@ -315,6 +313,7 @@ public abstract class Particule {
 
     public void resetVitesse() {
         this.setProchaineVitesse(getVitesseOriginale());
+        this.setVitesseCourante(getVitesseOriginale());
     }
 
     public abstract Color getCouleur();
