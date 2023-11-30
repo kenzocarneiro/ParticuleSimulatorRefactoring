@@ -34,7 +34,7 @@ public class VueApplication extends JFrame{
 
 
         this.vueDebug = new VueDebug();
-        mb.add(this.vueDebug.getMenuDebug());
+        mb.add(this.vueDebug.getMenuDebug(controleur));
 
         this.setJMenuBar(mb);
         this.add(this.vueDebug.getText(), BorderLayout.NORTH);

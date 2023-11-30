@@ -94,6 +94,10 @@ public class Controleur {
         return this.champParticules;
     }
 
+    public Simulateur getSim() {
+        return this.sim;
+    }
+
     public List<Particule> getPopulationModele() {
         return champParticules.getParticules();
     }

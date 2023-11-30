@@ -26,4 +26,5 @@ public interface Champ extends Sujet {
 
     void updatePopulation();
 
+    void addParticule(Particule p1);
 }

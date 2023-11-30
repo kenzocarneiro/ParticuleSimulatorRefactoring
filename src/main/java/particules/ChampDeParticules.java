@@ -94,6 +94,7 @@ public class ChampDeParticules implements Champ, Sujet {
         this.aEnvoyerObservateur.addAll(this.nouvelleGeneration);
         notifyObserversAdd();
         this.nouvelleGeneration = new ArrayList<>();
+        this.controleur.getApplication().majParticulesADessiner();
     }
 
     @Override
@@ -128,4 +129,10 @@ public class ChampDeParticules implements Champ, Sujet {
             o.updateEtat(p.getEtat(), etat);
         }
     }
+
+    public void addParticule(Particule p1){
+        this.nouvelleGeneration.add(p1);
+        updatePopulation();
+    }
+
 }
