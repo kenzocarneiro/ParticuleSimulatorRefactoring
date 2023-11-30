@@ -50,7 +50,7 @@ public class Controleur {
      */
     public Controleur(String lib, int largeur, int hauteur) {
         champParticules = new ChampDeParticules(largeur, hauteur);
-        this.sim = new Simulateur(30, this);
+        this.sim = new Simulateur(300, this);
         this.application = new VueApplication(lib, this);
     }
 

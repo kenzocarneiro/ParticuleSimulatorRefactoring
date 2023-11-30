@@ -24,8 +24,7 @@ public class VueChampDeParticules extends JPanel {
     public void updateParticulesVisibles() {
         this.particulesADessiner = new ArrayList<VueParticule>();
         for (Particule p : c.getPopulationModele()) {
-            if(p.isVisible())
-                this.particulesADessiner.add(new VueParticule(p));
+            this.particulesADessiner.add(new VueParticule(p));
         }
     }
 

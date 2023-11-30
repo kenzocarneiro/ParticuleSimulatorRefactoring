@@ -5,7 +5,7 @@ import java.util.List;
 // décorateur Epileptique de Particule
 public class Epileptique extends Particule {
     protected Particule particuleDecoree;
-    private int visible;
+
     public Epileptique(Particule particule) {
         this.particuleDecoree = particule;
     }
@@ -89,7 +89,7 @@ public class Epileptique extends Particule {
 
     @Override
     public boolean isVisible() {
-        return nbTour % 100 < 50;
+        return (this.particuleDecoree.nbTour % 4) < 2;
     }
 
 }

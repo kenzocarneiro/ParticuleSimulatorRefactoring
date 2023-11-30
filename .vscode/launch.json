@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Application",
+            "request": "launch",
+            "mainClass": "application.Application",
+            "projectName": "SimulateurDeParticules"
+        },
+        {
+            "type": "lua-local",
+            "request": "launch",
+            "name": "Debug LOVE",
+            "program": {
+                "command": "love"
+            },
+            "args": [
+                "${workspaceFolder}",
+                "vsc_debug"
+            ]
+        }
+    ]
+}

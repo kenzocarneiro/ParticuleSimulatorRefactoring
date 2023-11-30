@@ -26,16 +26,27 @@ public class VueParticule {
     }
 
     public void seDessine(Graphics g) {
+        // System.out.println(p.isVisible());
+        // if(! this.p.isVisible())
+        // {
+        //     System.out.println("Particule invisible");
+        //     return;
+        // }
+
         int x = (int) this.p.getX();
         int y = (int) this.p.getY();
         g.setColor(this.couleurParticule);
-        if (p.getClass() == ParticuleA.class) {
-            g.fillOval(x - (ParticuleA.epaisseur / 2), y + (ParticuleA.epaisseur / 2), (ParticuleA.epaisseur), ParticuleA.epaisseur);
-        }
 
-        if (p.getClass() == ParticuleB.class) {
-            g.fillOval(x - (ParticuleB.epaisseur / 2), y + (ParticuleB.epaisseur / 2), (ParticuleB.epaisseur), ParticuleB.epaisseur);
-        }
+        g.fillOval(x - (ParticuleA.epaisseur / 2), y + (ParticuleA.epaisseur / 2), (ParticuleA.epaisseur), ParticuleA.epaisseur);
+ 
+
+        // if (p.getClass() == ParticuleA.class) {
+        //     g.fillOval(x - (ParticuleA.epaisseur / 2), y + (ParticuleA.epaisseur / 2), (ParticuleA.epaisseur), ParticuleA.epaisseur);
+        // }
+
+        // if (p.getClass() == ParticuleB.class) {
+        //     g.fillOval(x - (ParticuleB.epaisseur / 2), y + (ParticuleB.epaisseur / 2), (ParticuleB.epaisseur), ParticuleB.epaisseur);
+        // }
     }
 
     public boolean outOfDate() {
