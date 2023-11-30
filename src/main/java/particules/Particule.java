@@ -167,6 +167,7 @@ public abstract class Particule {
     }
 
     public void setEtat(EtatParticule etat) {
+        this.champ.notifyObserversEtat(this, etat);
         this.etat = etat;
     }
 
