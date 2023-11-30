@@ -1,5 +1,8 @@
 package particules;
 
+import etats.EtatNormalJeune;
+import etats.EtatParticule;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,13 +40,31 @@ public abstract class Particule {
      * Variable permettant de savoir dans quel etat se situe la particule
      */
     protected Etat etatDeLaParticule;
+
     protected int nbTour = 0;
     protected double prochaineVitesse;
     protected double prochaineDirection;  // en radians [0 - 2 PI[
+
     protected int passageACTIVE;
     protected int passageFINDEVIE;
     protected int passageMORT;
+
     protected Champ champ;
+    protected EtatParticule etat;
+
+    protected boolean enCollision;
+
+    public Particule(Champ c, double x, double y, double dC) {
+        this.champ = c;
+        this.x = x;
+        this.y = y;
+        directionCourante = dC;
+        prochaineDirection = dC;
+        this.phaseDeLaParticule = Phase.JEUNE;
+        this.etatDeLaParticule = Etat.NORMAL;
+        this.etat = new EtatNormalJeune(this);
+        this.enCollision = false;
+    }
 
     public double getX() {
         return x;
@@ -61,24 +82,147 @@ public abstract class Particule {
         this.y = y;
     }
 
+    public abstract void handleCollision(Particule p);
+
+    public EtatParticule intervertirEtat() {
+        return etat.intervertirEtat();
+    }
+
+    public boolean isActiveAndExcited() {
+        return etat.isActiveAndExcited();
+    }
+
+    public int getNbTour() {
+        return nbTour;
+    }
+
+    public int getPassageACTIVE() {
+        return passageACTIVE;
+    }
+
+    public int getPassageFINDEVIE() {
+        return passageFINDEVIE;
+    }
+
+    public int getPassageMORT() {
+        return passageMORT;
+    }
+
+    public Etat getEtatDeLaParticule() {
+        return etatDeLaParticule;
+    }
+
+    public static List<Particule> getCollisionsSimplesTraitees() {
+        return collisionsSimplesTraitees;
+    }
+
+    public double getVitesseCourante() {
+        return vitesseCourante;
+    }
+
+    public double getDirectionCourante() {
+        return directionCourante;
+    }
+
+    public Phase getPhaseDeLaParticule() {
+        return phaseDeLaParticule;
+    }
+
+    public double getProchaineVitesse() {
+        return prochaineVitesse;
+    }
+
+    public double getProchaineDirection() {
+        return prochaineDirection;
+    }
+
+    public Champ getChamp() {
+        return champ;
+    }
+
+    public EtatParticule getEtat() {
+        return etat;
+    }
+
+    public static void setCollisionsSimplesTraitees(List<Particule> collisionsSimplesTraitees) {
+        Particule.collisionsSimplesTraitees = collisionsSimplesTraitees;
+    }
+
+    public void setVitesseCourante(double vitesseCourante) {
+        this.vitesseCourante = vitesseCourante;
+    }
+
+    public void setDirectionCourante(double directionCourante) {
+        this.directionCourante = directionCourante;
+    }
+
+    public void setPhaseDeLaParticule(Phase phaseDeLaParticule) {
+        this.phaseDeLaParticule = phaseDeLaParticule;
+    }
+
+    public void setEtatDeLaParticule(Etat etatDeLaParticule) {
+        this.etatDeLaParticule = etatDeLaParticule;
+    }
+
+    public void setNbTour(int nbTour) {
+        this.nbTour = nbTour;
+    }
+
+    public void setProchaineVitesse(double prochaineVitesse) {
+        this.prochaineVitesse = prochaineVitesse;
+    }
+
+    public void setProchaineDirection(double prochaineDirection) {
+        this.prochaineDirection = prochaineDirection;
+    }
+
+    public void setPassageACTIVE(int passageACTIVE) {
+        this.passageACTIVE = passageACTIVE;
+    }
+
+    public void setPassageFINDEVIE(int passageFINDEVIE) {
+        this.passageFINDEVIE = passageFINDEVIE;
+    }
+
+    public void setPassageMORT(int passageMORT) {
+        this.passageMORT = passageMORT;
+    }
+
+    public void setChamp(Champ champ) {
+        this.champ = champ;
+    }
+
+    public void setEtat(EtatParticule etat) {
+        this.etat = etat;
+    }
+
     /**
      * Methode appelee a chaque fois qu'un deplacement est fait
      */
     public void gestionCycle() {
+        etat = etat.gestionCycle();
 
-        if (this.nbTour == this.passageACTIVE) {
-            this.phaseDeLaParticule = Phase.ACTIVE;
-        }
+//        if (this.nbTour == this.passageACTIVE) {
+//            this.phaseDeLaParticule = Phase.ACTIVE;
+//        }
+//
+//        if (this.nbTour == this.passageFINDEVIE) {
+//            this.phaseDeLaParticule = Phase.FINDEVIE;
+//        }
+//
+//
+//        if (this.nbTour == this.passageMORT) {
+//            this.phaseDeLaParticule = Phase.MORTE;
+//        }
 
-        if (this.nbTour == this.passageFINDEVIE) {
-            this.phaseDeLaParticule = Phase.FINDEVIE;
-        }
+    }
 
+    public boolean isEnCollision() {
+        return enCollision;
+    }
 
-        if (this.nbTour == this.passageMORT) {
-            this.phaseDeLaParticule = Phase.MORTE;
-        }
-
+    public void setEnCollision(boolean enCollision) {
+        this.enCollision = enCollision;
     }
 
     public void printIt() {
@@ -151,7 +295,7 @@ public abstract class Particule {
      * @param c : particules presentes dans le champ de particules
      * @return les particules presentes dans le champ d'action de la particule courante.
      */
-    protected List<Particule> extraireVoisins(List<Particule> c) {
+    public List<Particule> extraireVoisins(List<Particule> c) {
         List<Particule> result = new ArrayList<Particule>();
         for (Particule p : c) {
             if (p != this && util.DistancesEtDirections.distanceDepuisUnPoint(this.getX(), this.getY(), p.getX(), p.getY()) <= Particule.epaisseur) {
@@ -164,7 +308,7 @@ public abstract class Particule {
     /**
      * Cette methode retourne l'ensemble des voisins avec lesquels la particule correcte en en collision exclusive.
      */
-    protected List<Particule> collisionSimpleBilateral(List<Particule> voisins) {
+    public List<Particule> collisionSimpleBilateral(List<Particule> voisins) {
 
         List<Particule> resultat = new ArrayList<Particule>();
         List<Particule> aRetirer = new ArrayList<Particule>();
@@ -193,25 +337,11 @@ public abstract class Particule {
      * @return : retourne vrai si une collision multiple a eu lieu et faux sinon.
      */
     public boolean collisionMultiple(List<Particule> c) {
-        List<Particule> voisins = this.extraireVoisins(c);
-        if (voisins.size() > 1) {
-
-            if (this.directionCourante > Math.PI) this.prochaineDirection = Math.PI - this.directionCourante;
-            else this.prochaineDirection = Math.PI + this.directionCourante;
-
-
-            if (!(this.etatDeLaParticule == Etat.EXCITE)) {
-                this.etatDeLaParticule = Etat.EXCITE;
-                this.augmentationVitesse();
-            } else {
-                this.prochaineVitesse = this.vitesseCourante;
-            }
-            return true;
-        }
-        return false;
+        etat = etat.collisionMultiple(c);
+        return enCollision;
     }
 
-    protected void augmentationVitesse() {
+    public void augmentationVitesse() {
         this.prochaineVitesse = this.vitesseCourante * 1.5;
 
     }
@@ -222,7 +352,10 @@ public abstract class Particule {
      * La variable champ represente l'ensemble des particules presentes dans le champ de particules.
      * Les nouvelles entitees eventuellement crees devront etre ajoutees dans le champ de particules.
      */
-    public abstract boolean collisionSimple(List<Particule> champ);
+    public boolean collisionSimple(List<Particule> champ){
+        etat = etat.collisionSimple(champ);
+        return enCollision;
+    }
 
     public abstract void resetVitesse();
 
