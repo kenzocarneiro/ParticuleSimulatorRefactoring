@@ -37,7 +37,6 @@ public abstract class EtatParticule {
             if (p.isActiveAndExcited() && this.estExciteEtActive()) {
                 particule.handleCollision(p);
             } else {
-                p.setEtat(p.intervertirEtat());
                 return p.intervertirEtat();
             }
         }
