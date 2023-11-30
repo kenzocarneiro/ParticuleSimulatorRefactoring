@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class Particule {
 
-    public static final int epaisseur = 10;
+    private static final int epaisseur = 10;
     /**
      * cette variable stocke doit etre reinitialiser a chaque tour de simulation. Elle stocke
      * les collisions simples traitees. Si a est en collision simple avec b (et reciproquement), a est stockee dans
@@ -183,6 +183,10 @@ public abstract class Particule {
 
     public void setEnCollision(boolean enCollision) {
         this.enCollision = enCollision;
+    }
+
+    public static int getEpaisseur() {
+        return epaisseur;
     }
 
 //    public void printIt() {

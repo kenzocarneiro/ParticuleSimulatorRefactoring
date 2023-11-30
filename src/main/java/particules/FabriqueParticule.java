@@ -31,18 +31,7 @@ public abstract class FabriqueParticule {
         ArrayList<Particule> nouvelleGeneration = new ArrayList<>();
         Random generateur = new Random();
         int epaisseur = 0;
-
-        switch (typeParticule) {
-            case A: {
-                epaisseur = ParticuleA.epaisseur;
-                break;
-            }
-
-            case B: {
-                epaisseur = ParticuleB.epaisseur;
-                break;
-            }
-        }
+        epaisseur = Particule.getEpaisseur();
 
         for (int i = 0; i < nb; i++) {
             int x = (int) (generateur.nextFloat() * largeur);
