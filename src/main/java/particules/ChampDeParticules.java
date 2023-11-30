@@ -16,7 +16,8 @@ public class ChampDeParticules implements Champ, Sujet {
     private final List<Particule> population;
     private List<Particule> nouvelleGeneration;
     private Controleur controleur;
-    private List<Observer> observers;
+    private final List<Observer> observers;
+    private List<Particule> aEnvoyerObservateur;
 
     public ChampDeParticules(int largeur, int longeur) {
         this.largeur = largeur;
@@ -24,6 +25,7 @@ public class ChampDeParticules implements Champ, Sujet {
         this.population = new ArrayList<>();
         this.nouvelleGeneration = new ArrayList<>();
         this.observers = new ArrayList<>();
+        this.aEnvoyerObservateur = new ArrayList<>();
     }
 
     public ChampDeParticules(int largeur, int longeur, int nb, int typeParticule) {
@@ -111,6 +113,12 @@ public class ChampDeParticules implements Champ, Sujet {
         return population;
     }
 
+    public void removeParticule(Particule p) {
+        this.population.remove(p);
+        this.aEnvoyerObservateur.add(p);
+        notifyObserversRemove();
+    }
+
     @Override
     public void supprimerLesParticulesDecedees() {
         HashSet<Particule> particulesMortes = new HashSet<>();
@@ -121,13 +129,19 @@ public class ChampDeParticules implements Champ, Sujet {
         }
 
         this.population.removeAll(particulesMortes);
-        notifyObservers();
+        if (!particulesMortes.isEmpty()){
+            this.aEnvoyerObservateur.addAll(particulesMortes);
+            notifyObserversRemove();
+        }
     }
 
     public void updatePopulation() {
         this.population.addAll(this.nouvelleGeneration);
+        if (!this.nouvelleGeneration.isEmpty()){
+            this.aEnvoyerObservateur.addAll(this.nouvelleGeneration);
+            notifyObserversAdd();
+        }
         this.nouvelleGeneration = new ArrayList<>();
-        notifyObservers();
     }
 
     @Override
@@ -141,10 +155,19 @@ public class ChampDeParticules implements Champ, Sujet {
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObserversRemove() {
         for (Observer o : this.observers) {
-            o.update(this.population);
+            o.updateRemove(this.aEnvoyerObservateur);
         }
+        this.aEnvoyerObservateur = new ArrayList<>();
+    }
+
+    @Override
+    public void notifyObserversAdd() {
+        for (Observer o : this.observers) {
+            o.updateAdd(this.aEnvoyerObservateur);
+        }
+        this.aEnvoyerObservateur = new ArrayList<>();
     }
 }
 

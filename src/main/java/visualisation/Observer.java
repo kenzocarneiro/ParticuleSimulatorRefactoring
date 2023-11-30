@@ -5,5 +5,6 @@ import particules.Particule;
 import java.util.List;
 
 public interface Observer {
-    void update(List<Particule> p);
+    void updateRemove(List<Particule> p);
+    void updateAdd(List<Particule> p);
 }
