@@ -77,7 +77,7 @@ public abstract class Particule {
         return etat.intervertirEtat();
     }
 
-    public boolean isActiveAndExcited() {
+    public boolean estExciteEtActive() {
         return etat.estExciteEtActive();
     }
 

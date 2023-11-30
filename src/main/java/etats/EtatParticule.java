@@ -34,7 +34,7 @@ public abstract class EtatParticule {
             if (p.getDirectionCourante() > Math.PI) p.setProchaineDirection(p.getDirectionCourante() - Math.PI);
             else p.setProchaineDirection(p.getDirectionCourante() + Math.PI);
             Particule.collisionsSimplesTraitees.add(p);
-            if (p.isActiveAndExcited() && this.estExciteEtActive()) {
+            if (p.estExciteEtActive() && this.estExciteEtActive()) {
                 particule.handleCollision(p);
             } else {
                 return p.intervertirEtat();
