@@ -1,10 +1,6 @@
 package etats;
 
 import particules.Particule;
-import particules.ParticuleA;
-import particules.ParticuleB;
-
-import java.util.List;
 
 public class EtatNormalJeune extends EtatNormal {
 

@@ -78,7 +78,7 @@ public abstract class Particule {
     }
 
     public boolean isActiveAndExcited() {
-        return etat.isActiveAndExcited();
+        return etat.estExciteEtActive();
     }
 
     public int getNbTour() {
@@ -260,7 +260,7 @@ public abstract class Particule {
     }
 
     public boolean estMorte() {
-        return false;
+        return etat.estMorte();
     }
 
     /**

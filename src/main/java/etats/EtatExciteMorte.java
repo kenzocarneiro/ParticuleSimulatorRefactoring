@@ -2,8 +2,6 @@ package etats;
 
 import particules.Particule;
 
-import java.util.List;
-
 public class EtatExciteMorte extends EtatExcite {
     public EtatExciteMorte(Particule particule) {
         super(particule);
@@ -13,5 +11,9 @@ public class EtatExciteMorte extends EtatExcite {
     public EtatParticule intervertirEtat() {
         particule.resetVitesse();
         return new EtatNormalMorte(particule);
+    }
+
+    public boolean estMorte() {
+        return true;
     }
 }

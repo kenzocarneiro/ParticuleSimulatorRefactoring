@@ -2,8 +2,6 @@ package etats;
 
 import particules.Particule;
 
-import java.util.List;
-
 public class EtatNormalFinDeVie extends EtatNormal {
 
     public EtatNormalFinDeVie(Particule particule) {
