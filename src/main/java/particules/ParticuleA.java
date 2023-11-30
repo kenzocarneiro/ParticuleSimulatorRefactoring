@@ -1,9 +1,11 @@
 package particules;
 
 public class ParticuleA extends Particule {
+    private final double vitesseOriginale = 10f;
+
     public ParticuleA(Champ c, double x, double y, double dC) {
         super(c, x, y, dC);
-        vitesseCourante = 10f;
+        vitesseCourante = vitesseOriginale;
         resetVitesse();
         passageACTIVE = 500;
         passageFINDEVIE = 1500;
@@ -11,8 +13,8 @@ public class ParticuleA extends Particule {
     }
 
     @Override
-    public void resetVitesse() {
-        this.prochaineVitesse = 10f;
+    public double getVitesseOriginale() {
+        return vitesseOriginale;
     }
 
     @Override

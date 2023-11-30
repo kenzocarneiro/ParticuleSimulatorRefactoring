@@ -309,5 +309,9 @@ public abstract class Particule {
         setEtat(etat.meurt());
     }
 
-    public abstract void resetVitesse();
+    public abstract double getVitesseOriginale();
+
+    public void resetVitesse() {
+        this.setProchaineVitesse(getVitesseOriginale());
+    }
 }
