@@ -18,6 +18,9 @@ public class VueParticule {
     }
 
     public void seDessine(Graphics g) {
+        if(! this.p.isVisible())
+            return;
+
         int x = (int) this.p.getX();
         int y = (int) this.p.getY();
         float coefColor = p.getEtat().getCoefColor();
