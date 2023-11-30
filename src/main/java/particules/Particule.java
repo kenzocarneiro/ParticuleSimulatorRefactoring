@@ -173,7 +173,7 @@ public abstract class Particule {
      * Methode appelee a chaque fois qu'un deplacement est fait
      */
     public void gestionCycle() {
-        etat = etat.gestionCycle();
+        setEtat(etat.gestionCycle());
     }
 
     public boolean isEnCollision() {
@@ -290,7 +290,7 @@ public abstract class Particule {
      * @return : retourne vrai si une collision multiple a eu lieu et faux sinon.
      */
     public boolean collisionMultiple(List<Particule> c) {
-        etat = etat.collisionMultiple(c);
+        setEtat(etat.collisionMultiple(c));
         return enCollision;
     }
 
@@ -301,12 +301,12 @@ public abstract class Particule {
      * Les nouvelles entitees eventuellement crees devront etre ajoutees dans le champ de particules.
      */
     public boolean collisionSimple(List<Particule> champ){
-        etat = etat.collisionSimple(champ);
+        setEtat(etat.collisionSimple(champ));
         return enCollision;
     }
 
     public void meurt() {
-        etat = etat.meurt();
+        setEtat(etat.meurt());
     }
 
     public abstract void resetVitesse();
