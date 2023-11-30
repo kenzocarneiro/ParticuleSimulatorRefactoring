@@ -18,7 +18,6 @@ public class EtatNormalActive extends EtatNormal {
 
     @Override
     public EtatParticule intervertirEtat() {
-        particule.augmentationVitesse();
         return new EtatExciteActive(particule);
     }
 }

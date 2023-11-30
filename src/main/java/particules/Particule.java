@@ -294,11 +294,6 @@ public abstract class Particule {
         return enCollision;
     }
 
-    public void augmentationVitesse() {
-        this.prochaineVitesse = this.vitesseCourante * 1.5;
-
-    }
-
     /**
      * Cette methode sera appelee lorsqu'une collision a lieu
      * entre plusieurs particules.

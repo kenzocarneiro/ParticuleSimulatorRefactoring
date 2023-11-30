@@ -17,7 +17,6 @@ public class EtatNormalFinDeVie extends EtatNormal {
 
     @Override
     public EtatParticule intervertirEtat() {
-        particule.augmentationVitesse();
         return new EtatExciteFinDeVie(particule);
     }
 }

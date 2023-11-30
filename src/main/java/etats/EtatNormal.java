@@ -5,6 +5,7 @@ import particules.Particule;
 public abstract class EtatNormal extends EtatParticule {
     public EtatNormal(Particule particule) {
         super(particule);
+        particule.resetVitesse();
     }
 
     @Override
