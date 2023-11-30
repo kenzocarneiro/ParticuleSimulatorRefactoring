@@ -46,7 +46,6 @@ public class VueDebug implements Observer {
 
     @Override
     public void updateEtat(EtatParticule oldEtat, EtatParticule newEtat){
-        System.out.println(oldEtat.getClass().getSimpleName() + " -> " + newEtat.getClass().getSimpleName());
         if(oldEtat.getClass().getSimpleName().contains("Normal")) nbNormal--;
         if(oldEtat.getClass().getSimpleName().contains("Excite")) nbExcite--;
         if(oldEtat.getClass().getSimpleName().contains("Jeune")) nbJeune--;

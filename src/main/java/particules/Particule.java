@@ -72,7 +72,7 @@ public abstract class Particule {
         this.y = y;
     }
 
-    public abstract void handleCollision(Particule p);
+    public abstract EtatParticule handleCollision(Particule p);
 
     public EtatParticule intervertirEtat() {
         return etat.intervertirEtat();
@@ -178,10 +178,6 @@ public abstract class Particule {
         setEtat(etat.gestionCycle());
     }
 
-    public boolean isEnCollision() {
-        return enCollision;
-    }
-
     public void setEnCollision(boolean enCollision) {
         this.enCollision = enCollision;
     }
@@ -191,28 +187,6 @@ public abstract class Particule {
     public static int getEpaisseur() {
         return epaisseur;
     }
-
-//    public void printIt() {
-//        switch (this.phaseDeLaParticule) {
-//            case JEUNE: {
-//                System.out.println("Particule jeune");
-//                break;
-//            }
-//            case ACTIVE: {
-//                System.out.println("Particule active");
-//                break;
-//            }
-//
-//            case FINDEVIE: {
-//                System.out.println("Particule Fin de vie");
-//                break;
-//            }
-//            case MORTE: {
-//                System.out.println("Particule morte");
-//                break;
-//            }
-//        }
-//    }
 
     /**
      * Calcul de la prochaine direction et vitesse. Dans le cas normal, aucun changement concernant les
@@ -225,7 +199,6 @@ public abstract class Particule {
         this.gestionCycle();
         if (!Particule.collisionsSimplesTraitees.contains(this)) {
             if (!this.collisionMultiple(this.champ.getParticules())) {
-
                 if (!this.collisionSimple(this.champ.getParticules())) {
                     prochaineVitesse = vitesseCourante;
                     prochaineDirection = directionCourante;
