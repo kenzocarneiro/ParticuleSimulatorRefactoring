@@ -81,6 +81,7 @@ public abstract class Particule {
     }
 
     public void setComportement(Comportement comportement) {
+        this.champ.notifyObserversComportement(this, comportement);
         this.comportement = comportement;
     }
 
