@@ -6,7 +6,7 @@ import particules.ParticuleB;
 
 import java.util.List;
 
-public class EtatNormalJeune extends EtatParticule {
+public class EtatNormalJeune extends EtatNormal {
 
     public EtatNormalJeune(Particule particule) {
         super(particule);
@@ -25,25 +25,4 @@ public class EtatNormalJeune extends EtatParticule {
         particule.augmentationVitesse();
         return new EtatExciteJeune(particule);
     }
-
-
-    @Override
-    public EtatParticule collisionMultiple(List<Particule> champ) {
-        List<Particule> voisins = particule.extraireVoisins(champ);
-
-        if (voisins.size() > 1) {
-
-            if (particule.getDirectionCourante() > Math.PI)
-                particule.setProchaineDirection(Math.PI - particule.getDirectionCourante());
-            else particule.setProchaineDirection(Math.PI + particule.getDirectionCourante());
-
-            particule.augmentationVitesse();
-            particule.setEnCollision(true);
-            return new EtatExciteJeune(particule);
-
-        }
-        particule.setEnCollision(false);
-        return this;
-    }
-
 }

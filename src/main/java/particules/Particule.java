@@ -16,7 +16,7 @@ public abstract class Particule {
      * cet ensemble. Ainsi au traitement de b, quand on verra que dans son voisinage direct, il y a a, on ne fera
      * pas de nouveau le traitement de la collision.
      */
-    public static List<Particule> collisionsSimplesTraitees = new ArrayList<Particule>();
+    public static List<Particule> collisionsSimplesTraitees = new ArrayList<>();
     /**
      * Position a l'ecran en x et y
      */
@@ -31,15 +31,6 @@ public abstract class Particule {
      * Direction exprimee en angle (en radians [0 : 2*PI[
      */
     protected double directionCourante;
-    /**
-     * Variable permettant de savoir dans quelle phase se situe la particule
-     */
-
-    protected Phase phaseDeLaParticule;
-    /**
-     * Variable permettant de savoir dans quel etat se situe la particule
-     */
-    protected Etat etatDeLaParticule;
 
     protected int nbTour = 0;
     protected double prochaineVitesse;
@@ -60,8 +51,6 @@ public abstract class Particule {
         this.y = y;
         directionCourante = dC;
         prochaineDirection = dC;
-        this.phaseDeLaParticule = Phase.JEUNE;
-        this.etatDeLaParticule = Etat.NORMAL;
         this.etat = new EtatNormalJeune(this);
         this.enCollision = false;
     }
@@ -108,10 +97,6 @@ public abstract class Particule {
         return passageMORT;
     }
 
-    public Etat getEtatDeLaParticule() {
-        return etatDeLaParticule;
-    }
-
     public static List<Particule> getCollisionsSimplesTraitees() {
         return collisionsSimplesTraitees;
     }
@@ -122,10 +107,6 @@ public abstract class Particule {
 
     public double getDirectionCourante() {
         return directionCourante;
-    }
-
-    public Phase getPhaseDeLaParticule() {
-        return phaseDeLaParticule;
     }
 
     public double getProchaineVitesse() {
@@ -154,14 +135,6 @@ public abstract class Particule {
 
     public void setDirectionCourante(double directionCourante) {
         this.directionCourante = directionCourante;
-    }
-
-    public void setPhaseDeLaParticule(Phase phaseDeLaParticule) {
-        this.phaseDeLaParticule = phaseDeLaParticule;
-    }
-
-    public void setEtatDeLaParticule(Etat etatDeLaParticule) {
-        this.etatDeLaParticule = etatDeLaParticule;
     }
 
     public void setNbTour(int nbTour) {
@@ -225,33 +198,32 @@ public abstract class Particule {
         this.enCollision = enCollision;
     }
 
-    public void printIt() {
-        switch (this.phaseDeLaParticule) {
-            case JEUNE: {
-                System.out.println("Particule jeune");
-                break;
-            }
-            case ACTIVE: {
-                System.out.println("Particule active");
-                break;
-            }
-
-            case FINDEVIE: {
-                System.out.println("Particule Fin de vie");
-                break;
-            }
-            case MORTE: {
-                System.out.println("Particule morte");
-                break;
-            }
-        }
-    }
+//    public void printIt() {
+//        switch (this.phaseDeLaParticule) {
+//            case JEUNE: {
+//                System.out.println("Particule jeune");
+//                break;
+//            }
+//            case ACTIVE: {
+//                System.out.println("Particule active");
+//                break;
+//            }
+//
+//            case FINDEVIE: {
+//                System.out.println("Particule Fin de vie");
+//                break;
+//            }
+//            case MORTE: {
+//                System.out.println("Particule morte");
+//                break;
+//            }
+//        }
+//    }
 
     /**
      * Calcul de la prochaine direction et vitesse. Dans le cas normal, aucun changement concernant les
      * deux champs. Dans le cas d'une collision simple ou multiples, la maj des champs est deleguee aux
      * methodes associees.
-     *
      * // @param champ : liste des particules presentes dans le champ de particules.
      */
     final public void calculeDeplacementAFaire() {
@@ -288,7 +260,7 @@ public abstract class Particule {
     }
 
     public boolean estMorte() {
-        return this.phaseDeLaParticule == Phase.MORTE;
+        return false;
     }
 
     /**
@@ -296,7 +268,7 @@ public abstract class Particule {
      * @return les particules presentes dans le champ d'action de la particule courante.
      */
     public List<Particule> extraireVoisins(List<Particule> c) {
-        List<Particule> result = new ArrayList<Particule>();
+        List<Particule> result = new ArrayList<>();
         for (Particule p : c) {
             if (p != this && util.DistancesEtDirections.distanceDepuisUnPoint(this.getX(), this.getY(), p.getX(), p.getY()) <= Particule.epaisseur) {
                 result.add(p);
@@ -309,11 +281,9 @@ public abstract class Particule {
      * Cette methode retourne l'ensemble des voisins avec lesquels la particule correcte en en collision exclusive.
      */
     public List<Particule> collisionSimpleBilateral(List<Particule> voisins) {
+        List<Particule> resultat = this.extraireVoisins(voisins);
+        List<Particule> aRetirer = new ArrayList<>();
 
-        List<Particule> resultat = new ArrayList<Particule>();
-        List<Particule> aRetirer = new ArrayList<Particule>();
-
-        resultat = this.extraireVoisins(voisins);
         for (Particule p : resultat) {
             if (p.extraireVoisins(voisins).size() > 1) {
                 aRetirer.add(p);
@@ -357,34 +327,10 @@ public abstract class Particule {
         return enCollision;
     }
 
+    public EtatParticule meurt() {
+        etat = etat.meurt();
+        return etat;
+    }
+
     public abstract void resetVitesse();
-
-
-    /**
-     * Par defaut, une particule est dans son etat normal.
-     * Apres collision dans un etat normal, une particule devient excitee.
-     * Elle peut revenir dans son etat normal :
-     * - soit apres un certain temps sans nouvelle collision dependant de la nature de
-     * la particule
-     * - soit en percutant une autre particule.
-     *
-     * @author YohanBoichut
-     */
-    protected enum Etat {NORMAL, EXCITE}
-
-
-    /**
-     * Permet de definir dans quelle phase de vie se situe une particule
-     * JEUNE : une particule jeune peut etre excitee apres collision avec une autre particule, mais si
-     * une nouvelle collision a lieu en etat d'excitation, alors elle redevient normale
-     * ACTIVE : une particule active se comporte comme une particule JEUNE sauf au moment d'une collision en etat
-     * excite avec une autre particule egalement en etat excite. A cet instant, un evenement special peut avoir lieu : generation
-     * d'une nouvelle particule, destruction simultanee des deux particules en collision. Cet evenement depend encore une fois de la
-     * nature des deux particules en collision.
-     * FINDEVIE : une telle particule reste toujours en etat normal meme apres collision. Elle disparait une fois que la periode de
-     * fin de vie est terminee.
-     *
-     * @author YohanBoichut
-     */
-    protected enum Phase {JEUNE, ACTIVE, FINDEVIE, MORTE}
 }

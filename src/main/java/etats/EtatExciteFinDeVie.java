@@ -2,7 +2,7 @@ package etats;
 
 import particules.Particule;
 
-public class EtatExciteFinDeVie extends EtatParticule {
+public class EtatExciteFinDeVie extends EtatExcite {
     public EtatExciteFinDeVie(Particule particule) {
         super(particule);
     }

@@ -14,7 +14,7 @@ public abstract class EtatParticule {
         return particule;
     }
 
-    public EtatParticule collisionSimple(List<Particule> c) {
+    public EtatParticule collisionSimple(List<Particule> champ) {
         List<Particule> enCollisionFrontale = particule.collisionSimpleBilateral(particule.getChamp().getParticules());
 
         if (enCollisionFrontale.size() != 1) {
@@ -44,20 +44,7 @@ public abstract class EtatParticule {
         return this;
     }
 
-    public EtatParticule collisionMultiple(List<Particule> champ) {
-        List<Particule> voisins = particule.extraireVoisins(champ);
-        if (voisins.size() > 1) {
-
-            if (particule.getDirectionCourante() > Math.PI) particule.setProchaineDirection(Math.PI - particule.getDirectionCourante());
-            else particule.setProchaineDirection(Math.PI + particule.getDirectionCourante());
-
-            particule.setProchaineVitesse(particule.getVitesseCourante());
-            particule.setEnCollision(true);
-            return this;
-        }
-        particule.setEnCollision(false);
-        return this;
-    }
+    public abstract EtatParticule collisionMultiple(List<Particule> champ);
 
     public EtatParticule intervertirEtat() {
         throw new RuntimeException("Operation Impossible");
@@ -70,4 +57,6 @@ public abstract class EtatParticule {
     public EtatParticule gestionCycle() {
         return this;
     }
+
+    public abstract EtatParticule meurt();
 }

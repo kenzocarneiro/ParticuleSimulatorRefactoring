@@ -4,7 +4,7 @@ import particules.Particule;
 
 import java.util.List;
 
-public class EtatExciteMorte extends EtatParticule {
+public class EtatExciteMorte extends EtatExcite {
     public EtatExciteMorte(Particule particule) {
         super(particule);
     }
