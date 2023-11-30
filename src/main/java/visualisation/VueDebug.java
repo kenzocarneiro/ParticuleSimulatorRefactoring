@@ -12,7 +12,7 @@ import java.util.List;
 
 public class VueDebug implements Observer {
     private boolean debug = false;
-    private final JLabel texte = new JLabel("Particules :");
+    private final JLabel texte = new JLabel();
     private final int[] particules = new int[ParticuleType.values().length];
     int nbNormal, nbExcite, nbJeune, nbActive, nbFinDeVie;
 
@@ -46,7 +46,6 @@ public class VueDebug implements Observer {
 
     @Override
     public void updateEtat(EtatParticule oldEtat, EtatParticule newEtat){
-        System.out.println(oldEtat.getClass().getSimpleName() + " -> " + newEtat.getClass().getSimpleName());
         if(oldEtat.getClass().getSimpleName().contains("Normal")) nbNormal--;
         if(oldEtat.getClass().getSimpleName().contains("Excite")) nbExcite--;
         if(oldEtat.getClass().getSimpleName().contains("Jeune")) nbJeune--;
@@ -62,19 +61,25 @@ public class VueDebug implements Observer {
     }
 
     private void majNbParticulesText() {
-        StringBuilder texte = new StringBuilder("Particules : ");
+        StringBuilder texte = new StringBuilder("<html>");
+        int somme = 0;
         for (int i = 0; i < ParticuleType.values().length; i++) {
             texte.append("Particules ").append(ParticuleType.values()[i]).append(" : ").append(particules[i]);
             if (i != ParticuleType.values().length - 1) texte.append(" , ");
+            somme += particules[i];
         }
         if (debug) {
-            texte.append(" | ");
+            texte.append(" => total : ").append(somme);
+            texte.append("<br/>");
             texte.append("Normal : ").append(nbNormal).append(" , ");
-            texte.append("Excite : ").append(nbExcite).append(" | ");
+            texte.append("Excite : ").append(nbExcite).append(" => total : ");
+            texte.append(nbNormal + nbExcite).append("<br/>");
             texte.append("Jeune : ").append(nbJeune).append(" , ");
             texte.append("Active : ").append(nbActive).append(" , ");
             texte.append("FinDeVie : ").append(nbFinDeVie);
+            texte.append(" => total : ").append(nbJeune + nbActive + nbFinDeVie);
         }
+        texte.append("</html>");
         this.texte.setText(texte.toString());
     }
 
