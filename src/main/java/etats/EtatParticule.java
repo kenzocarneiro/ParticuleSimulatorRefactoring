@@ -17,6 +17,11 @@ public abstract class EtatParticule {
     public abstract float getCoefColor();
 
     public EtatParticule collisionSimple(List<Particule> champ) {
+        if(!particule.isVisible()) {
+            particule.setEnCollision(false);
+            return this;
+        }
+
         List<Particule> enCollisionFrontale = particule.collisionSimpleBilateral(particule.getChamp().getParticules());
 
         if (enCollisionFrontale.size() != 1) {
@@ -33,6 +38,10 @@ public abstract class EtatParticule {
         }
 
         for (Particule p : enCollisionFrontale) {
+            if(!p.isVisible()) {
+                continue;
+            }
+            p.contamine(particule);
             if (p.getDirectionCourante() > Math.PI) p.setProchaineDirection(p.getDirectionCourante() - Math.PI);
             else p.setProchaineDirection(p.getDirectionCourante() + Math.PI);
             Particule.collisionsSimplesTraitees.add(p);
@@ -47,6 +56,10 @@ public abstract class EtatParticule {
     }
 
     public EtatParticule collisionMultiple(List<Particule> champ) {
+        if(!particule.isVisible()) {
+            particule.setEnCollision(false);
+            return this;
+        }
         List<Particule> voisins = particule.extraireVoisins(champ);
         if (voisins.size() > 1) {
 

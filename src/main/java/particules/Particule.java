@@ -88,6 +88,10 @@ public abstract class Particule {
         return getComportement().isVisible();
     }
 
+    public void contamine(Particule p) {
+        getComportement().contamine(p);
+    }
+
     public abstract EtatParticule handleCollision(Particule p);
 
     public EtatParticule intervertirEtat() {

@@ -10,4 +10,6 @@ public abstract class Comportement {
     }
 
     public abstract boolean isVisible();
+
+    public abstract void contamine(Particule p);
 }

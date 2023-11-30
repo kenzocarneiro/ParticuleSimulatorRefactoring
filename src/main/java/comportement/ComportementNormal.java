@@ -10,4 +10,8 @@ public class ComportementNormal extends Comportement {
     public boolean isVisible() {
         return true;
     }
+
+    public void contamine(Particule p) {
+    }
+
 }
