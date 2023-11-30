@@ -2,9 +2,20 @@ package visualisation;
 
 import controleur.Controleur;
 
-public class FabriqueVueChampDeParticules {
+public final class FabriqueVueChampDeParticules {
+    private static FabriqueVueChampDeParticules instance;
 
-        public static VueChampDeParticules creationVueChampDeParticules(Controleur c) {
-            return new VueChampDeParticules(c);
+    private FabriqueVueChampDeParticules() {
+    }
+
+    public static FabriqueVueChampDeParticules getInstance() {
+        if (instance == null) {
+            instance = new FabriqueVueChampDeParticules();
         }
+        return instance;
+    }
+
+    public VueChampDeParticules creationVueChampDeParticules(Controleur c) {
+        return new VueChampDeParticules(c);
+    }
 }

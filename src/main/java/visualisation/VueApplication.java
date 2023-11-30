@@ -50,7 +50,7 @@ public class VueApplication extends JFrame implements Observer {
         this.setJMenuBar(mb);
         this.add(texte, BorderLayout.SOUTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.affichageSimulation = FabriqueVueChampDeParticules.creationVueChampDeParticules(this.controleur);
+        this.affichageSimulation = FabriqueVueChampDeParticules.getInstance().creationVueChampDeParticules(this.controleur);
         this.getContentPane().add(this.affichageSimulation, BorderLayout.CENTER);
         this.pack();
         this.setVisible(true);

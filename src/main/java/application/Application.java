@@ -19,7 +19,7 @@ public class Application {
          * Le contrôleur après creation lance la simulation
          */
 
-        c = FabriqueControleur.creationControleur("Simulateur de particules", 640, 480);
+        c = FabriqueControleur.getInstance().creationControleur("Champ de particules", 800, 600);
         c.lancerSimulation();
 
     }

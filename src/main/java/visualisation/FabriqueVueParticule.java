@@ -1,10 +1,23 @@
 package visualisation;
 
+import particules.FabriqueParticule;
 import particules.Particule;
 
-public class FabriqueVueParticule {
+public final class FabriqueVueParticule {
 
-    public static VueParticule creationVueParticule(Particule p) {
+    private static FabriqueVueParticule instance;
+
+    private FabriqueVueParticule() {
+    }
+
+    public static FabriqueVueParticule getInstance() {
+        if (instance == null) {
+            instance = new FabriqueVueParticule();
+        }
+        return instance;
+    }
+
+    public VueParticule creationVueParticule(Particule p) {
         return new VueParticule(p);
     }
 }
