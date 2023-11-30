@@ -6,6 +6,7 @@ public abstract class EtatExcite extends EtatParticule {
     public EtatExcite(Particule particule) {
         super(particule);
         particule.setProchaineVitesse(particule.getVitesseOriginale() * 1.5);
+        particule.setVitesseCourante(particule.getProchaineVitesse());
     }
 
     @Override
@@ -15,7 +16,6 @@ public abstract class EtatExcite extends EtatParticule {
 
     @Override
     public EtatParticule excite() {
-        particule.setProchaineVitesse(particule.getVitesseCourante());
         return this;
     }
 }

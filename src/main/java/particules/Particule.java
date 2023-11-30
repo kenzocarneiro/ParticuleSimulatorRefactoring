@@ -265,24 +265,19 @@ public abstract class Particule {
     }
 
     /**
-     * Cette methode retourne l'ensemble des voisins avec lesquels la particule correcte en en collision exclusive.
+     * Cette methode retourne l'ensemble des voisins avec lesquels la particule correcte en collision exclusive.
      */
     public List<Particule> collisionSimpleBilateral(List<Particule> voisins) {
         List<Particule> resultat = this.extraireVoisins(voisins);
         List<Particule> aRetirer = new ArrayList<>();
 
         for (Particule p : resultat) {
-            if (p.extraireVoisins(voisins).size() > 1) {
+            if (p.extraireVoisins(voisins).size() > 1 || Particule.collisionsSimplesTraitees.contains(p)) {
                 aRetirer.add(p);
-            } else {
-                if (Particule.collisionsSimplesTraitees.contains(p)) {
-                    aRetirer.add(p);
-                }
             }
         }
         resultat.removeAll(aRetirer);
         return resultat;
-
     }
 
     /**
@@ -317,6 +312,7 @@ public abstract class Particule {
 
     public void resetVitesse() {
         this.setProchaineVitesse(getVitesseOriginale());
+        this.setVitesseCourante(getVitesseOriginale());
     }
 
     public abstract Color getCouleur();
