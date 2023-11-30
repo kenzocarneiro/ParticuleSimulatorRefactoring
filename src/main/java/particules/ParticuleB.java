@@ -18,7 +18,7 @@ public class ParticuleB extends Particule {
 
     public void handleCollision(Particule p) {
         if (p.getClass() == ParticuleB.class) {
-            this.champ.naissance(1, this.x, this.y);
+            this.champ.naissance(ParticuleType.B, this.x, this.y);
             p.meurt();
             this.meurt();
             this.champ.removeParticule(this);
@@ -28,7 +28,7 @@ public class ParticuleB extends Particule {
         if (p.getClass() == ParticuleA.class) {
             this.resetVitesse();
             p.resetVitesse();
-            this.champ.naissance(0, this.x, this.y);
+            this.champ.naissance(ParticuleType.A, this.x, this.y);
         }
     }
 }

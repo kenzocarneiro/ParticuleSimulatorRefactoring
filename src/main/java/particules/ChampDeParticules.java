@@ -7,7 +7,6 @@ import visualisation.Sujet;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 
 public class ChampDeParticules implements Champ, Sujet {
 
@@ -28,7 +27,7 @@ public class ChampDeParticules implements Champ, Sujet {
         this.aEnvoyerObservateur = new ArrayList<>();
     }
 
-    public ChampDeParticules(int largeur, int longeur, int nb, int typeParticule) {
+    public ChampDeParticules(int largeur, int longeur, int nb, ParticuleType typeParticule) {
         this.largeur = largeur;
         this.hauteur = longeur;
         this.population = new ArrayList<>();
@@ -40,12 +39,12 @@ public class ChampDeParticules implements Champ, Sujet {
         this.controleur = c;
     }
 
-    public void ajouterUnePopulation(int type, int nb) {
+    public void ajouterUnePopulation(ParticuleType type, int nb) {
         this.nouvelleGeneration.addAll(this.generationParticule(nb, type));
     }
 
     @Override
-    public void naissance(int type, double x, double y) {
+    public void naissance(ParticuleType type, double x, double y) {
         this.nouvelleGeneration.add(FabriqueParticule.creationParticuleType(x, y, type, this));
         this.controleur.populationEtendueInVivo();
     }
@@ -60,32 +59,8 @@ public class ChampDeParticules implements Champ, Sujet {
         return hauteur;
     }
 
-    private ArrayList<Particule> generationParticule(int nb, int typeParticule) {
-        ArrayList<Particule> nouvelleGeneration = new ArrayList<>();
-        Random generateur = new Random();
-        int epaisseur = 0;
-
-        switch (typeParticule) {
-            case 0: {
-                epaisseur = ParticuleA.epaisseur;
-                break;
-            }
-
-            case 1: {
-                epaisseur = ParticuleB.epaisseur;
-                break;
-            }
-        }
-
-        for (int i = 0; i < nb; i++) {
-            int x = (int) (generateur.nextFloat() * largeur);
-            if (x > largeur - epaisseur) x -= epaisseur;
-            int y = (int) (generateur.nextFloat() * hauteur);
-            if (y > hauteur - epaisseur) y -= epaisseur;
-
-            nouvelleGeneration.add(FabriqueParticule.creationParticuleType(x, y, typeParticule, this));
-        }
-        return nouvelleGeneration;
+    private ArrayList<Particule> generationParticule(int nb, ParticuleType typeParticule) {
+        return FabriqueParticule.generationParticule(nb, getLargeur(), getHauteur(), typeParticule, this);
     }
 
     @Override

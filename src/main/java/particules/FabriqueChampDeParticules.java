@@ -16,7 +16,7 @@ public class FabriqueChampDeParticules {
         return new ChampDeParticules(largeur, hauteur);
     }
 
-    public ChampDeParticules creationChampDeParticules(int largeur, int hauteur, int nbParticules, int typeParticule) {
+    public ChampDeParticules creationChampDeParticules(int largeur, int hauteur, int nbParticules, ParticuleType typeParticule) {
         return new ChampDeParticules(largeur, hauteur, nbParticules, typeParticule);
     }
 

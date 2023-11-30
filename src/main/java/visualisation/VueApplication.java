@@ -2,6 +2,7 @@ package visualisation;
 
 import controleur.Controleur;
 import particules.Particule;
+import particules.ParticuleType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,7 @@ public class VueApplication extends JFrame implements Observer {
     private static final String menu = "Insertion particules";
     private static final String[] libelleTypesParticules = {"Particules A", "Particules B"};
     private int[] particules = new int[libelleTypesParticules.length];
-    private static final int[] typesParticules = {0, 1};
+    private static final ParticuleType[] typesParticules = {ParticuleType.A, ParticuleType.B};
     private final Controleur controleur;
     private final JMenu m;
     private JOptionPane nbParticules;

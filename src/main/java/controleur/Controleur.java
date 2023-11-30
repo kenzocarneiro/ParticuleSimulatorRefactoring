@@ -3,6 +3,7 @@ package controleur;
 import particules.Champ;
 import particules.FabriqueChampDeParticules;
 import particules.Particule;
+import particules.ParticuleType;
 import simulation.FabriqueSimulateur;
 import simulation.Simulateur;
 import visualisation.FabriqueVueApplication;
@@ -37,7 +38,7 @@ public class Controleur {
      * @param nb      : nombre de particule a creer initialement
      * @param type    : type des particules a creer initialement
      */
-    public Controleur(String lib, int largeur, int hauteur, int nb, int type) {
+    public Controleur(String lib, int largeur, int hauteur, int nb, ParticuleType type) {
         champParticules = FabriqueChampDeParticules.getInstance().creationChampDeParticules(largeur, hauteur, nb, type);
         this.sim = FabriqueSimulateur.creationSimulateur(30, this);
         this.application = FabriqueVueApplication.getInstance().creationVueApplication(lib, this);
@@ -75,7 +76,7 @@ public class Controleur {
      * @param nb   : nombre de particules a creer
      * @param type : type de particules a creer
      */
-    public void ajouterPopulation(int nb, int type) {
+    public void ajouterPopulation(int nb, ParticuleType type) {
         this.champParticules.ajouterUnePopulation(type, nb);
         this.champParticules.updatePopulation();
         this.application.majParticulesADessiner();
