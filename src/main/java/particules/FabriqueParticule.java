@@ -30,8 +30,7 @@ public abstract class FabriqueParticule {
     public static ArrayList<Particule> generationParticule(int nb, int largeur, int hauteur, ParticuleType typeParticule, Champ champ) {
         ArrayList<Particule> nouvelleGeneration = new ArrayList<>();
         Random generateur = new Random();
-        int epaisseur = 0;
-        epaisseur = Particule.getEpaisseur();
+        int epaisseur = Particule.getEpaisseur();
 
         for (int i = 0; i < nb; i++) {
             int x = (int) (generateur.nextFloat() * largeur);

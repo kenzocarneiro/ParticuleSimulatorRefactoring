@@ -2,8 +2,6 @@ package visualisation;
 
 import etats.EtatExcite;
 import particules.Particule;
-import particules.ParticuleA;
-import particules.ParticuleB;
 
 import java.awt.*;
 

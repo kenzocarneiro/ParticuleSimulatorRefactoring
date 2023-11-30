@@ -185,6 +185,8 @@ public abstract class Particule {
         this.enCollision = enCollision;
     }
 
+    public abstract ParticuleType getType();
+
     public static int getEpaisseur() {
         return epaisseur;
     }
