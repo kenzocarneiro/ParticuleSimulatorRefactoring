@@ -3,6 +3,7 @@ package particules;
 import etats.EtatNormalJeune;
 import etats.EtatParticule;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -314,4 +315,6 @@ public abstract class Particule {
     public void resetVitesse() {
         this.setProchaineVitesse(getVitesseOriginale());
     }
+
+    public abstract Color getCouleur();
 }

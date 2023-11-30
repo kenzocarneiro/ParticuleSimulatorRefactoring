@@ -3,9 +3,13 @@ package etats;
 import particules.Particule;
 
 public class EtatNormalJeune extends EtatNormal {
-
+    private float coefColor = 1.0f;
     public EtatNormalJeune(Particule particule) {
         super(particule);
+    }
+
+    public float getCoefColor() {
+        return coefColor;
     }
 
     @Override
