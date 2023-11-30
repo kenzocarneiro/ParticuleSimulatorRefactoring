@@ -49,8 +49,8 @@ public abstract class Particule {
         this.champ = c;
         this.x = x;
         this.y = y;
-        directionCourante = dC;
-        prochaineDirection = dC;
+        this.directionCourante = dC;
+        this.prochaineDirection = dC;
         this.etat = new EtatNormalJeune(this);
         this.enCollision = false;
     }
@@ -174,20 +174,6 @@ public abstract class Particule {
      */
     public void gestionCycle() {
         etat = etat.gestionCycle();
-
-//        if (this.nbTour == this.passageACTIVE) {
-//            this.phaseDeLaParticule = Phase.ACTIVE;
-//        }
-//
-//        if (this.nbTour == this.passageFINDEVIE) {
-//            this.phaseDeLaParticule = Phase.FINDEVIE;
-//        }
-//
-//
-//        if (this.nbTour == this.passageMORT) {
-//            this.phaseDeLaParticule = Phase.MORTE;
-//        }
-
     }
 
     public boolean isEnCollision() {
@@ -241,11 +227,8 @@ public abstract class Particule {
     }
 
     public void effectueDeplacement() {
-
-
         vitesseCourante = prochaineVitesse;
         directionCourante = prochaineDirection;
-
 
         x += (int) (vitesseCourante * Math.cos(directionCourante));
         y += (int) (vitesseCourante * Math.sin(directionCourante));
@@ -327,9 +310,8 @@ public abstract class Particule {
         return enCollision;
     }
 
-    public EtatParticule meurt() {
+    public void meurt() {
         etat = etat.meurt();
-        return etat;
     }
 
     public abstract void resetVitesse();

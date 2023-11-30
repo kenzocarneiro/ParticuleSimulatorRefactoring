@@ -12,16 +12,12 @@ public class Application {
     }
 
     public static void main(String[] args) {
-
-
         /*
          * Création du contrôleur en lui précisant les dimensions du champ de particules
          * Le contrôleur après creation lance la simulation
          */
-
         c = FabriqueControleur.getInstance().creationControleur("Champ de particules", 800, 600);
         c.lancerSimulation();
-
     }
 
 }

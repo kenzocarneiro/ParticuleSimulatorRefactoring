@@ -6,10 +6,9 @@ public class ParticuleA extends Particule {
         super(c, x, y, dC);
         vitesseCourante = 10f;
         prochaineVitesse = 10f;
-        this.passageACTIVE = 500;
-        this.passageFINDEVIE = 1500;
-        this.passageMORT = 2000;
-
+        passageACTIVE = 500;
+        passageFINDEVIE = 1500;
+        passageMORT = 2000;
     }
 
     public void handleCollision(Particule p) {

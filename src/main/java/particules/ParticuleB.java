@@ -5,10 +5,10 @@ public class ParticuleB extends Particule {
     public ParticuleB(Champ c, double x, double y, double dC) {
         super(c, x, y, dC);
         vitesseCourante = 30f;
-        this.prochaineVitesse = 30f;
-        this.passageACTIVE = 100;
-        this.passageFINDEVIE = 300;
-        this.passageMORT = 700;
+        prochaineVitesse = 30f;
+        passageACTIVE = 100;
+        passageFINDEVIE = 300;
+        passageMORT = 700;
     }
 
     public void resetVitesse() {
