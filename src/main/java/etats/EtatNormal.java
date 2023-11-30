@@ -30,6 +30,6 @@ public abstract class EtatNormal extends EtatParticule {
 
     @Override
     public EtatParticule meurt() {
-        return new EtatExciteMorte(this.particule);
+        return new EtatNormalMorte(this.particule);
     }
 }
