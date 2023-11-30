@@ -13,6 +13,7 @@ public class EtatExciteMorte extends EtatExcite {
         return new EtatNormalMorte(particule);
     }
 
+    @Override
     public boolean estMorte() {
         return true;
     }
