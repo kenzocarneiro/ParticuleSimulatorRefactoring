@@ -14,7 +14,7 @@ public class VueApplication extends JFrame{
     private static final String menu = "Insertion particules";
     private final Controleur controleur;
     private final JMenu m;
-    private JOptionPane nbParticules;
+    private final JOptionPane nbParticules;
     private final VueChampDeParticules affichageSimulation;
     private final VueDebug vueDebug;
 
@@ -37,7 +37,7 @@ public class VueApplication extends JFrame{
         mb.add(this.vueDebug.getMenuDebug());
 
         this.setJMenuBar(mb);
-        this.add(this.vueDebug.getText(), BorderLayout.SOUTH);
+        this.add(this.vueDebug.getText(), BorderLayout.NORTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.affichageSimulation = FabriqueVueChampDeParticules.getInstance().creationVueChampDeParticules(this.controleur);
         this.getContentPane().add(this.affichageSimulation, BorderLayout.CENTER);
