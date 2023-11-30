@@ -9,7 +9,6 @@ public class EtatExciteMorte extends EtatExcite {
 
     @Override
     public EtatParticule intervertirEtat() {
-        particule.resetVitesse();
         return new EtatNormalMorte(particule);
     }
 

@@ -1,35 +1,37 @@
 package particules;
 
 public class ParticuleA extends Particule {
+    private final double vitesseOriginale = 10f;
 
     public ParticuleA(Champ c, double x, double y, double dC) {
         super(c, x, y, dC);
-        vitesseCourante = 10f;
-        prochaineVitesse = 10f;
-        this.passageACTIVE = 500;
-        this.passageFINDEVIE = 1500;
-        this.passageMORT = 2000;
-
+        vitesseCourante = vitesseOriginale;
+        resetVitesse();
+        passageACTIVE = 500;
+        passageFINDEVIE = 1500;
+        passageMORT = 2000;
     }
 
+    @Override
+    public double getVitesseOriginale() {
+        return vitesseOriginale;
+    }
+
+    @Override
     public void handleCollision(Particule p) {
+        // A collides with A (and both are Active and Excited)
         if (p.getClass() == ParticuleA.class) {
-            this.champ.naissance(0, this.x, this.y);
             p.meurt();
             this.meurt();
             this.champ.removeParticule(this);
             this.champ.removeParticule(p);
         }
 
+        // A collides with B (and both are Active and Excited)
         if (p.getClass() == ParticuleB.class) {
-            this.resetVitesse();
-            p.resetVitesse();
-            this.champ.naissance(0, this.x, this.y);
+            this.intervertirEtat();
+            p.intervertirEtat();
+            this.champ.naissance(ParticuleType.A, this.x, this.y);
         }
-    }
-
-    @Override
-    public void resetVitesse() {
-        this.prochaineVitesse = 10f;
     }
 }

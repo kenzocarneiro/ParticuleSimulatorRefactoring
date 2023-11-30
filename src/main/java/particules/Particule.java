@@ -49,8 +49,8 @@ public abstract class Particule {
         this.champ = c;
         this.x = x;
         this.y = y;
-        directionCourante = dC;
-        prochaineDirection = dC;
+        this.directionCourante = dC;
+        this.prochaineDirection = dC;
         this.etat = new EtatNormalJeune(this);
         this.enCollision = false;
     }
@@ -77,7 +77,7 @@ public abstract class Particule {
         return etat.intervertirEtat();
     }
 
-    public boolean isActiveAndExcited() {
+    public boolean estExciteEtActive() {
         return etat.estExciteEtActive();
     }
 
@@ -173,21 +173,7 @@ public abstract class Particule {
      * Methode appelee a chaque fois qu'un deplacement est fait
      */
     public void gestionCycle() {
-        etat = etat.gestionCycle();
-
-//        if (this.nbTour == this.passageACTIVE) {
-//            this.phaseDeLaParticule = Phase.ACTIVE;
-//        }
-//
-//        if (this.nbTour == this.passageFINDEVIE) {
-//            this.phaseDeLaParticule = Phase.FINDEVIE;
-//        }
-//
-//
-//        if (this.nbTour == this.passageMORT) {
-//            this.phaseDeLaParticule = Phase.MORTE;
-//        }
-
+        setEtat(etat.gestionCycle());
     }
 
     public boolean isEnCollision() {
@@ -241,11 +227,8 @@ public abstract class Particule {
     }
 
     public void effectueDeplacement() {
-
-
         vitesseCourante = prochaineVitesse;
         directionCourante = prochaineDirection;
-
 
         x += (int) (vitesseCourante * Math.cos(directionCourante));
         y += (int) (vitesseCourante * Math.sin(directionCourante));
@@ -307,13 +290,8 @@ public abstract class Particule {
      * @return : retourne vrai si une collision multiple a eu lieu et faux sinon.
      */
     public boolean collisionMultiple(List<Particule> c) {
-        etat = etat.collisionMultiple(c);
+        setEtat(etat.collisionMultiple(c));
         return enCollision;
-    }
-
-    public void augmentationVitesse() {
-        this.prochaineVitesse = this.vitesseCourante * 1.5;
-
     }
 
     /**
@@ -323,14 +301,17 @@ public abstract class Particule {
      * Les nouvelles entitees eventuellement crees devront etre ajoutees dans le champ de particules.
      */
     public boolean collisionSimple(List<Particule> champ){
-        etat = etat.collisionSimple(champ);
+        setEtat(etat.collisionSimple(champ));
         return enCollision;
     }
 
-    public EtatParticule meurt() {
-        etat = etat.meurt();
-        return etat;
+    public void meurt() {
+        setEtat(etat.meurt());
     }
 
-    public abstract void resetVitesse();
+    public abstract double getVitesseOriginale();
+
+    public void resetVitesse() {
+        this.setProchaineVitesse(getVitesseOriginale());
+    }
 }

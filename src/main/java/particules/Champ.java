@@ -16,13 +16,13 @@ public interface Champ extends Sujet {
 
     void removeParticule(Particule p);
 
-    void ajouterUnePopulation(int type, int nb);
+    void ajouterUnePopulation(ParticuleType type, int nb);
 
     void supprimerLesParticulesDecedees();
 
     void setControleur(Controleur c);
 
-    void naissance(int i, double x, double y);
+    void naissance(ParticuleType type, double x, double y);
 
     void updatePopulation();
 
