@@ -1,5 +1,6 @@
 package visualisation;
 
+import comportement.Comportement;
 import etats.EtatParticule;
 import particules.Particule;
 
@@ -9,4 +10,5 @@ public interface Sujet {
     void notifyObserversRemove();
     void notifyObserversAdd();
     void notifyObserversEtat(Particule p, EtatParticule etat);
+    void notifyObserversComportement(Particule p, Comportement comportement);
 }

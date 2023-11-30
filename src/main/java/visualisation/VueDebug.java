@@ -1,5 +1,8 @@
 package visualisation;
 
+import comportement.Comportement;
+import comportement.ComportementEpileptique;
+import comportement.ComportementNormal;
 import controleur.Controleur;
 import etats.EtatExciteActive;
 import etats.EtatNormalActive;
@@ -16,7 +19,7 @@ public class VueDebug implements Observer {
     private boolean debug = false;
     private final JLabel texte = new JLabel();
     private final int[] particules = new int[ParticuleType.values().length];
-    int nbNormal, nbExcite, nbJeune, nbActive, nbFinDeVie;
+    int nbNormal, nbExcite, nbJeune, nbActive, nbFinDeVie, nbComportementNormal, nbComportementEpileptique;
 
     @Override
     public void updateRemove(List<Particule> p) {
@@ -28,6 +31,9 @@ public class VueDebug implements Observer {
             }
             if (particule.getEtat().getClass().getSimpleName().contains("Normal")) nbNormal--;
             if (particule.getEtat().getClass().getSimpleName().contains("Excite")) nbExcite--;
+            if (particule.getComportement().getClass().getSimpleName().contains("Normal")) nbComportementNormal--;
+            if (particule.getComportement().getClass().getSimpleName().contains("Epileptique"))
+                nbComportementEpileptique--;
         }
         majNbParticulesText();
     }
@@ -62,6 +68,18 @@ public class VueDebug implements Observer {
         majNbParticulesText();
     }
 
+    @Override
+    public void updateComportement(Comportement oldComportement, Comportement newComportement) {
+        if (oldComportement != null) {
+            if (oldComportement.getClass().getSimpleName().contains("Normal")) nbComportementNormal--;
+            if (oldComportement.getClass().getSimpleName().contains("Epileptique")) nbComportementEpileptique--;
+        }
+
+        if (newComportement.getClass().getSimpleName().contains("Normal")) nbComportementNormal++;
+        if (newComportement.getClass().getSimpleName().contains("Epileptique")) nbComportementEpileptique++;
+        majNbParticulesText();
+    }
+
     private void majNbParticulesText() {
         StringBuilder texte = new StringBuilder("<html>");
         int somme = 0;
@@ -79,7 +97,10 @@ public class VueDebug implements Observer {
             texte.append("Jeune : ").append(nbJeune).append(" , ");
             texte.append("Active : ").append(nbActive).append(" , ");
             texte.append("FinDeVie : ").append(nbFinDeVie);
-            texte.append(" => total : ").append(nbJeune + nbActive + nbFinDeVie);
+            texte.append(" => total : ").append(nbJeune + nbActive + nbFinDeVie).append("<br/>");
+            texte.append("CompNormal : ").append(nbComportementNormal).append(" , ");
+            texte.append("CompEpileptique : ").append(nbComportementEpileptique);
+            texte.append(" => total : ").append(nbComportementNormal + nbComportementEpileptique).append("<br/>");
         }
         texte.append("</html>");
         this.texte.setText(texte.toString());
@@ -105,10 +126,15 @@ public class VueDebug implements Observer {
                 int type1 = jop.showOptionDialog(null, "Type de 1", "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"A", "B", "C"}, null);
 //                int etat = jop.showOptionDialog(null, "Cycle de vie de 1", "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Jeune", "Active", "FinDeVie"}, null);
                 int excite = jop.showOptionDialog(null, "Etat de 1", "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Normal", "Excite"}, null);
+                int epileptique = jop.showOptionDialog(null, "1 epileptique ?", "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Oui", "Non"}, null);
 
                 int type2 = jop.showOptionDialog(null, "Type de 2", "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"A", "B", "C"}, null);
 //                int etat2 = jop.showOptionDialog(null, "Cycle de vie de 2", "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Jeune", "Active", "FinDeVie"}, null);
                 int excite2 = jop.showOptionDialog(null, "Etat de 2", "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Normal", "Excite"}, null);
+                int epileptique2 = jop.showOptionDialog(null, "2 epileptique ?", "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Oui", "Non"}, null);
+
+                if (type1 == -1 || type2 == -1 || excite == -1 || excite2 == -1 || epileptique == -1 || epileptique2 == -1)
+                    return;
 
                 ParticuleType typeParticule1 = ParticuleType.values()[type1];
                 ParticuleType typeParticule2 = ParticuleType.values()[type2];
@@ -142,6 +168,8 @@ public class VueDebug implements Observer {
                 if (excite == 1) p1.setEtat(new EtatExciteActive(p1));
                 if (excite2 == 1) p2.setEtat(new EtatExciteActive(p2));
 
+                p1.setComportement((epileptique == 0) ? new ComportementEpileptique(p1) : new ComportementNormal(p1));
+                p2.setComportement((epileptique2 == 0) ? new ComportementEpileptique(p2) : new ComportementNormal(p2));
 
                 controleur.getchampParticules().addParticule(p1);
                 controleur.getchampParticules().addParticule(p2);
