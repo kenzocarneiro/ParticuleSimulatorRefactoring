@@ -2,8 +2,6 @@ package particules;
 
 public abstract class FabriqueParticule {
 
-        public static Particule creationParticule() {
-            return null;
-        }
+    public abstract Particule creationParticule(Champ c, double x, double y, double dC);
 }
 

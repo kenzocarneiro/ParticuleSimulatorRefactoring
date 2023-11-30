@@ -1,12 +1,19 @@
 package controleur;
 
-public class FabriqueControleur {
+public final class FabriqueControleur {
+    private static FabriqueControleur instance;
 
-        public static Controleur creationControleur(String lib, int largeur, int hauteur, int nb, int type) {
-            return new Controleur(lib, largeur, hauteur, nb, type);
-        }
+    private FabriqueControleur() {
+    }
 
-        public static Controleur creationControleur(String lib, int largeur, int hauteur) {
-            return new Controleur(lib, largeur, hauteur);
+    public static FabriqueControleur getInstance() {
+        if (instance == null) {
+            instance = new FabriqueControleur();
         }
+        return instance;
+    }
+
+    public Controleur creationControleur(String lib, int largeur, int hauteur) {
+        return new Controleur(lib, largeur, hauteur);
+    }
 }
