@@ -14,6 +14,8 @@ public interface Champ extends Sujet {
 
     List<Particule> getParticules();
 
+    void removeParticule(Particule p);
+
     void ajouterUnePopulation(int type, int nb);
 
     void supprimerLesParticulesDecedees();

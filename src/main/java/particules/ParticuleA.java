@@ -20,8 +20,8 @@ public class ParticuleA extends Particule {
             this.champ.naissance(0, this.x, this.y);
             p.phaseDeLaParticule = Phase.MORTE;
             this.phaseDeLaParticule = Phase.MORTE;
-            this.champ.getParticules().remove(this);
-            this.champ.getParticules().remove(p);
+            this.champ.removeParticule(this);
+            this.champ.removeParticule(p);
         }
 
         if (p.getClass() == ParticuleB.class) {

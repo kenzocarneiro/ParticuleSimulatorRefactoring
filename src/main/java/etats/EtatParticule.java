@@ -68,6 +68,6 @@ public abstract class EtatParticule {
     }
 
     public EtatParticule gestionCycle() {
-        throw new RuntimeException("Operation Impossible");
+        return this;
     }
 }
