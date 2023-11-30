@@ -185,6 +185,8 @@ public abstract class Particule {
         this.enCollision = enCollision;
     }
 
+    public abstract ParticuleType getType();
+
 //    public void printIt() {
 //        switch (this.phaseDeLaParticule) {
 //            case JEUNE: {

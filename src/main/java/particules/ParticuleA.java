@@ -42,4 +42,8 @@ public class ParticuleA extends Particule {
             this.champ.naissance(ParticuleType.A, this.x, this.y);
         }
     }
+
+    public ParticuleType getType() {
+        return ParticuleType.A;
+    }
 }
