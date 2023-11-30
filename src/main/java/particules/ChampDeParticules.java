@@ -1,6 +1,7 @@
 package particules;
 
 import controleur.Controleur;
+import etats.EtatParticule;
 import visualisation.Observer;
 import visualisation.Sujet;
 
@@ -84,18 +85,14 @@ public class ChampDeParticules implements Champ, Sujet {
         }
 
         this.population.removeAll(particulesMortes);
-        if (!particulesMortes.isEmpty()){
-            this.aEnvoyerObservateur.addAll(particulesMortes);
-            notifyObserversRemove();
-        }
+        this.aEnvoyerObservateur.addAll(particulesMortes);
+        notifyObserversRemove();
     }
 
     public void updatePopulation() {
         this.population.addAll(this.nouvelleGeneration);
-        if (!this.nouvelleGeneration.isEmpty()){
-            this.aEnvoyerObservateur.addAll(this.nouvelleGeneration);
-            notifyObserversAdd();
-        }
+        this.aEnvoyerObservateur.addAll(this.nouvelleGeneration);
+        notifyObserversAdd();
         this.nouvelleGeneration = new ArrayList<>();
     }
 
@@ -124,7 +121,11 @@ public class ChampDeParticules implements Champ, Sujet {
         }
         this.aEnvoyerObservateur = new ArrayList<>();
     }
-}
 
-	
-	
+    @Override
+    public void notifyObserversEtat(Particule p, EtatParticule etat) {
+        for (Observer o : this.observers) {
+            o.updateEtat(p.getEtat(), etat);
+        }
+    }
+}
