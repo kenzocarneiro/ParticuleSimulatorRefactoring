@@ -34,7 +34,7 @@ public abstract class EtatParticule {
             if (p.getDirectionCourante() > Math.PI) p.setProchaineDirection(p.getDirectionCourante() - Math.PI);
             else p.setProchaineDirection(p.getDirectionCourante() + Math.PI);
             Particule.collisionsSimplesTraitees.add(p);
-            if (p.isActiveAndExcited() && this.isActiveAndExcited()) {
+            if (p.isActiveAndExcited() && this.estExciteEtActive()) {
                 particule.handleCollision(p);
             } else {
                 p.setEtat(p.intervertirEtat());
@@ -50,7 +50,11 @@ public abstract class EtatParticule {
         throw new RuntimeException("Operation Impossible");
     }
 
-    public boolean isActiveAndExcited() {
+    public boolean estExciteEtActive() {
+        return false;
+    }
+
+    public boolean estMorte() {
         return false;
     }
 

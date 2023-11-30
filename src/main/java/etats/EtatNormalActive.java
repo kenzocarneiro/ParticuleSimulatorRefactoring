@@ -2,8 +2,6 @@ package etats;
 
 import particules.Particule;
 
-import java.util.List;
-
 public class EtatNormalActive extends EtatNormal {
 
     public EtatNormalActive(Particule particule) {
