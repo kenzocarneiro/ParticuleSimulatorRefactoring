@@ -1,5 +1,8 @@
 package visualisation;
 
+import comportement.Comportement;
+import comportement.ComportementEpileptique;
+import comportement.ComportementNormal;
 import controleur.Controleur;
 import etats.EtatExciteActive;
 import etats.EtatNormalActive;
@@ -17,7 +20,7 @@ public class VueDebug implements Observer {
     private boolean debug = false;
     private final JLabel texte = new JLabel();
     private final int[] particules = new int[ParticuleType.values().length];
-    int nbNormal, nbExcite, nbJeune, nbActive, nbFinDeVie;
+    int nbNormal, nbExcite, nbJeune, nbActive, nbFinDeVie, nbComportementNormal, nbComportementEpileptique;
 
     @Override
     public void updateRemove(List<Particule> p) {
@@ -29,6 +32,9 @@ public class VueDebug implements Observer {
             }
             if (particule.getEtat().getClass().getSimpleName().contains("Normal")) nbNormal--;
             if (particule.getEtat().getClass().getSimpleName().contains("Excite")) nbExcite--;
+            if (particule.getComportement().getClass().getSimpleName().contains("Normal")) nbComportementNormal--;
+            if (particule.getComportement().getClass().getSimpleName().contains("Epileptique"))
+                nbComportementEpileptique--;
         }
         majNbParticulesText();
     }
@@ -43,6 +49,8 @@ public class VueDebug implements Observer {
             }
             nbNormal++;
             nbJeune++;
+            if (particule.getComportement() instanceof ComportementNormal) nbComportementNormal++;
+            if (particule.getComportement() instanceof ComportementEpileptique) nbComportementEpileptique++;
         }
         majNbParticulesText();
     }
@@ -63,6 +71,18 @@ public class VueDebug implements Observer {
         majNbParticulesText();
     }
 
+    @Override
+    public void updateComportement(Comportement oldComportement, Comportement newComportement) {
+        if (oldComportement != null) {
+            if (oldComportement instanceof ComportementNormal) nbComportementNormal--;
+            if (oldComportement instanceof ComportementEpileptique) nbComportementEpileptique--;
+        }
+
+        if (newComportement instanceof ComportementNormal) nbComportementNormal++;
+        if (newComportement instanceof ComportementEpileptique) nbComportementEpileptique++;
+        majNbParticulesText();
+    }
+
     private void majNbParticulesText() {
         StringBuilder texte = new StringBuilder("<html>");
         int somme = 0;
@@ -80,7 +100,10 @@ public class VueDebug implements Observer {
             texte.append("Jeune : ").append(nbJeune).append(" , ");
             texte.append("Active : ").append(nbActive).append(" , ");
             texte.append("FinDeVie : ").append(nbFinDeVie);
-            texte.append(" => total : ").append(nbJeune + nbActive + nbFinDeVie);
+            texte.append(" => total : ").append(nbJeune + nbActive + nbFinDeVie).append("<br/>");
+            texte.append("CompNormal : ").append(nbComportementNormal).append(" , ");
+            texte.append("CompEpileptique : ").append(nbComportementEpileptique);
+            texte.append(" => total : ").append(nbComportementNormal + nbComportementEpileptique).append("<br/>");
         }
         texte.append("</html>");
         this.texte.setText(texte.toString());

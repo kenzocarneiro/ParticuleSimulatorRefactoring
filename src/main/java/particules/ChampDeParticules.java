@@ -1,5 +1,6 @@
 package particules;
 
+import comportement.Comportement;
 import controleur.Controleur;
 import etats.EtatParticule;
 import visualisation.Observer;
@@ -136,6 +137,13 @@ public class ChampDeParticules implements Champ, Sujet {
     public void notifyObserversEtat(Particule p, EtatParticule etat) {
         for (Observer o : this.observers) {
             o.updateEtat(p.getEtat(), etat);
+        }
+    }
+
+    @Override
+    public void notifyObserversComportement(Particule p, Comportement comportement) {
+        for (Observer o : this.observers) {
+            o.updateComportement(p.getComportement(), comportement);
         }
     }
 
