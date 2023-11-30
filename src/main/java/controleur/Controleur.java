@@ -38,9 +38,9 @@ public class Controleur {
      * @param type    : type des particules a creer initialement
      */
     public Controleur(String lib, int largeur, int hauteur, int nb, int type) {
-        champParticules = FabriqueChampDeParticules.creationChampDeParticules(largeur, hauteur, nb, type);
+        champParticules = FabriqueChampDeParticules.getInstance().creationChampDeParticules(largeur, hauteur, nb, type);
         this.sim = FabriqueSimulateur.creationSimulateur(30, this);
-        this.application = FabriqueVueApplication.creationVueApplication(lib, this);
+        this.application = FabriqueVueApplication.getInstance().creationVueApplication(lib, this);
     }
 
     /**
@@ -51,9 +51,9 @@ public class Controleur {
      * @param hauteur : hauteur du champ de particules
      */
     public Controleur(String lib, int largeur, int hauteur) {
-        champParticules = FabriqueChampDeParticules.creationChampDeParticules(largeur, hauteur);
+        champParticules = FabriqueChampDeParticules.getInstance().creationChampDeParticules(largeur, hauteur);
         this.sim = FabriqueSimulateur.creationSimulateur(30, this);
-        this.application = FabriqueVueApplication.creationVueApplication(lib, this);
+        this.application = FabriqueVueApplication.getInstance().creationVueApplication(lib, this);
     }
 
     public VueApplication getApplication() {
