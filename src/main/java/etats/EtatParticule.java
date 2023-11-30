@@ -14,6 +14,8 @@ public abstract class EtatParticule {
         return particule;
     }
 
+    public abstract float getCoefColor();
+
     public EtatParticule collisionSimple(List<Particule> champ) {
         List<Particule> enCollisionFrontale = particule.collisionSimpleBilateral(particule.getChamp().getParticules());
 

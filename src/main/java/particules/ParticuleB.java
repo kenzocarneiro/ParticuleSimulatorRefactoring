@@ -1,7 +1,15 @@
 package particules;
 
+import java.awt.*;
+
 public class ParticuleB extends Particule {
     private final double vitesseOriginale = 30f;
+    private final Color couleur = new Color(0.0f, 1.0f, 0.0f);
+
+    @Override
+    public Color getCouleur() {
+        return couleur;
+    }
 
     public ParticuleB(Champ c, double x, double y, double dC) {
         super(c, x, y, dC);

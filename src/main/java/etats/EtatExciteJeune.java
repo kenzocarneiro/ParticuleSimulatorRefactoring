@@ -3,8 +3,14 @@ package etats;
 import particules.Particule;
 
 public class EtatExciteJeune extends EtatExcite {
+    private float coefColor = 1.0f;
+
     public EtatExciteJeune(Particule particule) {
         super(particule);
+    }
+
+    public float getCoefColor() {
+        return coefColor;
     }
 
     @Override
