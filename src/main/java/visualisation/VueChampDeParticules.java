@@ -18,7 +18,7 @@ public class VueChampDeParticules extends JPanel {
     public VueChampDeParticules(Controleur c) {
         this.c = c;
         this.updateParticulesVisibles();
-        setPreferredSize(new Dimension(c.getchampParticules().getLargeur() + Particule.epaisseur / 2, c.getchampParticules().getHauteur() + Particule.epaisseur / 2));
+        setPreferredSize(new Dimension(c.getchampParticules().getLargeur() + Particule.getEpaisseur() / 2, c.getchampParticules().getHauteur() + Particule.getEpaisseur() / 2));
     }
 
     public void updateParticulesVisibles() {

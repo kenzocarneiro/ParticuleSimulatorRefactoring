@@ -27,9 +27,10 @@ public class VueParticule {
                 (p.getCouleur().getGreen() * coefColor)/255,
                 (p.getCouleur().getBlue() * coefColor)/255));
 
-        g.fillOval(x - (p.epaisseur / 2), y + (p.epaisseur / 2), (p.epaisseur), p.epaisseur);
+        int epaisseur = Particule.getEpaisseur();
+        g.fillOval(x - (epaisseur / 2), y + (epaisseur / 2), epaisseur, epaisseur);
         if (p.getEtat() instanceof EtatExcite) {
-            g.drawOval(x - (p.epaisseur / 2) - 5, y + (p.epaisseur / 2) - 5, (p.epaisseur) + 10, p.epaisseur + 10);
+            g.drawOval(x - (epaisseur / 2) - 5, y + (epaisseur / 2) - 5, epaisseur + 10, epaisseur + 10);
         }
     }
 
