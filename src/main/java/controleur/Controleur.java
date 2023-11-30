@@ -82,6 +82,12 @@ public class Controleur {
         this.application.majParticulesADessiner();
     }
 
+    public void ajouterManuellement(Particule p) {
+        this.champParticules.ajouterManuellement(p);
+        this.champParticules.updatePopulation();
+        this.application.majParticulesADessiner();
+    }
+
     /**
      * Permet de signaler à la vue qu'il faut se redessiner étant donné qu'il
      * y a eu des naissances de particules.

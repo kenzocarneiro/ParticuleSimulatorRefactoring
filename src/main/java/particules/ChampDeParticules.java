@@ -51,6 +51,12 @@ public class ChampDeParticules implements Champ, Sujet {
     }
 
     @Override
+    public void ajouterManuellement(Particule p) {
+        this.nouvelleGeneration.add(p);
+        this.controleur.populationEtendueInVivo();
+    }
+
+    @Override
     public int getLargeur() {
         return largeur;
     }
@@ -90,6 +96,9 @@ public class ChampDeParticules implements Champ, Sujet {
     }
 
     public void updatePopulation() {
+        if (this.nouvelleGeneration.isEmpty()) {
+            return;
+        }
         this.population.addAll(this.nouvelleGeneration);
         this.aEnvoyerObservateur.addAll(this.nouvelleGeneration);
         notifyObserversAdd();
