@@ -46,7 +46,7 @@ public class ChampDeParticules implements Champ, Sujet {
 
     @Override
     public void naissance(int type, double x, double y) {
-        this.nouvelleGeneration.add(this.creationParticule(type, x, y));
+        this.nouvelleGeneration.add(FabriqueParticule.creationParticuleType(x, y, type, this));
         this.controleur.populationEtendueInVivo();
     }
 
@@ -58,26 +58,6 @@ public class ChampDeParticules implements Champ, Sujet {
     @Override
     public int getHauteur() {
         return hauteur;
-    }
-
-    private Particule creationParticule(int typeParticule, double x, double y) {
-        Random generateur = new Random();
-        double direction = (generateur.nextFloat() * 2 * Math.PI);
-
-        Particule result = null;
-
-        switch (typeParticule) {
-            case 0: {
-                result = FabriqueParticuleA.getInstance().creationParticule(this, x, y, direction);
-                break;
-            }
-
-            case 1: {
-                result = FabriqueParticuleB.getInstance().creationParticule(this, x, y, direction);
-                break;
-            }
-        }
-        return result;
     }
 
     private ArrayList<Particule> generationParticule(int nb, int typeParticule) {
@@ -103,7 +83,7 @@ public class ChampDeParticules implements Champ, Sujet {
             int y = (int) (generateur.nextFloat() * hauteur);
             if (y > hauteur - epaisseur) y -= epaisseur;
 
-            nouvelleGeneration.add(this.creationParticule(typeParticule, x, y));
+            nouvelleGeneration.add(FabriqueParticule.creationParticuleType(x, y, typeParticule, this));
         }
         return nouvelleGeneration;
     }
