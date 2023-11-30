@@ -1,5 +1,7 @@
 package particules;
 
+import etats.EtatParticule;
+
 import java.awt.*;
 
 public class ParticuleB extends Particule {
@@ -26,21 +28,21 @@ public class ParticuleB extends Particule {
     }
 
     @Override
-    public void handleCollision(Particule p) {
+    public EtatParticule handleCollision(Particule p) {
         // B collides with B (and both are Active and Excited)
-        if (p.getClass() == ParticuleB.class) {
+        if (p.getType().equals(ParticuleType.B)) {
             this.champ.naissance(ParticuleType.A, this.x, this.y);
             p.meurt();
             this.meurt();
-            this.champ.removeParticule(this);
-            this.champ.removeParticule(p);
         }
         // B collides with A (and both are Active and Excited)
-        if (p.getClass() == ParticuleA.class) {
+        if (p.getType().equals(ParticuleType.A)) {
             this.intervertirEtat();
             p.intervertirEtat();
             this.champ.naissance(ParticuleType.A, this.x, this.y);
         }
+
+        return this.getEtat();
     }
 
     public ParticuleType getType() {

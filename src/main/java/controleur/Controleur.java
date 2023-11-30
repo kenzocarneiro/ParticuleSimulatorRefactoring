@@ -120,6 +120,7 @@ public class Controleur {
      */
     public void integrationNouvelleGeneration() {
         this.champParticules.updatePopulation();
+        this.populationEtendueInVivo();
         this.application.repaint();
     }
 }
