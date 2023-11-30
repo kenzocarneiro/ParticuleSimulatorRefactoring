@@ -7,6 +7,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import comportement.Comportement;
+
 
 public abstract class Particule {
 
@@ -46,6 +48,8 @@ public abstract class Particule {
 
     protected boolean enCollision;
 
+    protected Comportement comportement;
+
     public Particule(Champ c, double x, double y, double dC) {
         this.champ = c;
         this.x = x;
@@ -70,6 +74,18 @@ public abstract class Particule {
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public Comportement getComportement() {
+        return comportement;
+    }
+
+    public void setComportement(Comportement comportement) {
+        this.comportement = comportement;
+    }
+
+    public boolean isVisible() {
+        return getComportement().isVisible();
     }
 
     public abstract EtatParticule handleCollision(Particule p);

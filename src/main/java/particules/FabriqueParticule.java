@@ -3,6 +3,9 @@ package particules;
 import java.util.ArrayList;
 import java.util.Random;
 
+import comportement.ComportementEpileptique;
+import comportement.ComportementNormal;
+
 public abstract class FabriqueParticule {
 
     public abstract Particule creationParticule(Champ c, double x, double y, double dC);
@@ -24,6 +27,12 @@ public abstract class FabriqueParticule {
                 break;
             }
         }
+
+        if(generateur.nextFloat() < 0.18)
+            result.setComportement(new ComportementEpileptique(result));
+        else
+            result.setComportement(new ComportementNormal(result));
+
         return result;
     }
 
