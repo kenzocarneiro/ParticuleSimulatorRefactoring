@@ -1,8 +1,7 @@
 package visualisation;
 
+import etats.EtatExcite;
 import particules.Particule;
-import particules.ParticuleA;
-import particules.ParticuleB;
 
 import java.awt.*;
 
@@ -12,13 +11,6 @@ public class VueParticule {
 
     public VueParticule(Particule p) {
         this.p = p;
-        if (p.getClass() == ParticuleA.class) {
-            this.couleurParticule = new Color(1.0f, 0.0f, 0.0f);
-        }
-
-        if (p.getClass() == ParticuleB.class) {
-            this.couleurParticule = new Color(0.0f, 1.0f, 0.0f);
-        }
     }
 
     public Particule getParticule() {
@@ -26,27 +18,18 @@ public class VueParticule {
     }
 
     public void seDessine(Graphics g) {
-        // System.out.println(p.isVisible());
-        // if(! this.p.isVisible())
-        // {
-        //     System.out.println("Particule invisible");
-        //     return;
-        // }
-
         int x = (int) this.p.getX();
         int y = (int) this.p.getY();
-        g.setColor(this.couleurParticule);
+        float coefColor = p.getEtat().getCoefColor();
+        g.setColor(new Color((p.getCouleur().getRed() * coefColor)/255,
+                (p.getCouleur().getGreen() * coefColor)/255,
+                (p.getCouleur().getBlue() * coefColor)/255));
 
-        g.fillOval(x - (ParticuleA.epaisseur / 2), y + (ParticuleA.epaisseur / 2), (ParticuleA.epaisseur), ParticuleA.epaisseur);
- 
-
-        // if (p.getClass() == ParticuleA.class) {
-        //     g.fillOval(x - (ParticuleA.epaisseur / 2), y + (ParticuleA.epaisseur / 2), (ParticuleA.epaisseur), ParticuleA.epaisseur);
-        // }
-
-        // if (p.getClass() == ParticuleB.class) {
-        //     g.fillOval(x - (ParticuleB.epaisseur / 2), y + (ParticuleB.epaisseur / 2), (ParticuleB.epaisseur), ParticuleB.epaisseur);
-        // }
+        int epaisseur = Particule.getEpaisseur();
+        g.fillOval(x - (epaisseur / 2), y + (epaisseur / 2), epaisseur, epaisseur);
+        if (p.getEtat() instanceof EtatExcite) {
+            g.drawOval(x - (epaisseur / 2) - 5, y + (epaisseur / 2) - 5, epaisseur + 10, epaisseur + 10);
+        }
     }
 
     public boolean outOfDate() {

@@ -18,13 +18,13 @@ public class VueChampDeParticules extends JPanel {
     public VueChampDeParticules(Controleur c) {
         this.c = c;
         this.updateParticulesVisibles();
-        setPreferredSize(new Dimension(c.getchampParticules().getLargeur() + Particule.epaisseur / 2, c.getchampParticules().getHauteur() + Particule.epaisseur / 2));
+        setPreferredSize(new Dimension(c.getchampParticules().getLargeur() + Particule.getEpaisseur() / 2, c.getchampParticules().getHauteur() + Particule.getEpaisseur() / 2));
     }
 
     public void updateParticulesVisibles() {
-        this.particulesADessiner = new ArrayList<VueParticule>();
+        this.particulesADessiner = new ArrayList<>();
         for (Particule p : c.getPopulationModele()) {
-            this.particulesADessiner.add(new VueParticule(p));
+            this.particulesADessiner.add(FabriqueVueParticule.getInstance().creationVueParticule(p));
         }
     }
 
@@ -33,7 +33,7 @@ public class VueChampDeParticules extends JPanel {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setStroke(new BasicStroke(3f));
         super.paint(g);
-        List<VueParticule> aSupprimer = new ArrayList<VueParticule>();
+        List<VueParticule> aSupprimer = new ArrayList<>();
         synchronized (particulesADessiner) {
             for (VueParticule d : particulesADessiner) {
                 if (d.outOfDate()) {

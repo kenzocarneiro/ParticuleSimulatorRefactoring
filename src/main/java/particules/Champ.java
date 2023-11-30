@@ -1,11 +1,12 @@
 package particules;
 
 import controleur.Controleur;
+import visualisation.Sujet;
 
 import java.util.List;
 
 
-public interface Champ {
+public interface Champ extends Sujet {
 
     int getLargeur();
 
@@ -13,14 +14,17 @@ public interface Champ {
 
     List<Particule> getParticules();
 
-    void ajouterUnePopulation(int type, int nb);
+    void removeParticule(Particule p);
+
+    void ajouterUnePopulation(ParticuleType type, int nb);
 
     void supprimerLesParticulesDecedees();
 
     void setControleur(Controleur c);
 
-    void naissance(int i, double x, double y);
+    void naissance(ParticuleType type, double x, double y);
 
     void updatePopulation();
 
+    void addParticule(Particule p1);
 }

@@ -1,9 +1,12 @@
 package controleur;
 
 import particules.Champ;
-import particules.ChampDeParticules;
+import particules.FabriqueChampDeParticules;
 import particules.Particule;
+import particules.ParticuleType;
+import simulation.FabriqueSimulateur;
 import simulation.Simulateur;
+import visualisation.FabriqueVueApplication;
 import visualisation.VueApplication;
 
 import java.util.List;
@@ -35,10 +38,10 @@ public class Controleur {
      * @param nb      : nombre de particule a creer initialement
      * @param type    : type des particules a creer initialement
      */
-    public Controleur(String lib, int largeur, int hauteur, int nb, int type) {
-        champParticules = new ChampDeParticules(largeur, hauteur, nb, type);
-        this.sim = new Simulateur(30, this);
-        this.application = new VueApplication(lib, this);
+    public Controleur(String lib, int largeur, int hauteur, int nb, ParticuleType type) {
+        champParticules = FabriqueChampDeParticules.getInstance().creationChampDeParticules(largeur, hauteur, nb, type);
+        this.sim = FabriqueSimulateur.getInstance().creationSimulateur(30, this);
+        this.application = FabriqueVueApplication.getInstance().creationVueApplication(lib, this);
     }
 
     /**
@@ -49,9 +52,9 @@ public class Controleur {
      * @param hauteur : hauteur du champ de particules
      */
     public Controleur(String lib, int largeur, int hauteur) {
-        champParticules = new ChampDeParticules(largeur, hauteur);
-        this.sim = new Simulateur(300, this);
-        this.application = new VueApplication(lib, this);
+        champParticules = FabriqueChampDeParticules.getInstance().creationChampDeParticules(largeur, hauteur);
+        this.sim = FabriqueSimulateur.getInstance().creationSimulateur(30, this);
+        this.application = FabriqueVueApplication.getInstance().creationVueApplication(lib, this);
     }
 
     public VueApplication getApplication() {
@@ -63,6 +66,7 @@ public class Controleur {
      */
     public void lancerSimulation() {
         this.champParticules.setControleur(this);
+        this.champParticules.addObserver(this.application.getVueDebug());
         this.sim.demarre();
     }
 
@@ -72,7 +76,7 @@ public class Controleur {
      * @param nb   : nombre de particules a creer
      * @param type : type de particules a creer
      */
-    public void ajouterPopulation(int nb, int type) {
+    public void ajouterPopulation(int nb, ParticuleType type) {
         this.champParticules.ajouterUnePopulation(type, nb);
         this.champParticules.updatePopulation();
         this.application.majParticulesADessiner();
@@ -88,6 +92,10 @@ public class Controleur {
 
     public Champ getchampParticules() {
         return this.champParticules;
+    }
+
+    public Simulateur getSim() {
+        return this.sim;
     }
 
     public List<Particule> getPopulationModele() {
@@ -112,6 +120,7 @@ public class Controleur {
      */
     public void integrationNouvelleGeneration() {
         this.champParticules.updatePopulation();
+        this.populationEtendueInVivo();
         this.application.repaint();
     }
 }
