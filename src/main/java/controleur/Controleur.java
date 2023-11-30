@@ -39,7 +39,7 @@ public class Controleur {
      */
     public Controleur(String lib, int largeur, int hauteur, int nb, int type) {
         champParticules = FabriqueChampDeParticules.getInstance().creationChampDeParticules(largeur, hauteur, nb, type);
-        this.sim = FabriqueSimulateur.creationSimulateur(30, this);
+        this.sim = FabriqueSimulateur.getInstance().creationSimulateur(30, this);
         this.application = FabriqueVueApplication.getInstance().creationVueApplication(lib, this);
     }
 
@@ -52,7 +52,7 @@ public class Controleur {
      */
     public Controleur(String lib, int largeur, int hauteur) {
         champParticules = FabriqueChampDeParticules.getInstance().creationChampDeParticules(largeur, hauteur);
-        this.sim = FabriqueSimulateur.creationSimulateur(30, this);
+        this.sim = FabriqueSimulateur.getInstance().creationSimulateur(30, this);
         this.application = FabriqueVueApplication.getInstance().creationVueApplication(lib, this);
     }
 

@@ -3,15 +3,18 @@ package simulation;
 import controleur.Controleur;
 
 public class FabriqueSimulateur {
-    private static Simulateur simulateur;
+    private static FabriqueSimulateur instance;
 
-    private FabriqueSimulateur() {
+    private FabriqueSimulateur() {}
+
+    public static FabriqueSimulateur getInstance() {
+        if (instance == null) {
+            instance = new FabriqueSimulateur();
+        }
+        return instance;
     }
 
-    public static Simulateur creationSimulateur(int delai, Controleur c) {
-        if (simulateur == null) {
-            simulateur = new Simulateur(delai, c);
-        }
-        return simulateur;
+    public Simulateur creationSimulateur(int delai, Controleur c) {
+        return new Simulateur(delai, c);
     }
 }
