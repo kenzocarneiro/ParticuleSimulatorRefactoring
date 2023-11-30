@@ -41,6 +41,7 @@ public abstract class EtatParticule {
             if(!p.isVisible()) {
                 continue;
             }
+            particule.contamine(p);
             p.contamine(particule);
             if (p.getDirectionCourante() > Math.PI) p.setProchaineDirection(p.getDirectionCourante() - Math.PI);
             else p.setProchaineDirection(p.getDirectionCourante() + Math.PI);

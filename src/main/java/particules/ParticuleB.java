@@ -13,8 +13,8 @@ public class ParticuleB extends Particule {
         return couleur;
     }
 
-    public ParticuleB(Champ c, double x, double y, double dC) {
-        super(c, x, y, dC);
+    public ParticuleB(Champ c, double x, double y, double dC, boolean epiletique) {
+        super(c, x, y, dC, epiletique);
         vitesseCourante = vitesseOriginale;
         resetVitesse();
         passageACTIVE = 100;

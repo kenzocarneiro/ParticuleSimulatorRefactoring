@@ -1,5 +1,7 @@
 package particules;
 
+import comportement.ComportementEpileptique;
+import comportement.ComportementNormal;
 import etats.EtatNormalJeune;
 import etats.EtatParticule;
 
@@ -50,7 +52,7 @@ public abstract class Particule {
 
     protected Comportement comportement;
 
-    public Particule(Champ c, double x, double y, double dC) {
+    public Particule(Champ c, double x, double y, double dC, boolean epileptique) {
         this.champ = c;
         this.x = x;
         this.y = y;
@@ -58,6 +60,7 @@ public abstract class Particule {
         this.prochaineDirection = dC;
         this.etat = new EtatNormalJeune(this);
         this.enCollision = false;
+        this.comportement = epileptique ? new ComportementEpileptique(this) : new ComportementNormal(this);
     }
 
     public double getX() {
