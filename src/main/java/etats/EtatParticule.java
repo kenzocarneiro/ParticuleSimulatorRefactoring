@@ -14,7 +14,7 @@ public abstract class EtatParticule {
         return particule;
     }
 
-    public EtatParticule collisionSimple(List<Particule> c) {
+    public EtatParticule collisionSimple(List<Particule> champ) {
         List<Particule> enCollisionFrontale = particule.collisionSimpleBilateral(particule.getChamp().getParticules());
 
         if (enCollisionFrontale.size() != 1) {
@@ -57,4 +57,6 @@ public abstract class EtatParticule {
     public EtatParticule gestionCycle() {
         return this;
     }
+
+    public abstract EtatParticule meurt();
 }

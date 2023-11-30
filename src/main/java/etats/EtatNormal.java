@@ -27,4 +27,9 @@ public abstract class EtatNormal extends EtatParticule {
         particule.setEnCollision(false);
         return this;
     }
+
+    @Override
+    public EtatParticule meurt() {
+        return new EtatExciteMorte(this.particule);
+    }
 }

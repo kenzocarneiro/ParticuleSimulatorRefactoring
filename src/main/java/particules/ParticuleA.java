@@ -1,8 +1,5 @@
 package particules;
 
-import java.util.List;
-
-
 public class ParticuleA extends Particule {
 
     public ParticuleA(Champ c, double x, double y, double dC) {
@@ -18,8 +15,8 @@ public class ParticuleA extends Particule {
     public void handleCollision(Particule p) {
         if (p.getClass() == ParticuleA.class) {
             this.champ.naissance(0, this.x, this.y);
-            p.phaseDeLaParticule = Phase.MORTE;
-            this.phaseDeLaParticule = Phase.MORTE;
+            p.meurt();
+            this.meurt();
             this.champ.removeParticule(this);
             this.champ.removeParticule(p);
         }
