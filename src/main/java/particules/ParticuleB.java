@@ -17,14 +17,15 @@ public class ParticuleB extends Particule {
 
 
     public void handleCollision(Particule p) {
+        // B collides with B (and both are Active and Excited)
         if (p.getClass() == ParticuleB.class) {
-            this.champ.naissance(ParticuleType.B, this.x, this.y);
+            this.champ.naissance(ParticuleType.A, this.x, this.y);
             p.meurt();
             this.meurt();
             this.champ.removeParticule(this);
             this.champ.removeParticule(p);
         }
-
+        // B collides with A (and both are Active and Excited)
         if (p.getClass() == ParticuleA.class) {
             this.resetVitesse();
             p.resetVitesse();
