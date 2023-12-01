@@ -73,7 +73,7 @@ public class VueDebug implements Observer {
         nbEtats = new HashMap<EtatType, Integer>() {{
             for (EtatType etatType : EtatType.values()) {
                 put(etatType, 0);
-                labelFixeNbEtats.put(etatType, ajoutFixeLabel(new StringBuilder("").append(etatType)));
+                labelFixeNbEtats.put(etatType, ajoutFixeLabel(new StringBuilder(etatType.toString().toLowerCase())));
                 labelNbEtats.put(etatType, ajoutVariableLabel());
             }
         }};
@@ -90,7 +90,7 @@ public class VueDebug implements Observer {
         nbCycles = new HashMap<CycleType, Integer>() {{
             for (CycleType cycleType : CycleType.values()) {
                 put(cycleType, 0);
-                labelFixeNbCycles.put(cycleType, ajoutFixeLabel(new StringBuilder("").append(cycleType)));
+                labelFixeNbCycles.put(cycleType, ajoutFixeLabel(new StringBuilder(cycleType.toString().toLowerCase())));
                 labelNbCycles.put(cycleType, ajoutVariableLabel());
             }
         }};
@@ -107,7 +107,7 @@ public class VueDebug implements Observer {
         nbComportements = new HashMap<ComportementType, Integer>() {{
             for (ComportementType comportementType : ComportementType.values()) {
                 put(comportementType, 0);
-                labelFixeNbComportements.put(comportementType, ajoutFixeLabel(new StringBuilder("").append(comportementType)));
+                labelFixeNbComportements.put(comportementType, ajoutFixeLabel(new StringBuilder(comportementType.toString().toLowerCase())));
                 labelNbComportements.put(comportementType, ajoutVariableLabel());
             }
         }};
