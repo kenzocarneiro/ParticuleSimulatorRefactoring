@@ -20,6 +20,11 @@ public abstract class EtatExcite extends EtatParticule {
     }
 
     @Override
+    public EtatParticule calme() {
+        return intervertirEtat();
+    }
+
+    @Override
     public EtatType getEtatType() {
         return EtatType.EXCITE;
     }

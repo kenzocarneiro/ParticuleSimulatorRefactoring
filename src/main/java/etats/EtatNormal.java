@@ -19,6 +19,11 @@ public abstract class EtatNormal extends EtatParticule {
     }
 
     @Override
+    public EtatParticule calme() {
+        return this;
+    }
+
+    @Override
     public EtatType getEtatType() {
         return EtatType.NORMAL;
     }

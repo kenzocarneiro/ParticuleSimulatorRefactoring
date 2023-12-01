@@ -49,7 +49,6 @@ public abstract class EtatParticule {
 
         particule.contamine(p);
         p.contamine(particule);
-
         Particule.collisionsSimplesTraitees.add(p);
         if (p.estExciteEtActive() && this.estExciteEtActive()) {
             return particule.handleCollision(p);
@@ -98,6 +97,8 @@ public abstract class EtatParticule {
     public abstract EtatParticule meurt();
 
     public abstract EtatParticule excite();
+
+    public abstract EtatParticule calme();
 
     public abstract EtatType getEtatType();
     public abstract CycleType getCycleType();
