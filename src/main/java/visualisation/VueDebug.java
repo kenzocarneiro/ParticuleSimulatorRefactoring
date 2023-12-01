@@ -56,7 +56,7 @@ public class VueDebug implements Observer {
         nbParticules = new HashMap<ParticuleType, Integer>() {{
             for (ParticuleType particuleType : ParticuleType.values()) {
                 put(particuleType, 0);
-                labelFixeNbParticules.put(particuleType, ajoutFixeLabel(new StringBuilder("").append(particuleType)));
+                labelFixeNbParticules.put(particuleType, ajoutFixeLabel(new StringBuilder("Particules ").append(particuleType)));
                 labelNbParticules.put(particuleType, ajoutVariableLabel());
             }
         }};
