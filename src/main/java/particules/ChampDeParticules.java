@@ -48,7 +48,11 @@ public class ChampDeParticules implements Champ, Sujet {
 
     @Override
     public void naissance(ParticuleType type, double x, double y) {
-        this.nouvelleGeneration.add(FabriqueParticule.creationParticuleType(x, y, type, this));
+        Particule p = FabriqueParticule.creationParticuleType(x, y, type, this);
+        for (int i = 0; i < 2; i++) {
+            p.effectueDeplacement();
+        }
+        this.nouvelleGeneration.add(p);
     }
 
     @Override
