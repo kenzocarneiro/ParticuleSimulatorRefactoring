@@ -15,7 +15,7 @@ public class EtatExciteMorte extends EtatExcite {
 
     @Override
     public EtatParticule intervertirEtat() {
-        return new EtatNormalMorte(particule);
+        return FabriqueEtat.getInstance().creationEtat(particule, EtatType.NORMAL, CycleType.MORTE);
     }
 
     @Override

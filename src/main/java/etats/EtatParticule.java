@@ -5,7 +5,7 @@ import particules.Particule;
 import java.util.List;
 
 public abstract class EtatParticule {
-    Particule particule;
+    protected Particule particule;
     public EtatParticule(Particule particule) {
         this.particule = particule;
     }

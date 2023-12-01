@@ -16,14 +16,14 @@ public class EtatExciteJeune extends EtatExcite {
     @Override
     public EtatParticule gestionCycle() {
         if (particule.getNbTour() == particule.getPassageACTIVE()) {
-            return new EtatExciteActive(particule);
+            return FabriqueEtat.getInstance().creationEtat(particule, EtatType.EXCITE, CycleType.ACTIVE);
         }
         return this;
     }
 
     @Override
     public EtatParticule intervertirEtat() {
-        return new EtatNormalJeune(particule);
+        return FabriqueEtat.getInstance().creationEtat(particule, EtatType.NORMAL, CycleType.JEUNE);
     }
 
     @Override
