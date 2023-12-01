@@ -150,7 +150,7 @@ public class VueDebug implements Observer {
                     }
                     assert fabriqueParticule != null;
                     Particule p = fabriqueParticule.creationParticule(controleur.getchampParticules(), 100 + i * 600, 100, Math.PI*i, estEpileptique);
-                    p.setEtat(excite == 0 ? new EtatNormalActive(p) : new EtatExciteActive(p));
+                    p.setEtat(excite == 0 ? FabriqueEtat.getInstance().creationEtat(p, EtatType.NORMAL, CycleType.ACTIVE) : FabriqueEtat.getInstance().creationEtat(p, EtatType.EXCITE, CycleType.ACTIVE));
                     particules.add(p);
                 }
                 particules.forEach(controleur::ajouterManuellement);

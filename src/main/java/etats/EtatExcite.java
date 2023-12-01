@@ -11,7 +11,7 @@ public abstract class EtatExcite extends EtatParticule {
 
     @Override
     public EtatParticule meurt() {
-        return new EtatExciteMorte(this.particule);
+        return FabriqueEtat.getInstance().creationEtat(particule, EtatType.EXCITE, CycleType.MORTE);
     }
 
     @Override

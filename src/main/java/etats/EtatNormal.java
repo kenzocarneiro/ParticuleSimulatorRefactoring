@@ -10,7 +10,7 @@ public abstract class EtatNormal extends EtatParticule {
 
     @Override
     public EtatParticule meurt() {
-        return new EtatNormalMorte(this.particule);
+        return FabriqueEtat.getInstance().creationEtat(particule, EtatType.NORMAL, CycleType.MORTE);
     }
 
     @Override
