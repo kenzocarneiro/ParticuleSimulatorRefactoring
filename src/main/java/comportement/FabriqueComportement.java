@@ -21,6 +21,8 @@ public class FabriqueComportement {
                 return new ComportementNormal(particule);
             case EPILEPTIQUE:
                 return new ComportementEpileptique(particule);
+            case GUERISON:
+                return new ComportementGuerison(particule);
         }
         return null;
     }

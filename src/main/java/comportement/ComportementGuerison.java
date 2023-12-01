@@ -1,6 +1,5 @@
 package comportement;
 
-import etats.EtatType;
 import particules.Particule;
 
 public class ComportementGuerison extends Comportement {
@@ -10,7 +9,7 @@ public class ComportementGuerison extends Comportement {
 
     public void contamine(Particule p) {
         if(this.particule.estExciteEtActive() && p.estExciteEtActive()) {
-            p.setComportement(new ComportementNormal(p));
+            p.setComportement(FabriqueComportement.getInstance().creationComportement(p, ComportementType.NORMAL));
         }
     }
 
