@@ -52,105 +52,65 @@ public class VueDebug implements Observer {
         nbParticules = new HashMap<ParticuleType, Integer>() {{
             for (ParticuleType particuleType : ParticuleType.values()) {
                 put(particuleType, 0);
-                //partie fixe
-                StringBuilder strBuilder = new StringBuilder("");
-                strBuilder.append(particuleType);
-                strBuilder.append(" : ");
-                panelInfoParticules.add(new JLabel(strBuilder.toString()));
-                //partie variable
-                JLabel label = new JLabel("0");
-                label.setSize(20, label.getHeight());
-                labelNbParticules.put(particuleType, label);
-                panelInfoParticules.add(label);
+                ajoutFixeLabel(new StringBuilder("").append(particuleType));
+                labelNbParticules.put(particuleType, ajoutVariableLabel());
             }
         }};
         int ajoutVide = maxTailleEnum() - ParticuleType.values().length;
         for (int i = 0; i < 2*ajoutVide; i++) {
-            panelInfoParticules.add(new JLabel(""));
+            ajoutFixeLabel(new StringBuilder(""), true);
         }
-        panelInfoParticules.add(new JLabel("Total :"));
-        labelTotalParticules = new JLabel("0");
-        labelTotalParticules.setSize(20, labelTotalParticules.getHeight());
-        panelInfoParticules.add(labelTotalParticules);
+        ajoutFixeLabel(new StringBuilder("Total"));
+        labelTotalParticules = ajoutVariableLabel();
 
         // etats
         labelNbEtats = new HashMap<EtatType, JLabel>();
         nbEtats = new HashMap<EtatType, Integer>() {{
             for (EtatType etatType : EtatType.values()) {
                 put(etatType, 0);
-                //partie fixe
-                StringBuilder strBuilder = new StringBuilder("");
-                strBuilder.append(etatType);
-                strBuilder.append(" : ");
-                panelInfoParticules.add(new JLabel(strBuilder.toString()));
-                //partie variable
-                JLabel label = new JLabel("0");
-                label.setSize(20, label.getHeight());
-                labelNbEtats.put(etatType, label);
-                panelInfoParticules.add(label);
+                ajoutFixeLabel(new StringBuilder("").append(etatType));
+                labelNbEtats.put(etatType, ajoutVariableLabel());
             }
         }};
         ajoutVide = maxTailleEnum() - EtatType.values().length;
         for (int i = 0; i < 2*ajoutVide; i++) {
-            panelInfoParticules.add(new JLabel(""));
+            ajoutFixeLabel(new StringBuilder(""), true);
         }
-        panelInfoParticules.add(new JLabel("Total :"));
-        labelTotalEtats = new JLabel("0");
-        labelTotalEtats.setSize(20, labelTotalEtats.getHeight());
-        panelInfoParticules.add(labelTotalEtats);
+        ajoutFixeLabel(new StringBuilder("Total"));
+        labelTotalEtats = ajoutVariableLabel();
 
         // cycles
         labelNbCycles = new HashMap<CycleType, JLabel>();
         nbCycles = new HashMap<CycleType, Integer>() {{
             for (CycleType cycleType : CycleType.values()) {
                 put(cycleType, 0);
-                //partie fixe
-                StringBuilder strBuilder = new StringBuilder("");
-                strBuilder.append(cycleType);
-                strBuilder.append(" : ");
-                panelInfoParticules.add(new JLabel(strBuilder.toString()));
-                //partie variable
-                JLabel label = new JLabel("0");
-                label.setSize(20, label.getHeight());
-                labelNbCycles.put(cycleType, label);
-                panelInfoParticules.add(label);
+                ajoutFixeLabel(new StringBuilder("").append(cycleType));
+                labelNbCycles.put(cycleType, ajoutVariableLabel());
             }
         }};
         ajoutVide = maxTailleEnum() - CycleType.values().length;
         for (int i = 0; i < 2*ajoutVide; i++) {
-            panelInfoParticules.add(new JLabel(""));
+            ajoutFixeLabel(new StringBuilder(""), true);
         }
-        panelInfoParticules.add(new JLabel("Total :"));
-        labelTotalCycles = new JLabel("0");
-        labelTotalCycles.setSize(20, labelTotalCycles.getHeight());
-        panelInfoParticules.add(labelTotalCycles);
+        ajoutFixeLabel(new StringBuilder("Total"));
+        labelTotalCycles = ajoutVariableLabel();
 
         // comportements
         labelNbComportements = new HashMap<ComportementType, JLabel>();
         nbComportements = new HashMap<ComportementType, Integer>() {{
             for (ComportementType comportementType : ComportementType.values()) {
                 put(comportementType, 0);
-                //partie fixe
-                StringBuilder strBuilder = new StringBuilder("");
-                strBuilder.append(comportementType);
-                strBuilder.append(" : ");
-                panelInfoParticules.add(new JLabel(strBuilder.toString()));
-                //partie variable
-                JLabel label = new JLabel("0");
-                label.setSize(20, label.getHeight());
-                labelNbComportements.put(comportementType, label);
-                panelInfoParticules.add(label);
+                ajoutFixeLabel(new StringBuilder("").append(comportementType));
+                labelNbComportements.put(comportementType, ajoutVariableLabel());
             }
         }};
         ajoutVide = maxTailleEnum() - ComportementType.values().length;
         for (int i = 0; i < 2*ajoutVide; i++) {
-            panelInfoParticules.add(new JLabel(""));
+            ajoutFixeLabel(new StringBuilder(""), true);
         }
-        panelInfoParticules.add(new JLabel("Total :"));
-        labelTotalComportements = new JLabel("0");
-        labelTotalComportements.setSize(20, labelTotalComportements.getHeight());
-        panelInfoParticules.add(labelTotalComportements);
-
+        ajoutFixeLabel(new StringBuilder("Total"));
+        labelTotalComportements = ajoutVariableLabel();
+        
         if(useWidget)
             majPanelInfoParticules();
         else
@@ -167,6 +127,32 @@ public class VueDebug implements Observer {
             max = ComportementType.values().length;
 
         return max;
+    }
+
+    /**
+     * Label est le texte fixe
+     */
+    private JLabel ajoutFixeLabel(StringBuilder stringBuilder) {
+        return ajoutFixeLabel(stringBuilder, false);
+    }
+
+    private JLabel ajoutFixeLabel(StringBuilder stringBuilder, boolean vide) {
+        if(!vide)
+            stringBuilder.append(" : ");
+        JLabel label = new JLabel(stringBuilder.toString());
+        this.panelInfoParticules.add(label);
+        return label;
+    }
+
+    /**
+     * Label qui est variable et mis à jour lors des updates
+     */ 
+    private JLabel ajoutVariableLabel()
+    {
+        JLabel label = new JLabel("0");
+        // label.setSize(20, label.getHeight());
+        this.panelInfoParticules.add(label);
+        return label;
     }
 
     public void incrementParticule(Particule particule) {
