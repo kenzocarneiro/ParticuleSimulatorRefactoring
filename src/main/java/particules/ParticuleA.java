@@ -1,7 +1,5 @@
 package particules;
 
-import comportement.ComportementType;
-import comportement.FabriqueComportement;
 import etats.EtatParticule;
 
 import java.awt.*;
@@ -22,9 +20,6 @@ public class ParticuleA extends Particule {
         passageACTIVE = 500;
         passageFINDEVIE = 1500;
         passageMORT = 2000;
-        //this.comportement = epileptique ? new ComportementEpileptique(this) : new ComportementNormal(this);
-        this.comportement = FabriqueComportement.getInstance()
-                .creationComportement(this, epileptique ? ComportementType.EPILEPTIQUE : ComportementType.NORMAL);
     }
 
     @Override
@@ -39,12 +34,16 @@ public class ParticuleA extends Particule {
             p.meurt();
             this.meurt();
         }
-
         // A collides with B (and both are Active and Excited)
-        if (p.getType().equals(ParticuleType.B)) {
+        else if (p.getType().equals(ParticuleType.B)) {
             this.champ.naissance(ParticuleType.A, p.x, p.y);
             p.setEtat(p.intervertirEtat());
             return this.intervertirEtat();
+        }
+        // A collides with C (and both are Active and Excited)
+        else if (p.getType().equals(ParticuleType.C)) {
+            p.setEtat(p.getEtat().calme());
+            return this.getEtat().calme();
         }
         return this.getEtat();
     }
