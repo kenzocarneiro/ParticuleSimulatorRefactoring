@@ -3,7 +3,7 @@ package comportement;
 import particules.Particule;
 
 public abstract class Comportement {
-    Particule particule;
+    protected Particule particule;
 
     public Comportement(Particule particule) {
         this.particule = particule;
