@@ -19,6 +19,7 @@ public class ChampDeParticules implements Champ, Sujet {
     private Controleur controleur;
     private final List<Observer> observers;
     private List<Particule> aEnvoyerObservateur;
+    private boolean extermination = false;
 
     public ChampDeParticules(int largeur, int longeur) {
         this.largeur = largeur;
@@ -48,13 +49,11 @@ public class ChampDeParticules implements Champ, Sujet {
     @Override
     public void naissance(ParticuleType type, double x, double y) {
         this.nouvelleGeneration.add(FabriqueParticule.creationParticuleType(x, y, type, this));
-        this.controleur.populationEtendueInVivo();
     }
 
     @Override
     public void ajouterManuellement(Particule p) {
         this.nouvelleGeneration.add(p);
-        this.controleur.populationEtendueInVivo();
     }
 
     @Override
@@ -78,11 +77,19 @@ public class ChampDeParticules implements Champ, Sujet {
 
     @Override
     public void supprimerLesParticulesDecedees() {
+        if (extermination) {
+            this.population.forEach(Particule::meurt);
+            extermination = false;
+        }
+
         HashSet<Particule> particulesMortes = new HashSet<>();
         for (Particule p : this.population) {
             if (p.estMorte()) {
                 particulesMortes.add(p);
             }
+        }
+        if (particulesMortes.isEmpty()) {
+            return;
         }
 
         this.population.removeAll(particulesMortes);
@@ -141,4 +148,8 @@ public class ChampDeParticules implements Champ, Sujet {
         }
     }
 
+    @Override
+    public void exterminer() {
+        extermination = true;
+    }
 }

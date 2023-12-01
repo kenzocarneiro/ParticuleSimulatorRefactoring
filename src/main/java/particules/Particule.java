@@ -186,8 +186,10 @@ public abstract class Particule {
     }
 
     public void setEtat(EtatParticule etat) {
-        this.champ.notifyObserversEtat(this, etat);
-        this.etat = etat;
+        if (!this.etat.getEtatType().equals(etat.getEtatType()) || !this.etat.getCycleType().equals(etat.getCycleType())) {
+            this.champ.notifyObserversEtat(this, etat);
+            this.etat = etat;
+        }
     }
 
     /**

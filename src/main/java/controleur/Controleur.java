@@ -78,14 +78,10 @@ public class Controleur {
      */
     public void ajouterPopulation(int nb, ParticuleType type) {
         this.champParticules.ajouterUnePopulation(type, nb);
-        this.champParticules.updatePopulation();
-        this.application.majParticulesADessiner();
     }
 
     public void ajouterManuellement(Particule p) {
         this.champParticules.ajouterManuellement(p);
-        this.champParticules.updatePopulation();
-        this.application.majParticulesADessiner();
     }
 
     /**
