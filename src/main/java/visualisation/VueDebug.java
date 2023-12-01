@@ -110,7 +110,6 @@ public class VueDebug implements Observer {
     }
 
     private void majNbParticulesText() {
-        System.out.println("HELLO");
         StringBuilder texte = new StringBuilder("<html>");
         int somme = 0;
         for (ParticuleType particuleType : ParticuleType.values()) {
