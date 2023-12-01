@@ -8,8 +8,7 @@ import etats.EtatParticule;
 import java.awt.*;
 
 public class ParticuleC extends Particule{
-//    private final double vitesseOriginale = 15f;
-private final double vitesseOriginale = 10f;
+    private final double vitesseOriginale = 15f;
     private final Color couleur = new Color(0.0f, 0.0f, 1.0f);
 
     public ParticuleC(Champ c, double x, double y, double dC, boolean epileptique) {

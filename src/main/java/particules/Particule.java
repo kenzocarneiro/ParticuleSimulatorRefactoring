@@ -1,15 +1,11 @@
 package particules;
 
-import comportement.Comportement;
-import comportement.ComportementEpileptique;
-import comportement.ComportementNormal;
-import etats.EtatNormalJeune;
-import etats.EtatParticule;
+import comportement.*;
+import etats.*;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public abstract class Particule {
 
@@ -57,8 +53,9 @@ public abstract class Particule {
         this.y = y;
         this.directionCourante = dC;
         this.prochaineDirection = dC;
-        this.etat = new EtatNormalJeune(this);
+        this.etat = FabriqueEtat.getInstance().creationEtat(this, EtatType.NORMAL, CycleType.JEUNE);
         this.enCollision = false;
+        this.comportement = FabriqueComportement.getInstance().creationComportement(this, epileptique ? ComportementType.EPILEPTIQUE : ComportementType.NORMAL);
     }
 
     public double getX() {
