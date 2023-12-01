@@ -55,7 +55,8 @@ public abstract class Particule {
         this.prochaineDirection = dC;
         this.etat = FabriqueEtat.getInstance().creationEtat(this, EtatType.NORMAL, CycleType.JEUNE);
         this.enCollision = false;
-        this.comportement = FabriqueComportement.getInstance().creationComportement(this, epileptique ? ComportementType.EPILEPTIQUE : ComportementType.NORMAL);
+        this.comportement = FabriqueComportement.getInstance()
+                .creationComportement(this, epileptique ? ComportementType.EPILEPTIQUE : ComportementType.NORMAL);
     }
 
     public double getX() {

@@ -1,7 +1,5 @@
 package particules;
 
-import comportement.ComportementType;
-import comportement.FabriqueComportement;
 import etats.EtatParticule;
 
 import java.awt.*;
@@ -22,8 +20,6 @@ public class ParticuleB extends Particule {
         passageACTIVE = 100;
         passageFINDEVIE = 300;
         passageMORT = 700;
-        this.comportement = FabriqueComportement.getInstance()
-                .creationComportement(this, epileptique ? ComportementType.EPILEPTIQUE : ComportementType.NORMAL);
     }
 
     @Override
