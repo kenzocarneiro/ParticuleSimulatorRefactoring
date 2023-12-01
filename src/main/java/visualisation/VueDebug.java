@@ -8,8 +8,6 @@ import particules.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -140,40 +138,37 @@ public class VueDebug implements Observer {
 
         JMenuItem miDebug2 = new JMenuItem("Test collision");
         JOptionPane jop = new JOptionPane();
-        miDebug2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                List<Particule> particules = new ArrayList<>();
-                for (int i = 0; i < 2; i++) {
-                    int type = jop.showOptionDialog(null, "Type de " + (i + 1), "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"A", "B", "C"}, null);
-                    // int etat = jop.showOptionDialog(null, "Cycle de vie de " + (i + 1), "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Jeune", "Active", "FinDeVie"}, null);
-                    int excite = jop.showOptionDialog(null, "Etat de " + (i + 1), "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Normal", "Excite"}, null);
-                    int epileptique = jop.showOptionDialog(null, (i + 1) + " est-t'il epileptique ?", "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Oui", "Non"}, null);
+        miDebug2.addActionListener(e -> {
+            List<Particule> particules = new ArrayList<>();
+            for (int i = 0; i < 2; i++) {
+                int type = jop.showOptionDialog(null, "Type de " + (i + 1), "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"A", "B", "C"}, null);
+                // int etat = jop.showOptionDialog(null, "Cycle de vie de " + (i + 1), "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Jeune", "Active", "FinDeVie"}, null);
+                int excite = jop.showOptionDialog(null, "Etat de " + (i + 1), "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Normal", "Excite"}, null);
+                int epileptique = jop.showOptionDialog(null, (i + 1) + " est-t'il epileptique ?", "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Oui", "Non"}, null);
 
-                    if (type == -1 || excite == -1 || epileptique == -1) return;
+                if (type == -1 || excite == -1 || epileptique == -1) return;
 
-                    ParticuleType typeParticule = ParticuleType.values()[type];
-                    boolean estEpileptique = epileptique == 0;
+                ParticuleType typeParticule = ParticuleType.values()[type];
+                boolean estEpileptique = epileptique == 0;
 
-                    FabriqueParticule fabriqueParticule = null;
-                    switch (typeParticule) {
-                        case A:
-                            fabriqueParticule = FabriqueParticuleA.getInstance();
-                            break;
-                        case B:
-                            fabriqueParticule = FabriqueParticuleB.getInstance();
-                            break;
-                        case C:
-                            fabriqueParticule = FabriqueParticuleC.getInstance();
-                            break;
-                    }
-                    assert fabriqueParticule != null;
-                    Particule p = fabriqueParticule.creationParticule(controleur.getchampParticules(), 100 + i * 300, 400, Math.PI*i, estEpileptique);
-                    p.setEtat(excite == 0 ? FabriqueEtat.getInstance().creationEtat(p, EtatType.NORMAL, CycleType.ACTIVE) : FabriqueEtat.getInstance().creationEtat(p, EtatType.EXCITE, CycleType.ACTIVE));
-                    particules.add(p);
+                FabriqueParticule fabriqueParticule = null;
+                switch (typeParticule) {
+                    case A:
+                        fabriqueParticule = FabriqueParticuleA.getInstance();
+                        break;
+                    case B:
+                        fabriqueParticule = FabriqueParticuleB.getInstance();
+                        break;
+                    case C:
+                        fabriqueParticule = FabriqueParticuleC.getInstance();
+                        break;
                 }
-                particules.forEach(controleur::ajouterManuellement);
+                assert fabriqueParticule != null;
+                Particule p = fabriqueParticule.creationParticule(controleur.getchampParticules(), 100 + i * 500, 100, Math.PI*i, estEpileptique);
+                p.setEtat(excite == 0 ? FabriqueEtat.getInstance().creationEtat(p, EtatType.NORMAL, CycleType.ACTIVE) : FabriqueEtat.getInstance().creationEtat(p, EtatType.EXCITE, CycleType.ACTIVE));
+                particules.add(p);
             }
+            particules.forEach(controleur::ajouterManuellement);
         });
         mDebug.add(miDebug2);
 
@@ -183,9 +178,7 @@ public class VueDebug implements Observer {
         mDebug.add(slider);
 
         JMenuItem miDebug3 = new JMenuItem("Nettoyage de la zone");
-        miDebug3.addActionListener(e -> {
-            controleur.getchampParticules().exterminer();
-        });
+        miDebug3.addActionListener(e -> controleur.getchampParticules().exterminer());
         mDebug.add(miDebug3);
 
         return mDebug;

@@ -49,13 +49,11 @@ public class ChampDeParticules implements Champ, Sujet {
     @Override
     public void naissance(ParticuleType type, double x, double y) {
         this.nouvelleGeneration.add(FabriqueParticule.creationParticuleType(x, y, type, this));
-        this.controleur.populationEtendueInVivo();
     }
 
     @Override
     public void ajouterManuellement(Particule p) {
         this.nouvelleGeneration.add(p);
-        this.controleur.populationEtendueInVivo();
     }
 
     @Override
