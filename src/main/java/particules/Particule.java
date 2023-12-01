@@ -192,6 +192,10 @@ public abstract class Particule {
         }
     }
 
+    public void setUnnotifiedEtat(EtatParticule etat) {
+        this.etat = etat;
+    }
+
     /**
      * Methode appelee a chaque fois qu'un deplacement est fait
      */

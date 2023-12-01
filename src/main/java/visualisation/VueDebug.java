@@ -144,12 +144,10 @@ public class VueDebug implements Observer {
                 int type = jop.showOptionDialog(null, "Type de " + (i + 1), "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"A", "B", "C"}, null);
                 // int etat = jop.showOptionDialog(null, "Cycle de vie de " + (i + 1), "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Jeune", "Active", "FinDeVie"}, null);
                 int excite = jop.showOptionDialog(null, "Etat de " + (i + 1), "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Normal", "Excite"}, null);
-                int epileptique = jop.showOptionDialog(null, (i + 1) + " est-t'il epileptique ?", "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Oui", "Non"}, null);
 
-                if (type == -1 || excite == -1 || epileptique == -1) return;
+                if (type == -1 || excite == -1) return;
 
                 ParticuleType typeParticule = ParticuleType.values()[type];
-                boolean estEpileptique = epileptique == 0;
 
                 FabriqueParticule fabriqueParticule = null;
                 switch (typeParticule) {
@@ -164,11 +162,19 @@ public class VueDebug implements Observer {
                         break;
                 }
                 assert fabriqueParticule != null;
+
+                boolean estEpileptique = false;
+                if (!typeParticule.equals(ParticuleType.C)) {
+                    int epileptique = jop.showOptionDialog(null, (i + 1) + " est-t'il epileptique ?", "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Oui", "Non"}, null);
+                    if (epileptique == -1) return;
+                    estEpileptique = epileptique == 0;
+                }
+
                 // Pour une collision entre C et A avec C excité guérisseur et A excité épilétique
                 // ET   une collision entre B et A avec B excité normale et A excité épilétique
                 // -> x = 100 + i * 475
                 Particule p = fabriqueParticule.creationParticule(controleur.getchampParticules(), 100 + i * 475, 100, Math.PI*i, estEpileptique);
-                p.setEtat(excite == 0 ? FabriqueEtat.getInstance().creationEtat(p, EtatType.NORMAL, CycleType.ACTIVE) : FabriqueEtat.getInstance().creationEtat(p, EtatType.EXCITE, CycleType.ACTIVE));
+                p.setUnnotifiedEtat(excite == 0 ? FabriqueEtat.getInstance().creationEtat(p, EtatType.NORMAL, CycleType.ACTIVE) : FabriqueEtat.getInstance().creationEtat(p, EtatType.EXCITE, CycleType.ACTIVE));
                 particules.add(p);
             }
             particules.forEach(controleur::ajouterManuellement);

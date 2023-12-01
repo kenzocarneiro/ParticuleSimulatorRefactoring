@@ -22,7 +22,6 @@ public class ParticuleA extends Particule {
         passageACTIVE = 500;
         passageFINDEVIE = 1500;
         passageMORT = 2000;
-        //this.comportement = epileptique ? new ComportementEpileptique(this) : new ComportementNormal(this);
         this.comportement = FabriqueComportement.getInstance()
                 .creationComportement(this, epileptique ? ComportementType.EPILEPTIQUE : ComportementType.NORMAL);
     }
