@@ -1,5 +1,6 @@
 package particules;
 
+import comportement.Comportement;
 import comportement.ComportementEpileptique;
 import comportement.ComportementNormal;
 import etats.EtatNormalJeune;
@@ -8,8 +9,6 @@ import etats.EtatParticule;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import comportement.Comportement;
 
 
 public abstract class Particule {
@@ -317,4 +316,8 @@ public abstract class Particule {
     }
 
     public abstract Color getCouleur();
+
+    public double getVitesseExcite() {
+        return getVitesseOriginale() * 1.5;
+    }
 }
