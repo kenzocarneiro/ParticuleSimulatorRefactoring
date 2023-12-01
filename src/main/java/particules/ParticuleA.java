@@ -44,7 +44,7 @@ public class ParticuleA extends Particule {
             p.setEtat(p.intervertirEtat());
             return this.intervertirEtat();
         }
-        // B collides with C (and both are Active and Excited)
+        // A collides with C (and both are Active and Excited)
         else if (p.getType().equals(ParticuleType.C)) {
             p.setEtat(p.getEtat().calme());
             return this.getEtat().calme();
