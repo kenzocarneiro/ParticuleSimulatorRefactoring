@@ -134,12 +134,9 @@ public class VueDebug implements Observer {
     public Component getMenuDebug(Controleur controleur) {
         JMenu mDebug = new JMenu("Debug");
         JMenuItem miDebug = new JMenuItem("Afficher les détails");
-        miDebug.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                debug = !debug;
-                majNbParticulesText();
-            }
+        miDebug.addActionListener(e -> {
+            debug = !debug;
+            majNbParticulesText();
         });
         mDebug.add(miDebug);
 
@@ -155,6 +152,8 @@ public class VueDebug implements Observer {
                     int excite = jop.showOptionDialog(null, "Etat de " + (i + 1), "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Normal", "Excite"}, null);
                     int epileptique = jop.showOptionDialog(null, (i + 1) + " est-t'il epileptique ?", "Test collision", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Oui", "Non"}, null);
 
+                    if (type == -1 || excite == -1 || epileptique == -1) return;
+
                     ParticuleType typeParticule = ParticuleType.values()[type];
                     boolean estEpileptique = epileptique == 0;
 
@@ -166,13 +165,13 @@ public class VueDebug implements Observer {
                         case B:
                             fabriqueParticule = FabriqueParticuleB.getInstance();
                             break;
-//                        case C:
-//                            p = FabriqueParticuleC.getInstance().creationParticule(champ, 50, 50, 0);
-//                            break;
+                        case C:
+                            fabriqueParticule = FabriqueParticuleC.getInstance();
+                            break;
                     }
                     assert fabriqueParticule != null;
-                    Particule p = fabriqueParticule.creationParticule(controleur.getchampParticules(), 100 + i * 600, 100, Math.PI*i, estEpileptique);
-                    p.setEtat(excite == 0 ? new EtatNormalActive(p) : new EtatExciteActive(p));
+                    Particule p = fabriqueParticule.creationParticule(controleur.getchampParticules(), 100 + i * 300, 400, Math.PI*i, estEpileptique);
+                    p.setEtat(excite == 0 ? FabriqueEtat.getInstance().creationEtat(p, EtatType.NORMAL, CycleType.ACTIVE) : FabriqueEtat.getInstance().creationEtat(p, EtatType.EXCITE, CycleType.ACTIVE));
                     particules.add(p);
                 }
                 particules.forEach(controleur::ajouterManuellement);

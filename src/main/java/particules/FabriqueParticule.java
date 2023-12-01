@@ -24,6 +24,10 @@ public abstract class FabriqueParticule {
                 result = FabriqueParticuleB.getInstance().creationParticule(champ, x, y, direction, epileptique);
                 break;
             }
+            case C: {
+                result = FabriqueParticuleC.getInstance().creationParticule(champ, x, y, direction, epileptique);
+                break;
+            }
         }
 
         return result;

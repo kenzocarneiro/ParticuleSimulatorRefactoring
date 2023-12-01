@@ -76,12 +76,6 @@ public class ChampDeParticules implements Champ, Sujet {
         return population;
     }
 
-    public void removeParticule(Particule p) {
-        this.population.remove(p);
-        this.aEnvoyerObservateur.add(p);
-        notifyObserversRemove();
-    }
-
     @Override
     public void supprimerLesParticulesDecedees() {
         HashSet<Particule> particulesMortes = new HashSet<>();
@@ -148,11 +142,6 @@ public class ChampDeParticules implements Champ, Sujet {
         for (Observer o : this.observers) {
             o.updateComportement(p.getComportement(), comportement);
         }
-    }
-
-    public void addParticule(Particule p1){
-        this.nouvelleGeneration.add(p1);
-        updatePopulation();
     }
 
 }

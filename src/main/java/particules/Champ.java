@@ -14,8 +14,6 @@ public interface Champ extends Sujet {
 
     List<Particule> getParticules();
 
-    void removeParticule(Particule p);
-
     void ajouterUnePopulation(ParticuleType type, int nb);
 
     void supprimerLesParticulesDecedees();
@@ -25,8 +23,6 @@ public interface Champ extends Sujet {
     void naissance(ParticuleType type, double x, double y);
 
     void updatePopulation();
-
-    void addParticule(Particule p1);
 
     void ajouterManuellement(Particule p);
 }

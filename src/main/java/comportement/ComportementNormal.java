@@ -7,10 +7,6 @@ public class ComportementNormal extends Comportement {
         super(particule);
     }
 
-    public boolean isVisible() {
-        return true;
-    }
-
     public void contamine(Particule p) {
     }
 

@@ -16,14 +16,14 @@ public class EtatExciteFinDeVie extends EtatExcite {
     @Override
     public EtatParticule gestionCycle() {
         if (particule.getNbTour() == particule.getPassageMORT()) {
-            return new EtatExciteMorte(particule);
+            return FabriqueEtat.getInstance().creationEtat(particule, EtatType.EXCITE, CycleType.MORTE);
         }
         return this;
     }
 
     @Override
     public EtatParticule intervertirEtat() {
-        return new EtatNormalFinDeVie(particule);
+        return FabriqueEtat.getInstance().creationEtat(particule, EtatType.NORMAL, CycleType.FIN_DE_VIE);
     }
 
     @Override

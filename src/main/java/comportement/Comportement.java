@@ -9,9 +9,17 @@ public abstract class Comportement {
         this.particule = particule;
     }
 
-    public abstract boolean isVisible();
+    public boolean isVisible(){
+        return true;
+    }
 
     public abstract void contamine(Particule p);
+
+    public boolean resisteEpilepsie(){
+        return false;
+    }
+
+
 
     public abstract ComportementType getComportementType();
 }
