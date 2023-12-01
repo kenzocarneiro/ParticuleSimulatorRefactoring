@@ -1,14 +1,13 @@
 package visualisation;
 
-import comportement.ComportementEpileptique;
-import etats.EtatExcite;
+import comportement.ComportementType;
+import etats.EtatType;
 import particules.Particule;
 
 import java.awt.*;
 
 public class VueParticule {
-    private Particule p = null;
-    private Color couleurParticule = null;
+    final private Particule p;
 
     public VueParticule(Particule p) {
         this.p = p;
@@ -31,14 +30,14 @@ public class VueParticule {
 
         int epaisseur = Particule.getEpaisseur();
 
-        if (p.getComportement() instanceof ComportementEpileptique) {
+        if (p.getComportement().getComportementType().equals(ComportementType.EPILEPTIQUE)) {
             g.fillRect(x - (epaisseur / 2), y + (epaisseur / 2), epaisseur, epaisseur);
         }
         else {
             g.fillOval(x - (epaisseur / 2), y + (epaisseur / 2), epaisseur, epaisseur);
         }
 
-        if (p.getEtat() instanceof EtatExcite) {
+        if (p.getEtat().getEtatType().equals(EtatType.EXCITE)) {
             g.drawOval(x - (epaisseur / 2) - 5, y + (epaisseur / 2) - 5, epaisseur + 10, epaisseur + 10);
         }
     }
