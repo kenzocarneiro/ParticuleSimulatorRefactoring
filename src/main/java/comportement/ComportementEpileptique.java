@@ -1,6 +1,6 @@
 package comportement;
 
-import etats.EtatExcite;
+import etats.EtatType;
 import particules.Particule;
 
 public class ComportementEpileptique extends Comportement {
@@ -13,7 +13,7 @@ public class ComportementEpileptique extends Comportement {
     }
 
     public void contamine(Particule p) {
-        if(this.particule.estExciteEtActive() && p.getEtat() instanceof EtatExcite) {
+        if(this.particule.estExciteEtActive() && p.getEtat().getEtatType().equals(EtatType.EXCITE) && !p.getComportement().resisteEpilepsie()) {
             p.setComportement(new ComportementEpileptique(p));
         }
     }

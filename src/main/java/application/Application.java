@@ -5,10 +5,10 @@ import controleur.FabriqueControleur;
 
 public class Application {
 
-    private static Controleur c;
+    private static Controleur controleur;
 
-    public static Controleur getC() {
-        return c;
+    public static Controleur getControleur() {
+        return controleur;
     }
 
     public static void main(String[] args) {
@@ -16,8 +16,8 @@ public class Application {
          * Création du contrôleur en lui précisant les dimensions du champ de particules
          * Le contrôleur après creation lance la simulation
          */
-        c = FabriqueControleur.getInstance().creationControleur("Champ de particules", 800, 600);
-        c.lancerSimulation();
+        controleur = FabriqueControleur.getInstance().creationControleur("Champ de particules", 800, 600);
+        controleur.lancerSimulation();
     }
 
 }

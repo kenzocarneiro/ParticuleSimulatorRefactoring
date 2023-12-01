@@ -5,7 +5,7 @@ import particules.Particule;
 public abstract class EtatExcite extends EtatParticule {
     public EtatExcite(Particule particule) {
         super(particule);
-        particule.setProchaineVitesse(particule.getVitesseOriginale() * 1.5);
+        particule.setProchaineVitesse(particule.getVitesseExcite());
         particule.setVitesseCourante(particule.getProchaineVitesse());
     }
 

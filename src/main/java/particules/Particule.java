@@ -7,7 +7,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public abstract class Particule {
 
     private static final int epaisseur = 10;
@@ -56,7 +55,6 @@ public abstract class Particule {
         this.prochaineDirection = dC;
         this.etat = FabriqueEtat.getInstance().creationEtat(this, EtatType.NORMAL, CycleType.JEUNE);
         this.enCollision = false;
-        //this.comportement = epileptique ? new ComportementEpileptique(this) : new ComportementNormal(this);
         this.comportement = FabriqueComportement.getInstance().creationComportement(this, epileptique ? ComportementType.EPILEPTIQUE : ComportementType.NORMAL);
     }
 
@@ -314,4 +312,8 @@ public abstract class Particule {
     }
 
     public abstract Color getCouleur();
+
+    public double getVitesseExcite() {
+        return getVitesseOriginale() * 1.5;
+    }
 }
