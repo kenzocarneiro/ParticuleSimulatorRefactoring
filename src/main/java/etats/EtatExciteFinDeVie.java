@@ -25,4 +25,9 @@ public class EtatExciteFinDeVie extends EtatExcite {
     public EtatParticule intervertirEtat() {
         return new EtatNormalFinDeVie(particule);
     }
+
+    @Override
+    public CycleType getCycleType() {
+        return CycleType.FIN_DE_VIE;
+    }
 }

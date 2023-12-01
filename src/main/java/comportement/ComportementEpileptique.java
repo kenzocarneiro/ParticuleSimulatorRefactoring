@@ -17,4 +17,8 @@ public class ComportementEpileptique extends Comportement {
             p.setComportement(new ComportementEpileptique(p));
         }
     }
+
+    public ComportementType getComportementType() {
+        return ComportementType.EPILEPTIQUE;
+    }
 }

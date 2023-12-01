@@ -24,4 +24,9 @@ public class EtatNormalJeune extends EtatNormal {
     public EtatParticule intervertirEtat() {
         return new EtatExciteJeune(particule);
     }
+
+    @Override
+    public CycleType getCycleType() {
+        return CycleType.JEUNE;
+    }
 }

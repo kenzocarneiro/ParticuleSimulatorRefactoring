@@ -22,4 +22,9 @@ public class EtatNormalMorte extends EtatNormal {
     public boolean estMorte() {
         return true;
     }
+
+    @Override
+    public CycleType getCycleType() {
+        return CycleType.MORTE;
+    }
 }

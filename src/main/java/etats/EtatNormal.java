@@ -17,4 +17,9 @@ public abstract class EtatNormal extends EtatParticule {
     public EtatParticule excite() {
         return intervertirEtat();
     }
+
+    @Override
+    public EtatType getEtatType() {
+        return EtatType.NORMAL;
+    }
 }

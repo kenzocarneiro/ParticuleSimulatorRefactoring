@@ -22,4 +22,9 @@ public class EtatExciteMorte extends EtatExcite {
     public boolean estMorte() {
         return true;
     }
+
+    @Override
+    public CycleType getCycleType() {
+        return CycleType.MORTE;
+    }
 }

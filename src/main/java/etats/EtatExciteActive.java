@@ -31,4 +31,9 @@ public class EtatExciteActive extends EtatExcite {
     public boolean estExciteEtActive() {
         return true;
     }
+
+    @Override
+    public CycleType getCycleType() {
+        return CycleType.ACTIVE;
+    }
 }

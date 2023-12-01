@@ -1,12 +1,9 @@
 package visualisation;
 
 import comportement.Comportement;
-import comportement.ComportementEpileptique;
-import comportement.ComportementNormal;
+import comportement.ComportementType;
 import controleur.Controleur;
-import etats.EtatExciteActive;
-import etats.EtatNormalActive;
-import etats.EtatParticule;
+import etats.*;
 import particules.*;
 
 import javax.swing.*;
@@ -30,12 +27,12 @@ public class VueDebug implements Observer {
                     particules[i]--;
                 }
             }
-            if (particule.getEtat().getClass().getSimpleName().contains("Normal")) nbNormal--;
-            if (particule.getEtat().getClass().getSimpleName().contains("Excite")) nbExcite--;
-            if (particule.getComportement().getClass().getSimpleName().contains("Normal")) nbComportementNormal--;
-            if (particule.getComportement().getClass().getSimpleName().contains("Epileptique"))
-                nbComportementEpileptique--;
+            if (particule.getEtat().getEtatType().equals(EtatType.NORMAL)) nbNormal--;
+            else if (particule.getEtat().getEtatType().equals(EtatType.EXCITE)) nbExcite--;
+            if (particule.getComportement().getComportementType().equals(ComportementType.NORMAL)) nbComportementNormal--;
+            else if (particule.getComportement().getComportementType().equals(ComportementType.EPILEPTIQUE)) nbComportementEpileptique--;
         }
+
         majNbParticulesText();
     }
 
@@ -49,37 +46,40 @@ public class VueDebug implements Observer {
             }
             nbNormal++;
             nbJeune++;
-            if (particule.getComportement() instanceof ComportementNormal) nbComportementNormal++;
-            if (particule.getComportement() instanceof ComportementEpileptique) nbComportementEpileptique++;
+            if (particule.getComportement().getComportementType().equals(ComportementType.NORMAL)) nbComportementNormal++;
+            if (particule.getComportement().getComportementType().equals(ComportementType.EPILEPTIQUE)) nbComportementEpileptique++;
         }
+
         majNbParticulesText();
     }
 
     @Override
     public void updateEtat(EtatParticule oldEtat, EtatParticule newEtat) {
-        if (oldEtat.getClass().getSimpleName().contains("Normal")) nbNormal--;
-        if (oldEtat.getClass().getSimpleName().contains("Excite")) nbExcite--;
-        if (oldEtat.getClass().getSimpleName().contains("Jeune")) nbJeune--;
-        if (oldEtat.getClass().getSimpleName().contains("Active")) nbActive--;
-        if (oldEtat.getClass().getSimpleName().contains("FinDeVie")) nbFinDeVie--;
+        if (oldEtat.getEtatType().equals(EtatType.NORMAL)) nbNormal--;
+        else if (oldEtat.getEtatType().equals(EtatType.EXCITE)) nbExcite--;
+        if (oldEtat.getCycleType().equals(CycleType.JEUNE)) nbJeune--;
+        else if (oldEtat.getCycleType().equals(CycleType.ACTIVE)) nbActive--;
+        else if (oldEtat.getCycleType().equals(CycleType.FIN_DE_VIE)) nbFinDeVie--;
 
-        if (newEtat.getClass().getSimpleName().contains("Normal")) nbNormal++;
-        if (newEtat.getClass().getSimpleName().contains("Excite")) nbExcite++;
-        if (newEtat.getClass().getSimpleName().contains("Jeune")) nbJeune++;
-        if (newEtat.getClass().getSimpleName().contains("Active")) nbActive++;
-        if (newEtat.getClass().getSimpleName().contains("FinDeVie")) nbFinDeVie++;
+        if (newEtat.getEtatType().equals(EtatType.NORMAL)) nbNormal++;
+        else if (newEtat.getEtatType().equals(EtatType.EXCITE)) nbExcite++;
+        if (newEtat.getCycleType().equals(CycleType.JEUNE)) nbJeune++;
+        else if (newEtat.getCycleType().equals(CycleType.ACTIVE)) nbActive++;
+        else if (newEtat.getCycleType().equals(CycleType.FIN_DE_VIE)) nbFinDeVie++;
+
         majNbParticulesText();
     }
 
     @Override
     public void updateComportement(Comportement oldComportement, Comportement newComportement) {
         if (oldComportement != null) {
-            if (oldComportement instanceof ComportementNormal) nbComportementNormal--;
-            if (oldComportement instanceof ComportementEpileptique) nbComportementEpileptique--;
+            if (oldComportement.getComportementType().equals(ComportementType.NORMAL)) nbComportementNormal--;
+            else if (oldComportement.getComportementType().equals(ComportementType.EPILEPTIQUE)) nbComportementEpileptique--;
         }
 
-        if (newComportement instanceof ComportementNormal) nbComportementNormal++;
-        if (newComportement instanceof ComportementEpileptique) nbComportementEpileptique++;
+        if (newComportement.getComportementType().equals(ComportementType.NORMAL)) nbComportementNormal++;
+        else if (newComportement.getComportementType().equals(ComportementType.EPILEPTIQUE)) nbComportementEpileptique++;
+
         majNbParticulesText();
     }
 

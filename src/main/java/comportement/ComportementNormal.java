@@ -14,4 +14,7 @@ public class ComportementNormal extends Comportement {
     public void contamine(Particule p) {
     }
 
+    public ComportementType getComportementType() {
+        return ComportementType.NORMAL;
+    }
 }

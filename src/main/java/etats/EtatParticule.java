@@ -98,4 +98,7 @@ public abstract class EtatParticule {
     public abstract EtatParticule meurt();
 
     public abstract EtatParticule excite();
+
+    public abstract EtatType getEtatType();
+    public abstract CycleType getCycleType();
 }

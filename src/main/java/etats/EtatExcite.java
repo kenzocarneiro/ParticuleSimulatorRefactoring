@@ -18,4 +18,9 @@ public abstract class EtatExcite extends EtatParticule {
     public EtatParticule excite() {
         return this;
     }
+
+    @Override
+    public EtatType getEtatType() {
+        return EtatType.EXCITE;
+    }
 }
