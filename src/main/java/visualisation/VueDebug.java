@@ -16,10 +16,6 @@ import java.util.Map;
 public class VueDebug implements Observer {
     private boolean debug = false;
     
-    //ancien
-    private final JLabel texte = new JLabel();
-    //nouveau
-    private boolean useWidget = true;
     private final JPanel panelInfoParticules = new JPanel();
     private final GridLayout gridLayout = new GridLayout();
     
@@ -121,11 +117,8 @@ public class VueDebug implements Observer {
         }
         labelFixeTotalComportements = ajoutFixeLabel(new StringBuilder("Total"));
         labelTotalComportements = ajoutVariableLabel();
-
-        if(useWidget)
-            majPanelInfoParticules();
-        else
-            majNbParticulesText();
+        
+        majPanelInfoParticules();
     }
 
     private int maxTailleEnum() {
@@ -197,63 +190,27 @@ public class VueDebug implements Observer {
     @Override
     public void updateRemove(List<Particule> particules) {
         particules.forEach(this::decrementParticule);
-        if(useWidget)
-            majPanelInfoParticules();
-        else
-            majNbParticulesText();
+        majPanelInfoParticules();
     }
 
     @Override
     public void updateAdd(List<Particule> particules) {
         particules.forEach(this::incrementParticule);
-        if(useWidget)
-            majPanelInfoParticules();
-        else
-            majNbParticulesText();
+        majPanelInfoParticules();
     }
 
     @Override
     public void updateEtat(EtatParticule oldEtat, EtatParticule newEtat) {
         decrementEtat(oldEtat);
         incrementEtat(newEtat);
-        if(useWidget)
-            majPanelInfoParticules();
-        else
-            majNbParticulesText();
+        majPanelInfoParticules();
     }
 
     @Override
     public void updateComportement(Comportement oldComportement, Comportement newComportement) {
         decrementComportement(oldComportement);
         incrementComportement(newComportement);
-        if(useWidget)
-            majPanelInfoParticules();
-        else
-            majNbParticulesText();
-    }
-
-    private void majNbParticulesText() {
-        StringBuilder texte = new StringBuilder("<html>");
-        int somme = 0;
-        for (ParticuleType particuleType : ParticuleType.values()) {
-            texte.append("Particules ").append(particuleType).append(" : ").append(nbParticules.get(particuleType));
-            texte.append(" , ");
-            somme += nbParticules.get(particuleType);
-        }
-        if (debug) {
-            texte.append(" => total : ").append(somme);
-            texte.append("<br/>");
-            nbEtats.forEach((etatType, integer) -> texte.append(etatType).append(" : ").append(integer).append(", "));
-            texte.append(" => total : ").append(nbEtats.values().stream().mapToInt(Integer::intValue).sum());
-            texte.append("<br/>");
-            nbCycles.forEach((cycleType, integer) -> texte.append(cycleType).append(" : ").append(integer).append(", "));
-            texte.append(" => total : ").append(nbCycles.values().stream().mapToInt(Integer::intValue).sum());
-            texte.append("<br/>");
-            nbComportements.forEach((comportementType, integer) -> texte.append(comportementType).append(" : ").append(integer).append(", "));
-            texte.append(" => total : ").append(nbComportements.values().stream().mapToInt(Integer::intValue).sum());
-        }
-        texte.append("</html>");
-        this.texte.setText(texte.toString());
+        majPanelInfoParticules();
     }
 
     private void majPanelInfoParticules() {
@@ -307,20 +264,6 @@ public class VueDebug implements Observer {
         }
         labelFixeTotalComportements.setVisible(debug);
         labelTotalComportements.setVisible(debug);
-
-
-        // if (debug) {
-        //     texte.append(" => total : ").append(somme);
-        //     texte.append("<br/>");
-        //     nbEtats.forEach((etatType, integer) -> texte.append(etatType).append(" : ").append(integer).append(", "));
-        //     texte.append(" => total : ").append(nbEtats.values().stream().mapToInt(Integer::intValue).sum());
-        //     texte.append("<br/>");
-        //     nbCycles.forEach((cycleType, integer) -> texte.append(cycleType).append(" : ").append(integer).append(", "));
-        //     texte.append(" => total : ").append(nbCycles.values().stream().mapToInt(Integer::intValue).sum());
-        //     texte.append("<br/>");
-        //     nbComportements.forEach((comportementType, integer) -> texte.append(comportementType).append(" : ").append(integer).append(", "));
-        //     texte.append(" => total : ").append(nbComportements.values().stream().mapToInt(Integer::intValue).sum());
-        // }
     }
 
     public Component getMenuDebug(Controleur controleur) {
@@ -328,10 +271,7 @@ public class VueDebug implements Observer {
         JMenuItem miDebug = new JMenuItem("Afficher les détails");
         miDebug.addActionListener(e -> {
             debug = !debug;
-            if(useWidget)
-                majPanelInfoParticules();
-            else
-                majNbParticulesText();
+            majPanelInfoParticules();
         });
         mDebug.add(miDebug);
 
@@ -384,10 +324,6 @@ public class VueDebug implements Observer {
         mDebug.add(miDebug3);
 
         return mDebug;
-    }
-
-    public Component getText() {
-        return texte;
     }
 
     public JPanel getPanelInfoParticules() {
