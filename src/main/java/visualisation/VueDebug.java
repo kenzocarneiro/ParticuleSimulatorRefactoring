@@ -164,7 +164,10 @@ public class VueDebug implements Observer {
                         break;
                 }
                 assert fabriqueParticule != null;
-                Particule p = fabriqueParticule.creationParticule(controleur.getchampParticules(), 100 + i * 500, 100, Math.PI*i, estEpileptique);
+                // Pour une collision entre C et A avec C excité guérisseur et A excité épilétique
+                // ET   une collision entre B et A avec B excité normale et A excité épilétique
+                // -> x = 100 + i * 475
+                Particule p = fabriqueParticule.creationParticule(controleur.getchampParticules(), 100 + i * 475, 100, Math.PI*i, estEpileptique);
                 p.setEtat(excite == 0 ? FabriqueEtat.getInstance().creationEtat(p, EtatType.NORMAL, CycleType.ACTIVE) : FabriqueEtat.getInstance().creationEtat(p, EtatType.EXCITE, CycleType.ACTIVE));
                 particules.add(p);
             }
