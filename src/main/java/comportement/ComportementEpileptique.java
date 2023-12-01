@@ -13,7 +13,7 @@ public class ComportementEpileptique extends Comportement {
     }
 
     public void contamine(Particule p) {
-        if(this.particule.estExciteEtActive() && p.getEtat().getEtatType().equals(EtatType.EXCITE)) {
+        if(this.particule.estExciteEtActive() && p.getEtat().getEtatType().equals(EtatType.EXCITE) && !p.getComportement().resisteEpilepsie()) {
             p.setComportement(new ComportementEpileptique(p));
         }
     }

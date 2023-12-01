@@ -59,7 +59,6 @@ public abstract class Particule {
         this.prochaineDirection = dC;
         this.etat = new EtatNormalJeune(this);
         this.enCollision = false;
-        this.comportement = epileptique ? new ComportementEpileptique(this) : new ComportementNormal(this);
     }
 
     public double getX() {

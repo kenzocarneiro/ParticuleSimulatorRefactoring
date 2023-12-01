@@ -1,5 +1,7 @@
 package particules;
 
+import comportement.ComportementEpileptique;
+import comportement.ComportementNormal;
 import etats.EtatParticule;
 
 import java.awt.*;
@@ -13,13 +15,14 @@ public class ParticuleA extends Particule {
         return couleur;
     }
 
-    public ParticuleA(Champ c, double x, double y, double dC, boolean epiletique) {
-        super(c, x, y, dC, epiletique);
+    public ParticuleA(Champ c, double x, double y, double dC, boolean epileptique) {
+        super(c, x, y, dC, epileptique);
         vitesseCourante = vitesseOriginale;
         resetVitesse();
         passageACTIVE = 500;
         passageFINDEVIE = 1500;
         passageMORT = 2000;
+        this.comportement = epileptique ? new ComportementEpileptique(this) : new ComportementNormal(this);
     }
 
     @Override

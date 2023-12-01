@@ -47,7 +47,7 @@ public abstract class EtatParticule {
             p.setProchaineDirection(p.getDirectionCourante() + Math.PI);
         }
 
-        particule.contamine(p);// todo a revoir pour la particule C
+        particule.contamine(p);
         p.contamine(particule);
 
         Particule.collisionsSimplesTraitees.add(p);

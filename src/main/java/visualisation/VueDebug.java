@@ -148,7 +148,7 @@ public class VueDebug implements Observer {
                             break;
                     }
                     assert fabriqueParticule != null;
-                    Particule p = fabriqueParticule.creationParticule(controleur.getchampParticules(), 100 + i * 400, 100, Math.PI*i, estEpileptique);
+                    Particule p = fabriqueParticule.creationParticule(controleur.getchampParticules(), 100 + i * 410, 100, Math.PI*i, estEpileptique);
                     p.setEtat(excite == 0 ? new EtatNormalActive(p) : new EtatExciteActive(p));
                     particules.add(p);
                 }
