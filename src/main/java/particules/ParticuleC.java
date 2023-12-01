@@ -26,8 +26,8 @@ public class ParticuleC extends Particule{
 
     @Override
     public EtatParticule handleCollision(Particule p) {
-        p.setEtat(p.intervertirEtat());
-        return this.intervertirEtat();
+        p.setEtat(p.getEtat().calme());
+        return this.getEtat().calme();
     }
 
     public ParticuleType getType() {

@@ -39,12 +39,16 @@ public class ParticuleA extends Particule {
             p.meurt();
             this.meurt();
         }
-
         // A collides with B (and both are Active and Excited)
-        if (p.getType().equals(ParticuleType.B)) {
+        else if (p.getType().equals(ParticuleType.B)) {
             this.champ.naissance(ParticuleType.A, p.x, p.y);
             p.setEtat(p.intervertirEtat());
             return this.intervertirEtat();
+        }
+        // B collides with C (and both are Active and Excited)
+        else if (p.getType().equals(ParticuleType.C)) {
+            p.setEtat(p.getEtat().calme());
+            return this.getEtat().calme();
         }
         return this.getEtat();
     }
