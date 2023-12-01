@@ -15,38 +15,148 @@ import java.util.Map;
 
 public class VueDebug implements Observer {
     private boolean debug = false;
-    private final JLabel texte = new JLabel();
+    
+    private final JPanel panelInfoParticules = new JPanel();
+    private final GridLayout gridLayout = new GridLayout();
+    
+    private Map<ParticuleType, JLabel> labelFixeNbParticules;
+    private Map<ParticuleType, JLabel> labelNbParticules;
+    private JLabel labelFixeTotalParticules;
+    private JLabel labelTotalParticules;
 
-    Map<ParticuleType, Integer> nbParticules;
+    private Map<EtatType, JLabel> labelFixeNbEtats;
+    private Map<EtatType, JLabel> labelNbEtats;
+    private JLabel labelFixeTotalEtats;
+    private JLabel labelTotalEtats;
 
-    Map<EtatType, Integer> nbEtats;
-    Map<CycleType, Integer> nbCycles;
-    Map<ComportementType, Integer> nbComportements;
+    private Map<CycleType, JLabel> labelFixeNbCycles;
+    private Map<CycleType, JLabel> labelNbCycles;
+    private JLabel labelFixeTotalCycles;
+    private JLabel labelTotalCycles;
+
+    private Map<ComportementType, JLabel> labelFixeNbComportements;
+    private Map<ComportementType, JLabel> labelNbComportements;
+    private JLabel labelFixeTotalComportements;
+    private JLabel labelTotalComportements;
+
+    // informations sur les particules
+    private Map<ParticuleType, Integer> nbParticules;
+    private Map<EtatType, Integer> nbEtats;
+    private Map<CycleType, Integer> nbCycles;
+    private Map<ComportementType, Integer> nbComportements;
 
     public VueDebug() {
+        gridLayout.setColumns(2 * (maxTailleEnum() + 1));
+        gridLayout.setRows(0);
+        panelInfoParticules.setLayout(gridLayout);
+        
+        // particules
+        labelFixeNbParticules = new HashMap<ParticuleType, JLabel>();
+        labelNbParticules = new HashMap<ParticuleType, JLabel>();
         nbParticules = new HashMap<ParticuleType, Integer>() {{
             for (ParticuleType particuleType : ParticuleType.values()) {
                 put(particuleType, 0);
+                labelFixeNbParticules.put(particuleType, ajoutFixeLabel(new StringBuilder("Particules ").append(particuleType)));
+                labelNbParticules.put(particuleType, ajoutVariableLabel());
             }
         }};
+        int ajoutVide = maxTailleEnum() - ParticuleType.values().length;
+        for (int i = 0; i < 2*ajoutVide; i++) {
+            ajoutFixeLabel(new StringBuilder(""), true);
+        }
+        labelFixeTotalParticules = ajoutFixeLabel(new StringBuilder("Total"));
+        labelTotalParticules = ajoutVariableLabel();
 
+        // etats
+        labelFixeNbEtats = new HashMap<EtatType, JLabel>();
+        labelNbEtats = new HashMap<EtatType, JLabel>();
         nbEtats = new HashMap<EtatType, Integer>() {{
             for (EtatType etatType : EtatType.values()) {
                 put(etatType, 0);
+                labelFixeNbEtats.put(etatType, ajoutFixeLabel(new StringBuilder(etatType.toString().toLowerCase())));
+                labelNbEtats.put(etatType, ajoutVariableLabel());
             }
         }};
+        ajoutVide = maxTailleEnum() - EtatType.values().length;
+        for (int i = 0; i < 2*ajoutVide; i++) {
+            ajoutFixeLabel(new StringBuilder(""), true);
+        }
+        labelFixeTotalEtats = ajoutFixeLabel(new StringBuilder("Total"));
+        labelTotalEtats = ajoutVariableLabel();
+
+        // cycles
+        labelFixeNbCycles = new HashMap<CycleType, JLabel>();
+        labelNbCycles = new HashMap<CycleType, JLabel>();
         nbCycles = new HashMap<CycleType, Integer>() {{
             for (CycleType cycleType : CycleType.values()) {
                 put(cycleType, 0);
+                labelFixeNbCycles.put(cycleType, ajoutFixeLabel(new StringBuilder(cycleType.toString().toLowerCase())));
+                labelNbCycles.put(cycleType, ajoutVariableLabel());
             }
         }};
+        ajoutVide = maxTailleEnum() - CycleType.values().length;
+        for (int i = 0; i < 2*ajoutVide; i++) {
+            ajoutFixeLabel(new StringBuilder(""), true);
+        }
+        labelFixeTotalCycles = ajoutFixeLabel(new StringBuilder("Total"));
+        labelTotalCycles = ajoutVariableLabel();
+
+        // comportements
+        labelFixeNbComportements = new HashMap<ComportementType, JLabel>();
+        labelNbComportements = new HashMap<ComportementType, JLabel>();
         nbComportements = new HashMap<ComportementType, Integer>() {{
             for (ComportementType comportementType : ComportementType.values()) {
                 put(comportementType, 0);
+                labelFixeNbComportements.put(comportementType, ajoutFixeLabel(new StringBuilder(comportementType.toString().toLowerCase())));
+                labelNbComportements.put(comportementType, ajoutVariableLabel());
             }
         }};
+        ajoutVide = maxTailleEnum() - ComportementType.values().length;
+        for (int i = 0; i < 2*ajoutVide; i++) {
+            ajoutFixeLabel(new StringBuilder(""), true);
+        }
+        labelFixeTotalComportements = ajoutFixeLabel(new StringBuilder("Total"));
+        labelTotalComportements = ajoutVariableLabel();
+        
+        majPanelInfoParticules();
+    }
 
-        majNbParticulesText();
+    private int maxTailleEnum() {
+        int max = ParticuleType.values().length;
+        if(EtatType.values().length > max)
+            max = EtatType.values().length;
+        if(CycleType.values().length > max)
+            max = CycleType.values().length;
+        if(ComportementType.values().length > max)
+            max = ComportementType.values().length;
+
+        return max;
+    }
+
+    /**
+     * Label est le texte fixe
+     */
+    private JLabel ajoutFixeLabel(StringBuilder stringBuilder) {
+        return ajoutFixeLabel(stringBuilder, false);
+    }
+
+    private JLabel ajoutFixeLabel(StringBuilder stringBuilder, boolean vide) {
+        if(!vide)
+            stringBuilder.append(" : ");
+        JLabel label = new JLabel(stringBuilder.toString());
+        this.panelInfoParticules.add(label);
+        return label;
+    }
+
+    /**
+     * Label qui est variable et mis à jour lors des updates
+     */ 
+    private JLabel ajoutVariableLabel()
+    {
+        JLabel label = new JLabel("0");
+        // label.setSize(20, label.getHeight());
+        this.panelInfoParticules.add(label);
+        return label;
     }
 
     public void incrementParticule(Particule particule) {
@@ -80,51 +190,80 @@ public class VueDebug implements Observer {
     @Override
     public void updateRemove(List<Particule> particules) {
         particules.forEach(this::decrementParticule);
-        majNbParticulesText();
+        majPanelInfoParticules();
     }
 
     @Override
     public void updateAdd(List<Particule> particules) {
         particules.forEach(this::incrementParticule);
-        majNbParticulesText();
+        majPanelInfoParticules();
     }
 
     @Override
     public void updateEtat(EtatParticule oldEtat, EtatParticule newEtat) {
         decrementEtat(oldEtat);
         incrementEtat(newEtat);
-        majNbParticulesText();
+        majPanelInfoParticules();
     }
 
     @Override
     public void updateComportement(Comportement oldComportement, Comportement newComportement) {
         decrementComportement(oldComportement);
         incrementComportement(newComportement);
-        majNbParticulesText();
+        majPanelInfoParticules();
     }
 
-    private void majNbParticulesText() {
-        StringBuilder texte = new StringBuilder("<html>");
+    private void majPanelInfoParticules() {
         int somme = 0;
         for (ParticuleType particuleType : ParticuleType.values()) {
-            texte.append("Particules ").append(particuleType).append(" : ").append(nbParticules.get(particuleType));
-            texte.append(" , ");
+            labelNbParticules.get(particuleType).setText(nbParticules.get(particuleType).toString());
             somme += nbParticules.get(particuleType);
         }
-        if (debug) {
-            texte.append(" => total : ").append(somme);
-            texte.append("<br/>");
-            nbEtats.forEach((etatType, integer) -> texte.append(etatType).append(" : ").append(integer).append(", "));
-            texte.append(" => total : ").append(nbEtats.values().stream().mapToInt(Integer::intValue).sum());
-            texte.append("<br/>");
-            nbCycles.forEach((cycleType, integer) -> texte.append(cycleType).append(" : ").append(integer).append(", "));
-            texte.append(" => total : ").append(nbCycles.values().stream().mapToInt(Integer::intValue).sum());
-            texte.append("<br/>");
-            nbComportements.forEach((comportementType, integer) -> texte.append(comportementType).append(" : ").append(integer).append(", "));
-            texte.append(" => total : ").append(nbComportements.values().stream().mapToInt(Integer::intValue).sum());
+        labelTotalParticules.setText(String.valueOf(somme));
+
+        if(debug) {
+            somme = 0;
+            for (EtatType etatType : EtatType.values()) {
+                labelNbEtats.get(etatType).setText(nbEtats.get(etatType).toString());
+                somme += nbEtats.get(etatType);
+            }
+            labelTotalEtats.setText(String.valueOf(somme));
+
+            somme = 0;
+            for (CycleType cycleType : CycleType.values()) {
+                labelNbCycles.get(cycleType).setText(nbCycles.get(cycleType).toString());
+                somme += nbCycles.get(cycleType);
+            }
+            labelTotalCycles.setText(String.valueOf(somme));
+
+            somme = 0;
+            for (ComportementType comportementType : ComportementType.values()) {
+                labelNbComportements.get(comportementType).setText(nbComportements.get(comportementType).toString());
+                somme += nbComportements.get(comportementType);
+            }
+            labelTotalComportements.setText(String.valueOf(somme));
         }
-        texte.append("</html>");
-        this.texte.setText(texte.toString());
+
+        for (EtatType etatType : EtatType.values()) {
+            labelFixeNbEtats.get(etatType).setVisible(debug);
+            labelNbEtats.get(etatType).setVisible(debug);
+        }
+        labelFixeTotalEtats.setVisible(debug);
+        labelTotalEtats.setVisible(debug);
+
+        for (CycleType cycleType : CycleType.values()) {
+            labelFixeNbCycles.get(cycleType).setVisible(debug);
+            labelNbCycles.get(cycleType).setVisible(debug);
+        }
+        labelFixeTotalCycles.setVisible(debug);
+        labelTotalCycles.setVisible(debug);
+
+        for (ComportementType comportementType : ComportementType.values()) {
+            labelFixeNbComportements.get(comportementType).setVisible(debug);
+            labelNbComportements.get(comportementType).setVisible(debug);
+        }
+        labelFixeTotalComportements.setVisible(debug);
+        labelTotalComportements.setVisible(debug);
     }
 
     public Component getMenuDebug(Controleur controleur) {
@@ -132,7 +271,7 @@ public class VueDebug implements Observer {
         JMenuItem miDebug = new JMenuItem("Afficher les détails");
         miDebug.addActionListener(e -> {
             debug = !debug;
-            majNbParticulesText();
+            majPanelInfoParticules();
         });
         mDebug.add(miDebug);
 
@@ -179,7 +318,7 @@ public class VueDebug implements Observer {
         return mDebug;
     }
 
-    public Component getText() {
-        return texte;
+    public JPanel getPanelInfoParticules() {
+        return this.panelInfoParticules;
     }
 }
