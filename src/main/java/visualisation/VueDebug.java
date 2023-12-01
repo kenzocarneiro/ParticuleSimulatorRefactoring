@@ -214,34 +214,38 @@ public class VueDebug implements Observer {
     }
 
     private void majPanelInfoParticules() {
-        int somme = 0;
+        Integer valeur = 0, somme = 0;
         for (ParticuleType particuleType : ParticuleType.values()) {
-            labelNbParticules.get(particuleType).setText(nbParticules.get(particuleType).toString());
-            somme += nbParticules.get(particuleType);
+            valeur = nbParticules.get(particuleType);
+            labelNbParticules.get(particuleType).setText(valeur.toString());
+            somme += valeur;
         }
-        labelTotalParticules.setText(String.valueOf(somme));
+        labelTotalParticules.setText(somme.toString());
 
         if(debug) {
             somme = 0;
             for (EtatType etatType : EtatType.values()) {
-                labelNbEtats.get(etatType).setText(nbEtats.get(etatType).toString());
-                somme += nbEtats.get(etatType);
+                valeur = nbEtats.get(etatType);
+                labelNbEtats.get(etatType).setText(valeur.toString());
+                somme += valeur;
             }
-            labelTotalEtats.setText(String.valueOf(somme));
+            labelTotalEtats.setText(somme.toString());
 
             somme = 0;
             for (CycleType cycleType : CycleType.values()) {
-                labelNbCycles.get(cycleType).setText(nbCycles.get(cycleType).toString());
-                somme += nbCycles.get(cycleType);
+                valeur = nbCycles.get(cycleType);
+                labelNbCycles.get(cycleType).setText(valeur.toString());
+                somme += valeur;
             }
-            labelTotalCycles.setText(String.valueOf(somme));
+            labelTotalCycles.setText(somme.toString());
 
             somme = 0;
             for (ComportementType comportementType : ComportementType.values()) {
-                labelNbComportements.get(comportementType).setText(nbComportements.get(comportementType).toString());
-                somme += nbComportements.get(comportementType);
+                valeur = nbComportements.get(comportementType);
+                labelNbComportements.get(comportementType).setText(valeur.toString());
+                somme += valeur;
             }
-            labelTotalComportements.setText(String.valueOf(somme));
+            labelTotalComportements.setText(somme.toString());
         }
 
         for (EtatType etatType : EtatType.values()) {
