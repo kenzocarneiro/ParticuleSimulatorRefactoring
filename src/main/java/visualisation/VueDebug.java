@@ -18,7 +18,6 @@ import java.util.Map;
 public class VueDebug implements Observer {
     private boolean debug = false;
     private final JLabel texte = new JLabel();
-//    private final int[] particules = new int[ParticuleType.values().length];
 
     Map<ParticuleType, Integer> nbParticules;
 
@@ -27,9 +26,6 @@ public class VueDebug implements Observer {
     Map<ComportementType, Integer> nbComportements;
 
     public VueDebug() {
-//        for (int i = 0; i < ParticuleType.values().length; i++) {
-//            particules[i] = 0;
-//        }
         nbParticules = new HashMap<ParticuleType, Integer>() {{
             for (ParticuleType particuleType : ParticuleType.values()) {
                 put(particuleType, 0);
@@ -121,10 +117,13 @@ public class VueDebug implements Observer {
             texte.append(" => total : ").append(somme);
             texte.append("<br/>");
             nbEtats.forEach((etatType, integer) -> texte.append(etatType).append(" : ").append(integer).append(", "));
+            texte.append(" => total : ").append(nbEtats.values().stream().mapToInt(Integer::intValue).sum());
             texte.append("<br/>");
             nbCycles.forEach((cycleType, integer) -> texte.append(cycleType).append(" : ").append(integer).append(", "));
+            texte.append(" => total : ").append(nbCycles.values().stream().mapToInt(Integer::intValue).sum());
             texte.append("<br/>");
             nbComportements.forEach((comportementType, integer) -> texte.append(comportementType).append(" : ").append(integer).append(", "));
+            texte.append(" => total : ").append(nbComportements.values().stream().mapToInt(Integer::intValue).sum());
         }
         texte.append("</html>");
         this.texte.setText(texte.toString());
@@ -182,6 +181,12 @@ public class VueDebug implements Observer {
         slider.setMajorTickSpacing(10);
         slider.addChangeListener(e -> controleur.getSim().setDelaiSimulation(slider.getValue()));
         mDebug.add(slider);
+
+        JMenuItem miDebug3 = new JMenuItem("Nettoyage de la zone");
+        miDebug3.addActionListener(e -> {
+            controleur.getchampParticules().exterminer();
+        });
+        mDebug.add(miDebug3);
 
         return mDebug;
     }

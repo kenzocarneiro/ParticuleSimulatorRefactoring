@@ -25,4 +25,6 @@ public interface Champ extends Sujet {
     void updatePopulation();
 
     void ajouterManuellement(Particule p);
+
+    void exterminer();
 }

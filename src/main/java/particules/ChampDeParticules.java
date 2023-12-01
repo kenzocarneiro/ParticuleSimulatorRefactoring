@@ -19,6 +19,7 @@ public class ChampDeParticules implements Champ, Sujet {
     private Controleur controleur;
     private final List<Observer> observers;
     private List<Particule> aEnvoyerObservateur;
+    private boolean extermination = false;
 
     public ChampDeParticules(int largeur, int longeur) {
         this.largeur = largeur;
@@ -78,6 +79,11 @@ public class ChampDeParticules implements Champ, Sujet {
 
     @Override
     public void supprimerLesParticulesDecedees() {
+        if (extermination) {
+            this.population.forEach(Particule::meurt);
+            extermination = false;
+        }
+
         HashSet<Particule> particulesMortes = new HashSet<>();
         for (Particule p : this.population) {
             if (p.estMorte()) {
@@ -144,4 +150,8 @@ public class ChampDeParticules implements Champ, Sujet {
         }
     }
 
+    @Override
+    public void exterminer() {
+        extermination = true;
+    }
 }
