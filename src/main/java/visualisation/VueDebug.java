@@ -23,17 +23,24 @@ public class VueDebug implements Observer {
     private final JPanel panelInfoParticules = new JPanel();
     private final GridLayout gridLayout = new GridLayout();
     
-
+    private Map<ParticuleType, JLabel> labelFixeNbParticules;
     private Map<ParticuleType, JLabel> labelNbParticules;
+    private JLabel labelFixeTotalParticules;
     private JLabel labelTotalParticules;
 
+    private Map<EtatType, JLabel> labelFixeNbEtats;
     private Map<EtatType, JLabel> labelNbEtats;
+    private JLabel labelFixeTotalEtats;
     private JLabel labelTotalEtats;
 
+    private Map<CycleType, JLabel> labelFixeNbCycles;
     private Map<CycleType, JLabel> labelNbCycles;
+    private JLabel labelFixeTotalCycles;
     private JLabel labelTotalCycles;
 
+    private Map<ComportementType, JLabel> labelFixeNbComportements;
     private Map<ComportementType, JLabel> labelNbComportements;
+    private JLabel labelFixeTotalComportements;
     private JLabel labelTotalComportements;
 
     // informations sur les particules
@@ -48,11 +55,12 @@ public class VueDebug implements Observer {
         panelInfoParticules.setLayout(gridLayout);
         
         // particules
+        labelFixeNbParticules = new HashMap<ParticuleType, JLabel>();
         labelNbParticules = new HashMap<ParticuleType, JLabel>();
         nbParticules = new HashMap<ParticuleType, Integer>() {{
             for (ParticuleType particuleType : ParticuleType.values()) {
                 put(particuleType, 0);
-                ajoutFixeLabel(new StringBuilder("").append(particuleType));
+                labelFixeNbParticules.put(particuleType, ajoutFixeLabel(new StringBuilder("").append(particuleType)));
                 labelNbParticules.put(particuleType, ajoutVariableLabel());
             }
         }};
@@ -60,15 +68,16 @@ public class VueDebug implements Observer {
         for (int i = 0; i < 2*ajoutVide; i++) {
             ajoutFixeLabel(new StringBuilder(""), true);
         }
-        ajoutFixeLabel(new StringBuilder("Total"));
+        labelFixeTotalParticules = ajoutFixeLabel(new StringBuilder("Total"));
         labelTotalParticules = ajoutVariableLabel();
 
         // etats
+        labelFixeNbEtats = new HashMap<EtatType, JLabel>();
         labelNbEtats = new HashMap<EtatType, JLabel>();
         nbEtats = new HashMap<EtatType, Integer>() {{
             for (EtatType etatType : EtatType.values()) {
                 put(etatType, 0);
-                ajoutFixeLabel(new StringBuilder("").append(etatType));
+                labelFixeNbEtats.put(etatType, ajoutFixeLabel(new StringBuilder("").append(etatType)));
                 labelNbEtats.put(etatType, ajoutVariableLabel());
             }
         }};
@@ -76,15 +85,16 @@ public class VueDebug implements Observer {
         for (int i = 0; i < 2*ajoutVide; i++) {
             ajoutFixeLabel(new StringBuilder(""), true);
         }
-        ajoutFixeLabel(new StringBuilder("Total"));
+        labelFixeTotalEtats = ajoutFixeLabel(new StringBuilder("Total"));
         labelTotalEtats = ajoutVariableLabel();
 
         // cycles
+        labelFixeNbCycles = new HashMap<CycleType, JLabel>();
         labelNbCycles = new HashMap<CycleType, JLabel>();
         nbCycles = new HashMap<CycleType, Integer>() {{
             for (CycleType cycleType : CycleType.values()) {
                 put(cycleType, 0);
-                ajoutFixeLabel(new StringBuilder("").append(cycleType));
+                labelFixeNbCycles.put(cycleType, ajoutFixeLabel(new StringBuilder("").append(cycleType)));
                 labelNbCycles.put(cycleType, ajoutVariableLabel());
             }
         }};
@@ -92,15 +102,16 @@ public class VueDebug implements Observer {
         for (int i = 0; i < 2*ajoutVide; i++) {
             ajoutFixeLabel(new StringBuilder(""), true);
         }
-        ajoutFixeLabel(new StringBuilder("Total"));
+        labelFixeTotalCycles = ajoutFixeLabel(new StringBuilder("Total"));
         labelTotalCycles = ajoutVariableLabel();
 
         // comportements
+        labelFixeNbComportements = new HashMap<ComportementType, JLabel>();
         labelNbComportements = new HashMap<ComportementType, JLabel>();
         nbComportements = new HashMap<ComportementType, Integer>() {{
             for (ComportementType comportementType : ComportementType.values()) {
                 put(comportementType, 0);
-                ajoutFixeLabel(new StringBuilder("").append(comportementType));
+                labelFixeNbComportements.put(comportementType, ajoutFixeLabel(new StringBuilder("").append(comportementType)));
                 labelNbComportements.put(comportementType, ajoutVariableLabel());
             }
         }};
@@ -108,9 +119,9 @@ public class VueDebug implements Observer {
         for (int i = 0; i < 2*ajoutVide; i++) {
             ajoutFixeLabel(new StringBuilder(""), true);
         }
-        ajoutFixeLabel(new StringBuilder("Total"));
+        labelFixeTotalComportements = ajoutFixeLabel(new StringBuilder("Total"));
         labelTotalComportements = ajoutVariableLabel();
-        
+
         if(useWidget)
             majPanelInfoParticules();
         else
@@ -275,6 +286,28 @@ public class VueDebug implements Observer {
             }
             labelTotalComportements.setText(String.valueOf(somme));
         }
+
+        for (EtatType etatType : EtatType.values()) {
+            labelFixeNbEtats.get(etatType).setVisible(debug);
+            labelNbEtats.get(etatType).setVisible(debug);
+        }
+        labelFixeTotalEtats.setVisible(debug);
+        labelTotalEtats.setVisible(debug);
+
+        for (CycleType cycleType : CycleType.values()) {
+            labelFixeNbCycles.get(cycleType).setVisible(debug);
+            labelNbCycles.get(cycleType).setVisible(debug);
+        }
+        labelFixeTotalCycles.setVisible(debug);
+        labelTotalCycles.setVisible(debug);
+
+        for (ComportementType comportementType : ComportementType.values()) {
+            labelFixeNbComportements.get(comportementType).setVisible(debug);
+            labelNbComportements.get(comportementType).setVisible(debug);
+        }
+        labelFixeTotalComportements.setVisible(debug);
+        labelTotalComportements.setVisible(debug);
+
 
         // if (debug) {
         //     texte.append(" => total : ").append(somme);
