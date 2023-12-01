@@ -90,6 +90,9 @@ public class ChampDeParticules implements Champ, Sujet {
                 particulesMortes.add(p);
             }
         }
+        if (particulesMortes.isEmpty()) {
+            return;
+        }
 
         this.population.removeAll(particulesMortes);
         this.aEnvoyerObservateur.addAll(particulesMortes);

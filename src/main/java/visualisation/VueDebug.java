@@ -11,99 +11,121 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VueDebug implements Observer {
     private boolean debug = false;
     private final JLabel texte = new JLabel();
-    private final int[] particules = new int[ParticuleType.values().length];
-    int nbNormal, nbExcite, nbJeune, nbActive, nbFinDeVie, nbComportementNormal, nbComportementEpileptique;
+//    private final int[] particules = new int[ParticuleType.values().length];
 
-    @Override
-    public void updateRemove(List<Particule> p) {
-        for (Particule particule : p) {
-            for (int i = 0; i < ParticuleType.values().length; i++) {
-                if (particule.getType().equals(ParticuleType.values()[i])) {
-                    particules[i]--;
-                }
+    Map<ParticuleType, Integer> nbParticules;
+
+    Map<EtatType, Integer> nbEtats;
+    Map<CycleType, Integer> nbCycles;
+    Map<ComportementType, Integer> nbComportements;
+
+    public VueDebug() {
+//        for (int i = 0; i < ParticuleType.values().length; i++) {
+//            particules[i] = 0;
+//        }
+        nbParticules = new HashMap<ParticuleType, Integer>() {{
+            for (ParticuleType particuleType : ParticuleType.values()) {
+                put(particuleType, 0);
             }
-            if (particule.getEtat().getEtatType().equals(EtatType.NORMAL)) nbNormal--;
-            else if (particule.getEtat().getEtatType().equals(EtatType.EXCITE)) nbExcite--;
-            if (particule.getComportement().getComportementType().equals(ComportementType.NORMAL)) nbComportementNormal--;
-            else if (particule.getComportement().getComportementType().equals(ComportementType.EPILEPTIQUE)) nbComportementEpileptique--;
-        }
+        }};
+
+        nbEtats = new HashMap<EtatType, Integer>() {{
+            for (EtatType etatType : EtatType.values()) {
+                put(etatType, 0);
+            }
+        }};
+        nbCycles = new HashMap<CycleType, Integer>() {{
+            for (CycleType cycleType : CycleType.values()) {
+                put(cycleType, 0);
+            }
+        }};
+        nbComportements = new HashMap<ComportementType, Integer>() {{
+            for (ComportementType comportementType : ComportementType.values()) {
+                put(comportementType, 0);
+            }
+        }};
 
         majNbParticulesText();
     }
 
-    @Override
-    public void updateAdd(List<Particule> p) {
-        for (Particule particule : p) {
-            for (int i = 0; i < ParticuleType.values().length; i++) {
-                if (particule.getType().equals(ParticuleType.values()[i])) {
-                    particules[i]++;
-                }
-            }
-            nbNormal++;
-            nbJeune++;
-            if (particule.getComportement().getComportementType().equals(ComportementType.NORMAL)) nbComportementNormal++;
-            if (particule.getComportement().getComportementType().equals(ComportementType.EPILEPTIQUE)) nbComportementEpileptique++;
-        }
+    public void incrementParticule(Particule particule) {
+        nbParticules.merge(particule.getType(), 1, Integer::sum);
+        incrementEtat(particule.getEtat());
+        incrementComportement(particule.getComportement());
+    }
+    public void decrementParticule(Particule particule) {
+        nbParticules.merge(particule.getType(), -1, Integer::sum);
+        decrementEtat(particule.getEtat());
+        decrementComportement(particule.getComportement());
+    }
 
+    public void incrementEtat(EtatParticule etatParticule) {
+        nbEtats.merge(etatParticule.getEtatType(), 1, Integer::sum);
+        nbCycles.merge(etatParticule.getCycleType(), 1, Integer::sum);
+    }
+    public void decrementEtat(EtatParticule etatParticule) {
+        nbEtats.merge(etatParticule.getEtatType(), -1, Integer::sum);
+        nbCycles.merge(etatParticule.getCycleType(), -1, Integer::sum);
+    }
+
+    public void incrementComportement(Comportement comportement) {
+        nbComportements.merge(comportement.getComportementType(), 1, Integer::sum);
+    }
+    public void decrementComportement(Comportement comportement) {
+        nbComportements.merge(comportement.getComportementType(), -1, Integer::sum);
+    }
+
+
+    @Override
+    public void updateRemove(List<Particule> particules) {
+        particules.forEach(this::decrementParticule);
+        majNbParticulesText();
+    }
+
+    @Override
+    public void updateAdd(List<Particule> particules) {
+        particules.forEach(this::incrementParticule);
         majNbParticulesText();
     }
 
     @Override
     public void updateEtat(EtatParticule oldEtat, EtatParticule newEtat) {
-        if (oldEtat.getEtatType().equals(EtatType.NORMAL)) nbNormal--;
-        else if (oldEtat.getEtatType().equals(EtatType.EXCITE)) nbExcite--;
-        if (oldEtat.getCycleType().equals(CycleType.JEUNE)) nbJeune--;
-        else if (oldEtat.getCycleType().equals(CycleType.ACTIVE)) nbActive--;
-        else if (oldEtat.getCycleType().equals(CycleType.FIN_DE_VIE)) nbFinDeVie--;
-
-        if (newEtat.getEtatType().equals(EtatType.NORMAL)) nbNormal++;
-        else if (newEtat.getEtatType().equals(EtatType.EXCITE)) nbExcite++;
-        if (newEtat.getCycleType().equals(CycleType.JEUNE)) nbJeune++;
-        else if (newEtat.getCycleType().equals(CycleType.ACTIVE)) nbActive++;
-        else if (newEtat.getCycleType().equals(CycleType.FIN_DE_VIE)) nbFinDeVie++;
-
+        decrementEtat(oldEtat);
+        incrementEtat(newEtat);
         majNbParticulesText();
     }
 
     @Override
     public void updateComportement(Comportement oldComportement, Comportement newComportement) {
-        if (oldComportement != null) {
-            if (oldComportement.getComportementType().equals(ComportementType.NORMAL)) nbComportementNormal--;
-            else if (oldComportement.getComportementType().equals(ComportementType.EPILEPTIQUE)) nbComportementEpileptique--;
-        }
-
-        if (newComportement.getComportementType().equals(ComportementType.NORMAL)) nbComportementNormal++;
-        else if (newComportement.getComportementType().equals(ComportementType.EPILEPTIQUE)) nbComportementEpileptique++;
-
+        decrementComportement(oldComportement);
+        incrementComportement(newComportement);
         majNbParticulesText();
     }
 
     private void majNbParticulesText() {
+        System.out.println("HELLO");
         StringBuilder texte = new StringBuilder("<html>");
         int somme = 0;
-        for (int i = 0; i < ParticuleType.values().length; i++) {
-            texte.append("Particules ").append(ParticuleType.values()[i]).append(" : ").append(particules[i]);
-            if (i != ParticuleType.values().length - 1) texte.append(" , ");
-            somme += particules[i];
+        for (ParticuleType particuleType : ParticuleType.values()) {
+            texte.append("Particules ").append(particuleType).append(" : ").append(nbParticules.get(particuleType));
+            texte.append(" , ");
+            somme += nbParticules.get(particuleType);
         }
         if (debug) {
             texte.append(" => total : ").append(somme);
             texte.append("<br/>");
-            texte.append("Normal : ").append(nbNormal).append(" , ");
-            texte.append("Excite : ").append(nbExcite).append(" => total : ");
-            texte.append(nbNormal + nbExcite).append("<br/>");
-            texte.append("Jeune : ").append(nbJeune).append(" , ");
-            texte.append("Active : ").append(nbActive).append(" , ");
-            texte.append("FinDeVie : ").append(nbFinDeVie);
-            texte.append(" => total : ").append(nbJeune + nbActive + nbFinDeVie).append("<br/>");
-            texte.append("CompNormal : ").append(nbComportementNormal).append(" , ");
-            texte.append("CompEpileptique : ").append(nbComportementEpileptique);
-            texte.append(" => total : ").append(nbComportementNormal + nbComportementEpileptique).append("<br/>");
+            nbEtats.forEach((etatType, integer) -> texte.append(etatType).append(" : ").append(integer).append(", "));
+            texte.append("<br/>");
+            nbCycles.forEach((cycleType, integer) -> texte.append(cycleType).append(" : ").append(integer).append(", "));
+            texte.append("<br/>");
+            nbComportements.forEach((comportementType, integer) -> texte.append(comportementType).append(" : ").append(integer).append(", "));
         }
         texte.append("</html>");
         this.texte.setText(texte.toString());
